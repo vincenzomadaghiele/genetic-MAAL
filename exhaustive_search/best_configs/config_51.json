@@ -8,14 +8,14 @@
             {
                 "rule-name": "Melodic trajectory - D",
                 "rule-type": "less",
-                "rule-threshold": 0.5
+                "rule-threshold": 0.4
             }
         ],
         [
             {
                 "rule-name": "Rhythmic similarity",
                 "rule-type": "more",
-                "rule-threshold": 0.7
+                "rule-threshold": 0.7000000000000001
             }
         ]
     ],
@@ -27,4 +27,3 @@
     "maxLoopsRepetition": 20,
     "loopChange-rule": "better"
 }
-

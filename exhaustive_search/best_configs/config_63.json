@@ -15,7 +15,7 @@
             {
                 "rule-name": "Rhythmic similarity",
                 "rule-type": "more",
-                "rule-threshold": 0.7
+                "rule-threshold": 0.8
             }
         ]
     ],
@@ -27,4 +27,3 @@
     "maxLoopsRepetition": 20,
     "loopChange-rule": "better"
 }
-

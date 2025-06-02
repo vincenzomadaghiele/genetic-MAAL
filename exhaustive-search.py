@@ -7,14 +7,13 @@ from offlineALLclass import AutonomousLooperOffline
 from subprocess import Popen # process on multiple threads
 
 
-
 if __name__ == '__main__': 
 
 	# define soundfile and basic config
-	soundfile_filepath = './00_corpus/USE_CASE_1.wav'
-	starting_config_filepath = './config.json'
+	soundfile_filepath = './exhaustive_search/corpus/USE_CASE_1.wav'
+	starting_config_filepath = './exhaustive_search/corpus/objective_config.json'
 	
-	# open starting JSON file
+	# open basic JSON config file
 	with open(starting_config_filepath, 'r') as file:
 	    basic_config_file = json.load(file)
 	print(basic_config_file)
@@ -24,7 +23,7 @@ if __name__ == '__main__':
 		for rule_component in rule:
 			N_RULES += 1
 
-	# generate parameter permutations
+	# generate all parameter permutations
 	step = 0.1
 	elements = np.arange(0.0, 1.0+step, step)
 	permutations = [p for p in itertools.product(elements, repeat=N_RULES)]
@@ -45,7 +44,7 @@ if __name__ == '__main__':
 		with open(f'{config_files_path}/config_{p}.json', 'w', encoding='utf-8') as f:
 			json.dump(config_file_blank, f, ensure_ascii=False, indent=4)
 
-	# run looper for each config file
+	# generate commands to run looper for each config file
 	config_files_list = os.listdir(config_files_path) 
 	command_strings = []
 	for config_file in config_files_list:
@@ -61,7 +60,6 @@ if __name__ == '__main__':
 		#looper = AutonomousLooperOffline(soundfile_filepath, config_filepath=config_filepath, plotFlag=False)
 		#looper.computeLooperTrack(output_dir_path)
 
-
 	# GENERATE LOOPER RESULTS WITH MULTI THREADS
 	THREADS = 6
 	subdiv = THREADS # num threads
@@ -76,13 +74,4 @@ if __name__ == '__main__':
 		for j in range(remaining_indices):
 			command = command_strings[(i*subdiv+(subdiv-1)) + j]
 			os.system(command)
-
-
-	# read logs and transform
-
-	# evaluate fitness of all wrt to original
-
-
-
-
 
