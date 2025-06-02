@@ -412,6 +412,7 @@ class AutonomousLooperOffline():
 		os.mkdir(output_dir)
 
 
+		print(decisions_log)
 		with open(f'{output_dir}/decisions_log.json', 'w', encoding='utf-8') as f:
 			json.dump(decisions_log, f, ensure_ascii=False, indent=4)
 
