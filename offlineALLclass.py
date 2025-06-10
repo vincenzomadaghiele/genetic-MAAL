@@ -472,7 +472,7 @@ class AutonomousLooperOffline():
 
 		ax[0].set_ylabel("$x(t)$", rotation=0, ha='right', fontsize=13)
 		ax[0].xaxis.set_visible(False)
-		fig.suptitle(f'AUTONOMOUS LIVE LOOPER OUTPUT ON TRACK \n {self.soundfile_filepath.split('/')[-1]}', size=16, y=0.9)
+		fig.suptitle(f'AUTONOMOUS LIVE LOOPER OUTPUT ON TRACK \n {self.soundfile_filepath.split("/")[-1]}', size=16, y=0.9)
 		plt.subplots_adjust(wspace=0, hspace=0)
 		plt.savefig(f'{output_dir}/loops_figure.png')
 		if self.PLOT_FLAG:

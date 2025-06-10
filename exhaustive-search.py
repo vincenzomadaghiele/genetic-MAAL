@@ -49,7 +49,7 @@ if __name__ == '__main__':
 	command_strings = []
 	for config_file in config_files_list:
 		config_filepath = f'{config_files_path}/{config_file}'
-		output_dir_path = f'./exhaustive_search/looper_outputs/{config_file.split('.')[0]}'
+		output_dir_path = f'./exhaustive_search/looper_outputs/{config_file.split(".")[0]}'
 		if os.path.isdir(output_dir_path):
 			shutil.rmtree(output_dir_path)
 		os.mkdir(output_dir_path)
