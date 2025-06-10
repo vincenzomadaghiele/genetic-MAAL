@@ -1,4 +1,4 @@
-*.wav
+exhaustive_search/looper_outputs/*/*/*.wav
 *.png
 .DS_Store
 __pycache__/
