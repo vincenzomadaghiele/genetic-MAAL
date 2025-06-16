@@ -27,13 +27,18 @@ if __name__ == '__main__':
 	step = 0.1
 	elements = np.arange(0.0, 1.0+step, step)
 	permutations = [p for p in itertools.product(elements, repeat=N_RULES)]
-	print(permutations[0])
+	print()
+	print('Example threshold permuation')
+	print(permutations[10])
 	print(f'num threshold permutations: {len(permutations)}')
 	xi_elements = ["less", "more"]
 	xi_permutations = [p for p in itertools.product(xi_elements, repeat=N_RULES)]
-	print(xi_permutations)
+	print()
+	print('Example xi permuation')
+	print(xi_permutations[3])
 	print(f'num xi permutations: {len(xi_permutations)}')
 	print(f'total number of permutations: {len(xi_permutations)*len(permutations)}')
+	print()
 
 	# generate config files for all rule combinations
 	config_files_path = './exhaustive_search/config_files'
