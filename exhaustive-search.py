@@ -28,21 +28,28 @@ if __name__ == '__main__':
 	elements = np.arange(0.0, 1.0+step, step)
 	permutations = [p for p in itertools.product(elements, repeat=N_RULES)]
 	print(permutations[0])
-	print(f'num permutations: {len(permutations)}')
+	print(f'num threshold permutations: {len(permutations)}')
+	xi_elements = ["less", "more"]
+	xi_permutations = [p for p in itertools.product(xi_elements, repeat=N_RULES)]
+	print(xi_permutations)
+	print(f'num xi permutations: {len(xi_permutations)}')
+	print(f'total number of permutations: {len(xi_permutations)*len(permutations)}')
 
 	# generate config files for all rule combinations
 	config_files_path = './exhaustive_search/config_files'
 	config_file_blank = basic_config_file.copy()
 	for p, permutation in enumerate(permutations):
 		new_rules = rules.copy()
-		i = 0
-		for rule in new_rules:
-			for rule_component in rule:
-				rule_component["rule-threshold"] = permutation[i]
-				i+=1
-		config_file_blank['looping-rules'] = new_rules
-		with open(f'{config_files_path}/config_{p}.json', 'w', encoding='utf-8') as f:
-			json.dump(config_file_blank, f, ensure_ascii=False, indent=4)
+		for x, xi_permutation in enumerate(xi_permutations):
+			i = 0
+			for rule in new_rules:
+				for rule_component in rule:
+					rule_component["rule-threshold"] = permutation[i]
+					rule_component["rule-type"] = xi_permutation[i]
+					i+=1
+			config_file_blank['looping-rules'] = new_rules
+			with open(f'{config_files_path}/config_{p}_{x}.json', 'w', encoding='utf-8') as f:
+				json.dump(config_file_blank, f, ensure_ascii=False, indent=4)
 
 	# generate commands to run looper for each config file
 	config_files_list = os.listdir(config_files_path) 
