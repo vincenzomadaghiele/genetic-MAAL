@@ -38,7 +38,11 @@ def FitnessFunction(binary_decisions, objective_binary_log):
 	score = np.array(binary_decisions) + np.array(objective_binary_log)
 	unique, counts = np.unique(score, return_counts=True)
 	counter = dict(zip(unique, counts))
-	return counter[2]
+	try:
+		fitness = counter[2]
+	except: 
+		fitness = 0
+	return fitness
 
 
 # mutation function
@@ -52,9 +56,9 @@ def MutationAddRandomRule(rules):
 def MutationRemoveRandomRule(rules):
 	# remove a random rule from a random loop track
 	idx_rule_to_change = np.random.randint(0, high=len(rules))
+	idx_rule_component_to_change = np.random.randint(0, high=len(rules[idx_rule_to_change]))
 	if len(rules[idx_rule_to_change]) > N_MIN_RULES:
-		idx_rule_to_change = np.random.randint(0, high=len(rules[idx_rule_to_change]))
-		rules.remove(rules[idx_rule_to_change])
+		rules[idx_rule_to_change].remove(rules[idx_rule_to_change][idx_rule_component_to_change])
 	return rules
 
 def MutationSubstituteRandomRule(rules):

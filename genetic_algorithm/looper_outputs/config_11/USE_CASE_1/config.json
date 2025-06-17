@@ -8,7 +8,7 @@
             {
                 "rule-name": "Harmonic function similarity",
                 "rule-type": "more",
-                "rule-threshold": 0.7000000000000001
+                "rule-threshold": 0.8
             }
         ],
         [

@@ -6,16 +6,16 @@
     "looping-rules": [
         [
             {
-                "rule-name": "Dynamic changes - D",
+                "rule-name": "Rhythmic density",
                 "rule-type": "less",
-                "rule-threshold": 0.2
+                "rule-threshold": 0.6000000000000001
             }
         ],
         [
             {
-                "rule-name": "Global spectral overlap",
-                "rule-type": "more",
-                "rule-threshold": 0.6000000000000001
+                "rule-name": "Melodic trajectory - C",
+                "rule-type": "less",
+                "rule-threshold": 0.7000000000000001
             }
         ]
     ],
