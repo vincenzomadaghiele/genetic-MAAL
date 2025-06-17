@@ -6,16 +6,16 @@
     "looping-rules": [
         [
             {
-                "rule-name": "Harmonic similarity",
+                "rule-name": "Dynamic similarity",
                 "rule-type": "more",
-                "rule-threshold": 0.5
+                "rule-threshold": 0.8
             }
         ],
         [
             {
-                "rule-name": "Harmonic similarity",
+                "rule-name": "Rhythmic similarity",
                 "rule-type": "less",
-                "rule-threshold": 0.5
+                "rule-threshold": 0.6000000000000001
             }
         ]
     ],

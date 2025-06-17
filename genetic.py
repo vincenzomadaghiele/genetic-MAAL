@@ -104,6 +104,7 @@ if __name__ == '__main__':
 	parser = argparse.ArgumentParser()
 	parser.add_argument('--ITERATIONS', type=int, default=2,
 						help='name of the folder containing the soundfile')
+	args = parser.parse_args(sys.argv[1:])
 
 	## DEFINE SCRIPT PARAMETERS
 	iterations = args.ITERATIONS
