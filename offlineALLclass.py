@@ -210,7 +210,7 @@ class AutonomousLooperOffline():
 									decisions_element['decision_type'] = 'I'
 									decisions_element['loop_track (i)'] = i
 									decisions_element['num_beats (T_l)'] = self.candidate_segments_divisions[-1]
-									decisions_element['satisfaction_degree'] = satisfaction_degree
+									decisions_element['satisfaction_degree'] = float(satisfaction_degree)
 									decisions_bar['decisions'].append(decisions_element)
 								
 								# UPDATE LOOPER AUDIOTRACKS
@@ -335,7 +335,7 @@ class AutonomousLooperOffline():
 								decisions_element['decision_type'] = 'A'
 								decisions_element['loop_track (i)'] = i
 								decisions_element['num_beats (T_l)'] = self.candidate_segments_divisions[selected_candidate_nums[i]]
-								decisions_element['satisfaction_degree'] = selected_loops_satisfaction_degrees[i]
+								decisions_element['satisfaction_degree'] = float(selected_loops_satisfaction_degrees[i])
 								decisions_bar['decisions'].append(decisions_element)
 
 								break
@@ -356,7 +356,7 @@ class AutonomousLooperOffline():
 									decisions_element['decision_type'] = 'A'
 									decisions_element['loop_track (i)'] = i
 									decisions_element['num_beats (T_l)'] = self.candidate_segments_divisions[selected_candidate_nums[i]]
-									decisions_element['satisfaction_degree'] = selected_loops_satisfaction_degrees[i]
+									decisions_element['satisfaction_degree'] = float(selected_loops_satisfaction_degrees[i])
 									decisions_bar['decisions'].append(decisions_element)
 
 									break
