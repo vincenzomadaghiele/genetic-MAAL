@@ -1,4 +1,5 @@
 exhaustive_search/looper_outputs/*/*/*.wav
+genetic_algorithm/looper_outputs/*/*/*.wav
 *.png
 .DS_Store
 __pycache__/
