@@ -4,9 +4,9 @@
         "decisions": [
             {
                 "decision_type": "I",
-                "loop_track (i)": 0,
+                "loop_track (i)": 1,
                 "num_beats (T_l)": 1,
-                "satisfaction_degree": 0.9998907472311646
+                "satisfaction_degree": 0.3125
             }
         ]
     },
@@ -252,9 +252,9 @@
         "decisions": [
             {
                 "decision_type": "I",
-                "loop_track (i)": 0,
+                "loop_track (i)": 1,
                 "num_beats (T_l)": 1,
-                "satisfaction_degree": 0.029649540318768958
+                "satisfaction_degree": 0.25
             }
         ]
     },
@@ -502,7 +502,7 @@
                 "decision_type": "I",
                 "loop_track (i)": 0,
                 "num_beats (T_l)": 1,
-                "satisfaction_degree": 0.029666061879453177
+                "satisfaction_degree": 0.3125
             }
         ]
     },
@@ -554,10 +554,10 @@
         "subdivision_index (m)": 53,
         "decisions": [
             {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
+                "decision_type": "A",
+                "loop_track (i)": 1,
+                "num_beats (T_l)": 1,
+                "satisfaction_degree": 0.0875
             }
         ]
     },
@@ -620,10 +620,10 @@
         "subdivision_index (m)": 59,
         "decisions": [
             {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
+                "decision_type": "A",
+                "loop_track (i)": 1,
+                "num_beats (T_l)": 1,
+                "satisfaction_degree": 0.15
             }
         ]
     },
@@ -664,10 +664,10 @@
         "subdivision_index (m)": 63,
         "decisions": [
             {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
+                "decision_type": "A",
+                "loop_track (i)": 1,
+                "num_beats (T_l)": 1,
+                "satisfaction_degree": 0.15
             }
         ]
     },
@@ -730,14 +730,14 @@
         "subdivision_index (m)": 69,
         "decisions": [
             {
-                "decision_type": "Z",
-                "loop_track (i)": 0,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
+                "decision_type": "A",
+                "loop_track (i)": 1,
+                "num_beats (T_l)": 1,
+                "satisfaction_degree": 0.2125
             },
             {
                 "decision_type": "Z",
-                "loop_track (i)": 1,
+                "loop_track (i)": 0,
                 "num_beats (T_l)": null,
                 "satisfaction_degree": null
             }
@@ -747,10 +747,10 @@
         "subdivision_index (m)": 70,
         "decisions": [
             {
-                "decision_type": "I",
-                "loop_track (i)": 0,
-                "num_beats (T_l)": 1,
-                "satisfaction_degree": 0.03329830879094069
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null,
+                "satisfaction_degree": null
             }
         ]
     },
@@ -824,10 +824,10 @@
         "subdivision_index (m)": 77,
         "decisions": [
             {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
+                "decision_type": "A",
+                "loop_track (i)": 1,
+                "num_beats (T_l)": 1,
+                "satisfaction_degree": 0.2125
             }
         ]
     },
@@ -879,10 +879,10 @@
         "subdivision_index (m)": 82,
         "decisions": [
             {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
+                "decision_type": "A",
+                "loop_track (i)": 1,
+                "num_beats (T_l)": 1,
+                "satisfaction_degree": 0.2125
             }
         ]
     },
@@ -934,10 +934,10 @@
         "subdivision_index (m)": 87,
         "decisions": [
             {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
+                "decision_type": "A",
+                "loop_track (i)": 1,
+                "num_beats (T_l)": 1,
+                "satisfaction_degree": 0.2125
             }
         ]
     },
@@ -967,8 +967,8 @@
         "subdivision_index (m)": 90,
         "decisions": [
             {
-                "decision_type": "R",
-                "loop_track (i)": null,
+                "decision_type": "Z",
+                "loop_track (i)": 0,
                 "num_beats (T_l)": null,
                 "satisfaction_degree": null
             }
@@ -978,16 +978,10 @@
         "subdivision_index (m)": 91,
         "decisions": [
             {
-                "decision_type": "Z",
-                "loop_track (i)": 0,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            },
-            {
-                "decision_type": "Z",
+                "decision_type": "A",
                 "loop_track (i)": 1,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
+                "num_beats (T_l)": 1,
+                "satisfaction_degree": 0.2125
             }
         ]
     },
@@ -995,10 +989,10 @@
         "subdivision_index (m)": 92,
         "decisions": [
             {
-                "decision_type": "I",
-                "loop_track (i)": 0,
-                "num_beats (T_l)": 1,
-                "satisfaction_degree": 0.019335375132164514
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null,
+                "satisfaction_degree": null
             }
         ]
     },

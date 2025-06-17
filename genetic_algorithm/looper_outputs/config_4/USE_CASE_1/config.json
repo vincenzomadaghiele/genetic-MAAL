@@ -6,16 +6,21 @@
     "looping-rules": [
         [
             {
-                "rule-name": "Melodic similarity",
+                "rule-name": "Harmonic function transitions - C",
                 "rule-type": "more",
-                "rule-threshold": 0.2
+                "rule-threshold": 1.0
+            },
+            {
+                "rule-name": "Harmonic function similarity",
+                "rule-type": "more",
+                "rule-threshold": 0.8
             }
         ],
         [
             {
-                "rule-name": "Dynamic similarity",
+                "rule-name": "Rhythmic density",
                 "rule-type": "more",
-                "rule-threshold": 1.0
+                "rule-threshold": 0.1
             }
         ]
     ],

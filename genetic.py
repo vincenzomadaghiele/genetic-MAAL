@@ -6,8 +6,11 @@ import numpy as np
 from offlineALLclass import AutonomousLooperOffline
 from subprocess import Popen # process on multiple threads
 from collections import Counter
+import sys
+import argparse
 
 
+# utils
 def makeRandomRule(RULE_NAMES, XI_VALUES, THRESHOLD_VALUES):
 	rule = {}
 	rule["rule-name"] = RULE_NAMES[np.random.randint(0, high=len(RULE_NAMES))]
@@ -29,7 +32,8 @@ def decisionLogToBinary(decisions_log):
 			binary_decisions.append(0)
 	return binary_decisions
 
-def FitnessFunction(binary_log_1, binary_log_2):
+
+def FitnessFunction(binary_decisions, objective_binary_log):
 	# compute fitness function
 	score = np.array(binary_decisions) + np.array(objective_binary_log)
 	unique, counts = np.unique(score, return_counts=True)
@@ -37,9 +41,72 @@ def FitnessFunction(binary_log_1, binary_log_2):
 	return counter[2]
 
 
+# mutation function
+def MutationAddRandomRule(rules):
+	# add a random rule to a random loop track
+	idx_rule_to_change = np.random.randint(0, high=len(rules))
+	if len(rules[idx_rule_to_change]) < N_MAX_RULES:
+		rules[idx_rule_to_change].append(makeRandomRule(RULE_NAMES, XI_VALUES, THRESHOLD_VALUES))
+	return rules
+
+def MutationRemoveRandomRule(rules):
+	# remove a random rule from a random loop track
+	idx_rule_to_change = np.random.randint(0, high=len(rules))
+	if len(rules[idx_rule_to_change]) > N_MIN_RULES:
+		idx_rule_to_change = np.random.randint(0, high=len(rules[idx_rule_to_change]))
+		rules.remove(rules[idx_rule_to_change])
+	return rules
+
+def MutationSubstituteRandomRule(rules):
+	# substitute a rule with another random rule
+	idx_rule_to_change = np.random.randint(0, high=len(rules))
+	idx_rule_component_to_change = np.random.randint(0, high=len(rules[idx_rule_to_change]))
+	rules[idx_rule_to_change][idx_rule_component_to_change] = makeRandomRule(RULE_NAMES, XI_VALUES, THRESHOLD_VALUES)
+	return rules
+
+def MutationIncreaseThreshold(rules):
+	# increase the value of a threshold of a random rule element
+	idx_rule_to_change = np.random.randint(0, high=len(rules))
+	idx_rule_component_to_change = np.random.randint(0, high=len(rules[idx_rule_to_change]))
+	if rules[idx_rule_to_change][idx_rule_component_to_change]["rule-threshold"] > 0 and rules[idx_rule_to_change][idx_rule_component_to_change]["rule-threshold"] < 1:
+		rules[idx_rule_to_change][idx_rule_component_to_change]["rule-threshold"] += 0.1
+	return rules
+
+def MutationDecreaseThreshold(rules):
+	# increase the value of a threshold of a random rule element
+	idx_rule_to_change = np.random.randint(0, high=len(rules))
+	idx_rule_component_to_change = np.random.randint(0, high=len(rules[idx_rule_to_change]))
+	if rules[idx_rule_to_change][idx_rule_component_to_change]["rule-threshold"] > 0 and rules[idx_rule_to_change][idx_rule_component_to_change]["rule-threshold"] < 1:
+		rules[idx_rule_to_change][idx_rule_component_to_change]["rule-threshold"] -= 0.1
+	return rules
+
+def RandomMutate(rules, n_mutations=1):
+	new_rules = rules.copy()
+	for _ in range(n_mutations):
+		mutation_type = np.random.randint(0, high=N_MUTATION_TYPES)
+		if mutation_type == 0:
+			new_rules = MutationAddRandomRule(rules)
+		elif mutation_type == 1:
+			new_rules = MutationRemoveRandomRule(rules)
+		elif mutation_type == 2:
+			new_rules = MutationSubstituteRandomRule(rules)
+		elif mutation_type == 3:
+			new_rules = MutationIncreaseThreshold(rules)
+		elif mutation_type == 4:
+			new_rules = MutationDecreaseThreshold(rules)
+	return new_rules
+
+
 
 if __name__ == '__main__': 
 
+	# parse arguments
+	parser = argparse.ArgumentParser()
+	parser.add_argument('--ITERATIONS', type=int, default=2,
+						help='name of the folder containing the soundfile')
+
+	## DEFINE SCRIPT PARAMETERS
+	iterations = args.ITERATIONS
 
 
 	# INITIALIZE BASIC CONFIG FILE
@@ -50,7 +117,7 @@ if __name__ == '__main__':
 	# open basic JSON config file
 	with open(starting_config_filepath, 'r') as file:
 	    basic_config_file = json.load(file)
-	print(basic_config_file)
+	#print(basic_config_file)
 	rules = basic_config_file['looping-rules']
 	N_RULES = 0
 	for rule in rules:
@@ -83,8 +150,29 @@ if __name__ == '__main__':
 
 
 
-	# INITIALIZE CONFIG FILES
-	N_POPULATION = 10
+	# GENERAL INITS
+	config_files_path = './genetic_algorithm/config_files'
+	best_configs_path = './genetic_algorithm/best_configs'
+	looper_outputs_path = './genetic_algorithm/looper_outputs'
+	for f in os.listdir(config_files_path):
+		os.remove(os.path.join(config_files_path, f))
+	for f in os.listdir(best_configs_path):
+		os.remove(os.path.join(best_configs_path, f))
+	shutil.rmtree(looper_outputs_path)
+	os.mkdir(looper_outputs_path)
+
+	NUM_BEST = 5
+	MULT_FACTOR = 2
+	N_POPULATION = NUM_BEST * (MULT_FACTOR + 1)
+	#THREADS = 6 # for multi-thread computing
+	THREADS = N_POPULATION # for multi-thread computing
+	N_MAX_RULES = 5 # for computation of mutations
+	N_MIN_RULES = 1 # for computation of mutations
+	N_MUTATION_TYPES = 5 # for computation of mutations
+
+
+	print(f'Generating population of {N_POPULATION} random config files...')
+	# INITIALIZE RANDOM CONFIG FILES
 	for i in range(N_POPULATION):
 
 		# MAKE BASIC CONFIG FILE WITH RANDOM RULES
@@ -92,10 +180,8 @@ if __name__ == '__main__':
 		rule = makeRandomRule(RULE_NAMES, XI_VALUES, THRESHOLD_VALUES)
 		new_rules.append([makeRandomRule(RULE_NAMES, XI_VALUES, THRESHOLD_VALUES)])
 		new_rules.append([makeRandomRule(RULE_NAMES, XI_VALUES, THRESHOLD_VALUES)])
-		print(rule)
 
 		# generate config files for all rule combinations
-		config_files_path = './genetic_algorithm/config_files'
 		config_file_blank = basic_config_file.copy()
 		config_file_blank['looping-rules'] = new_rules
 		with open(f'{config_files_path}/config_{i}.json', 'w', encoding='utf-8') as f:
@@ -103,88 +189,117 @@ if __name__ == '__main__':
 
 
 
-	# GENERATE RESULTS
-	# generate commands to run looper for each config file
-	config_files_list = os.listdir(config_files_path) 
-	command_strings = []
-	for config_file in config_files_list:
-		config_filepath = f'{config_files_path}/{config_file}'
-		output_dir_path = f'./genetic_algorithm/looper_outputs/{config_file.split(".")[0]}'
-		if os.path.isdir(output_dir_path):
-			shutil.rmtree(output_dir_path)
-		os.mkdir(output_dir_path)
+	# RUN GENETIC ALGORITHM
+	#N_ITERATIONS = 2
+	N_ITERATIONS = iterations
+	for k in range(N_ITERATIONS):
 
-		command = f'python3 offlineALL.py --SOUNDFILE_FILEPATH {soundfile_filepath} --CONFIG_FILEPAHT {config_filepath} --OUTPUT_DIR_PATH {output_dir_path}'
-		command_strings.append(command)
+		print(f'Genetic algorithm iteration {k}')
+		print('-'*50)
 
-	# GENERATE LOOPER RESULTS WITH MULTI THREADS
-	THREADS = 6
-	subdiv = THREADS # num threads
-	for i in range(int(len(command_strings) / subdiv)):
-		processes = [Popen(command_strings[i*subdiv + j], shell=True) for j in range(subdiv)]
-		# collect statuses
-		exitcodes = [p.wait() for p in processes]
+		# GENERATE ALL RESULTS FROM CONFIG FILE
+		shutil.rmtree(looper_outputs_path) # remove old files
+		os.mkdir(looper_outputs_path) 
+		config_files_list = os.listdir(config_files_path) 
+		command_strings = []
+		# generate commands to run looper for each config file
+		for config_file in config_files_list:
+			config_filepath = f'{config_files_path}/{config_file}'
+			output_dir_path = f'{looper_outputs_path}/{config_file.split(".")[0]}'
+			if os.path.isdir(output_dir_path):
+				shutil.rmtree(output_dir_path)
+			os.mkdir(output_dir_path)
 
-	# remainder single-exectution
-	remaining_indices = len(command_strings) - (i*subdiv+(subdiv-1))
-	if remaining_indices > 0:
-		for j in range(remaining_indices):
-			command = command_strings[(i*subdiv+(subdiv-1)) + j]
-			os.system(command)
+			command = f'python3 offlineALL.py --SOUNDFILE_FILEPATH {soundfile_filepath} --CONFIG_FILEPAHT {config_filepath} --OUTPUT_DIR_PATH {output_dir_path} --VERBOSE 0 --IGNORE_WARNINGS True'
+			command_strings.append(command)
 
+		# GENERATE LOOPER RESULTS WITH MULTI THREADS
+		subdiv = THREADS # num threads
+		for i in range(int(len(command_strings) / subdiv)):
+			for j in range(subdiv):
+				print(f'Computing ALL with config file {i*subdiv + j}...')
+			processes = [Popen(command_strings[i*subdiv + j], shell=True) for j in range(subdiv)]
+			# collect statuses
+			exitcodes = [p.wait() for p in processes]
 
-
-	# EVALUATE FITNESS FUNCTION
-	# open JSON logfile to use for objective
-	path_to_objective_log = './genetic_algorithm/corpus/decisions_log.json'
-	with open(path_to_objective_log, 'r') as file:
-	    objective_log = json.load(file)
-	objective_binary_log = decisionLogToBinary(objective_log)
-
-	# open JSON logfiles of generated for search
-	looper_outputs_dir = './genetic_algorithm/looper_outputs'
-	looper_outputs_paths = os.listdir(looper_outputs_dir) 
-	looper_outputs_paths = [path for path in looper_outputs_paths if path != '.DS_Store']
-	scores = {}
-	for path in looper_outputs_paths:
-		# open logifle JSON
-		logifle_path = f'{looper_outputs_dir}/{path}/USE_CASE_1/decisions_log.json'
-		with open(logifle_path, 'r') as file:
-		    decisions_log = json.load(file)
-		# transform logfile to binary
-		binary_decisions = decisionLogToBinary(decisions_log)
-		# compute fitness function as comparison
-		scores[path] = FitnessFunction(binary_decisions, objective_binary_log)
+		# remainder single-exectution
+		remaining_indices = len(command_strings) - (i*subdiv+(subdiv-1))
+		if remaining_indices > 0:
+			for j in range(remaining_indices):
+				print(f'Computing ALL with config file {(i*subdiv+(subdiv-1)) + j}...')
+				command = command_strings[(i*subdiv+(subdiv-1)) + j]
+				os.system(command)
 
 
 
-	# SELECT FITTEST
-	# Find highest fitness values
-	NUM_BEST = 5
-	k = Counter(scores)
-	high = k.most_common(NUM_BEST) 
-	print(f"Configurations with {NUM_BEST} highest scores:")
-	for i in high:
-		print(f'{i[0]}: {i[1]}')
 
-		# save highest in best_configs folder
-		best_config_path = f'{looper_outputs_dir}/{i[0]}/USE_CASE_1/config.json'
-		with open(best_config_path, 'r') as file:
-			best_config = json.load(file)
-		with open(f'./genetic_algorithm/best_configs/{i[0]}.json', 'w', encoding='utf-8') as f:
-			json.dump(best_config, f, ensure_ascii=False, indent=4)
+		# EVALUATE FITNESS FUNCTION
+		# open JSON logfile to use for objective
+		print('Evaluating fitness function...')
+		path_to_objective_log = './genetic_algorithm/corpus/decisions_log.json'
+		with open(path_to_objective_log, 'r') as file:
+		    objective_log = json.load(file)
+		objective_binary_log = decisionLogToBinary(objective_log)
+
+		# open JSON logfiles of generated for search
+		for f in os.listdir(best_configs_path):
+			os.remove(os.path.join(best_configs_path, f)) # remove previous best configs
+		looper_outputs_paths = os.listdir(looper_outputs_path)
+		looper_outputs_paths = [path for path in looper_outputs_paths if path != '.DS_Store']
+		scores = {}
+		for path in looper_outputs_paths:
+			# open logifle JSON
+			logifle_path = f'{looper_outputs_path}/{path}/USE_CASE_1/decisions_log.json'
+			with open(logifle_path, 'r') as file:
+			    decisions_log = json.load(file)
+			# transform logfile to binary
+			binary_decisions = decisionLogToBinary(decisions_log)
+			# compute fitness function as comparison
+			scores[path] = FitnessFunction(binary_decisions, objective_binary_log)
 
 
 
-	# COMPUTE MUTATIONS
-	
+		# SELECT FITTEST
+		# Find highest fitness values
+		k = Counter(scores)
+		high = k.most_common(NUM_BEST)
+		print(f"Configurations with {NUM_BEST} highest scores:")
+		for i in high:
+			print(f'{i[0]}: {i[1]}')
+
+			# save highest in best_configs folder
+			best_config_path = f'{looper_outputs_path}/{i[0]}/USE_CASE_1/config.json'
+			with open(best_config_path, 'r') as file:
+				best_config = json.load(file)
+			with open(f'{best_configs_path}/{i[0]}.json', 'w', encoding='utf-8') as f:
+				json.dump(best_config, f, ensure_ascii=False, indent=4)
 
 
+		print('Computing mutations...')
+		print()
+		print()
+		# COMPUTE MUTATIONS
+		for f in os.listdir(config_files_path):
+			os.remove(os.path.join(config_files_path, f)) # remove old config files
+		best_configs_paths = os.listdir(best_configs_path) 
+		i = 0
+		for config_filepath in best_configs_paths:
+			# open best JSON config file
+			with open(f'{best_configs_path}/{config_filepath}', 'r') as file:
+			    config_file = json.load(file)
+			# keep the best ones in the population
+			with open(f'{config_files_path}/config_{i}.json', 'w', encoding='utf-8') as f:
+				json.dump(config_file, f, ensure_ascii=False, indent=4)
+			i += 1
 
-	# mutations: add a new random rule, change threshold (higher or lower), change less to more (does it make sense?)
-	# probability of mutations
-
-
+			# generate random mutations
+			for _ in range(MULT_FACTOR):
+				rules = config_file["looping-rules"]
+				new_rules = RandomMutate(rules)
+				config_file["looping-rules"] = new_rules
+				with open(f'{config_files_path}/config_{i}.json', 'w', encoding='utf-8') as f:
+					json.dump(config_file, f, ensure_ascii=False, indent=4)
+				i += 1
 
 
 
