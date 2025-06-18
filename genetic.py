@@ -107,11 +107,14 @@ if __name__ == '__main__':
 	# parse arguments
 	parser = argparse.ArgumentParser()
 	parser.add_argument('--ITERATIONS', type=int, default=2,
-						help='name of the folder containing the soundfile')
+						help='number of iterations')
+	parser.add_argument('--THREADS', type=int, default=6,
+						help='number of threads for parallel computation')
 	args = parser.parse_args(sys.argv[1:])
 
 	## DEFINE SCRIPT PARAMETERS
 	iterations = args.ITERATIONS
+	threads = args.THREADS
 
 
 	# INITIALIZE BASIC CONFIG FILE
@@ -166,11 +169,13 @@ if __name__ == '__main__':
 	shutil.rmtree(looper_outputs_path)
 	os.mkdir(looper_outputs_path)
 
-	NUM_BEST = 5
-	MULT_FACTOR = 2
-	N_POPULATION = NUM_BEST * (MULT_FACTOR + 1)
+	NUM_BEST = 5 # number of best configs to keep
+	MULT_FACTOR = 2 # number of mutated copies for each of best configurations
+	NUM_RANDOM = 3 # number of new random elements at each generation
+	N_POPULATION = NUM_BEST * (MULT_FACTOR + 1) + NUM_RANDOM
+
 	#THREADS = 6 # for multi-thread computing
-	THREADS = N_POPULATION # for multi-thread computing
+	THREADS = threads # for multi-thread computing
 	N_MAX_RULES = 5 # for computation of mutations
 	N_MIN_RULES = 1 # for computation of mutations
 	N_MUTATION_TYPES = 5 # for computation of mutations
@@ -287,7 +292,7 @@ if __name__ == '__main__':
 		for f in os.listdir(config_files_path):
 			os.remove(os.path.join(config_files_path, f)) # remove old config files
 		best_configs_paths = os.listdir(best_configs_path) 
-		i = 0
+		i = 0 # count config files
 		for config_filepath in best_configs_paths:
 			# open best JSON config file
 			with open(f'{best_configs_path}/{config_filepath}', 'r') as file:
@@ -305,6 +310,20 @@ if __name__ == '__main__':
 				with open(f'{config_files_path}/config_{i}.json', 'w', encoding='utf-8') as f:
 					json.dump(config_file, f, ensure_ascii=False, indent=4)
 				i += 1
+
+		for _ in range(NUM_RANDOM):
+			# MAKE BASIC CONFIG FILE WITH RANDOM RULES
+			new_rules = []
+			rule = makeRandomRule(RULE_NAMES, XI_VALUES, THRESHOLD_VALUES)
+			new_rules.append([makeRandomRule(RULE_NAMES, XI_VALUES, THRESHOLD_VALUES)])
+			new_rules.append([makeRandomRule(RULE_NAMES, XI_VALUES, THRESHOLD_VALUES)])
+
+			# generate config files for all rule combinations
+			config_file_blank = basic_config_file.copy()
+			config_file_blank['looping-rules'] = new_rules
+			with open(f'{config_files_path}/config_{i}.json', 'w', encoding='utf-8') as f:
+				json.dump(config_file_blank, f, ensure_ascii=False, indent=4)
+			i += 1
 
 
 

@@ -6,16 +6,21 @@
     "looping-rules": [
         [
             {
-                "rule-name": "Rhythmic density",
-                "rule-type": "less",
-                "rule-threshold": 0.6000000000000001
+                "rule-name": "Melodic trajectory - C",
+                "rule-type": "more",
+                "rule-threshold": 0.2
             }
         ],
         [
             {
-                "rule-name": "Melodic trajectory - D",
-                "rule-type": "more",
-                "rule-threshold": 0.4
+                "rule-name": "Harmonic function transitions - C",
+                "rule-type": "less",
+                "rule-threshold": 0.8
+            },
+            {
+                "rule-name": "Timbral similarity",
+                "rule-type": "less",
+                "rule-threshold": 0.2
             }
         ]
     ],
