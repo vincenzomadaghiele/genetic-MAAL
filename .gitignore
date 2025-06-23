@@ -1,5 +1,8 @@
 exhaustive_search/looper_outputs/*/*/*.wav
 genetic_algorithm/looper_outputs/*/*/*.wav
+genetic_algorithm/looper_outputs/
+genetic_algorithm/config_files/
+genetic_algorithm/best_configs/
 *.png
 .DS_Store
 __pycache__/
