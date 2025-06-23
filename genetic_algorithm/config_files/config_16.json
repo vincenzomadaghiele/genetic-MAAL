@@ -6,16 +6,16 @@
     "looping-rules": [
         [
             {
-                "rule-name": "Timbral similarity",
-                "rule-type": "less",
-                "rule-threshold": 1.0
+                "rule-name": "Melodic similarity",
+                "rule-type": "more",
+                "rule-threshold": 0.4
             }
         ],
         [
             {
-                "rule-name": "Frequency range overlap",
-                "rule-type": "more",
-                "rule-threshold": 0.6000000000000001
+                "rule-name": "Harmonic similarity",
+                "rule-type": "less",
+                "rule-threshold": 1.0
             }
         ]
     ],

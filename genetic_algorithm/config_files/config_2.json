@@ -6,21 +6,16 @@
     "looping-rules": [
         [
             {
-                "rule-name": "Harmonic function transitions - C",
-                "rule-type": "less",
-                "rule-threshold": 0.9
+                "rule-name": "Dynamic changes - C",
+                "rule-type": "more",
+                "rule-threshold": 0.4
             }
         ],
         [
             {
-                "rule-name": "Dynamic similarity",
-                "rule-type": "more",
-                "rule-threshold": 0.7000000000000001
-            },
-            {
-                "rule-name": "Harmonic function similarity",
+                "rule-name": "Timbral evolution - D",
                 "rule-type": "less",
-                "rule-threshold": 0.6000000000000001
+                "rule-threshold": 1.0
             }
         ]
     ],

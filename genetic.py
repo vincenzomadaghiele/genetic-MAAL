@@ -3,12 +3,14 @@ import os
 import itertools
 import shutil
 import numpy as np
-from offlineALLclass import AutonomousLooperOffline
+
 from subprocess import Popen # process on multiple threads
 from collections import Counter
 import sys
 import argparse
 
+import fitness_functions as fit
+from offlineALLclass import AutonomousLooperOffline
 
 # utils
 def makeRandomRule(RULE_NAMES, XI_VALUES, THRESHOLD_VALUES):
@@ -17,6 +19,7 @@ def makeRandomRule(RULE_NAMES, XI_VALUES, THRESHOLD_VALUES):
 	rule["rule-type"] = XI_VALUES[np.random.randint(0, high=len(XI_VALUES))]
 	rule["rule-threshold"] = THRESHOLD_VALUES[np.random.randint(0, high=len(THRESHOLD_VALUES))]
 	return rule
+
 
 def decisionLogToBinary(decisions_log):
 	# convert to binary array
@@ -249,7 +252,7 @@ if __name__ == '__main__':
 		path_to_objective_log = './genetic_algorithm/corpus/decisions_log.json'
 		with open(path_to_objective_log, 'r') as file:
 		    objective_log = json.load(file)
-		objective_binary_log = decisionLogToBinary(objective_log)
+		#objective_binary_log = decisionLogToBinary(objective_log)
 
 		# open JSON logfiles of generated for search
 		for f in os.listdir(best_configs_path):
@@ -263,9 +266,9 @@ if __name__ == '__main__':
 			with open(logifle_path, 'r') as file:
 			    decisions_log = json.load(file)
 			# transform logfile to binary
-			binary_decisions = decisionLogToBinary(decisions_log)
+			#binary_decisions = decisionLogToBinary(decisions_log)
 			# compute fitness function as comparison
-			scores[path] = FitnessFunction(binary_decisions, objective_binary_log)
+			scores[path] = fit.wightedLoopNumberFitnessFunction(decisions_log, objective_log)
 
 
 

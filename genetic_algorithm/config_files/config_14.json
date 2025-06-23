@@ -6,16 +6,21 @@
     "looping-rules": [
         [
             {
-                "rule-name": "Harmonic function transitions - C",
+                "rule-name": "Global spectral overlap",
                 "rule-type": "less",
-                "rule-threshold": 1.0
+                "rule-threshold": 0.5
             }
         ],
         [
             {
-                "rule-name": "Dynamic similarity",
+                "rule-name": "Rhythmic density",
                 "rule-type": "more",
-                "rule-threshold": 0.9
+                "rule-threshold": 0.6000000000000001
+            },
+            {
+                "rule-name": "Timbral similarity",
+                "rule-type": "more",
+                "rule-threshold": 0.7000000000000001
             }
         ]
     ],
