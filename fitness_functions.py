@@ -51,7 +51,7 @@ def wightedBinaryFitnessFunction(comparable_log, objective_log, weight=0.5):
 				score += 1
 			else:
 				score += weight
-	objective_binary[objective_binary==0] = weight
+	objective_binary = np.where(objective_binary==0, weight, objective_binary)
 	max_score = objective_binary.sum()
 	return score / max_score
 
@@ -74,7 +74,7 @@ def wightedLoopNumberFitnessFunction(comparable_log, objective_log, weight=0.5):
 			else:
 				score += weight
 	objective_binary_count = np.array(decisionLogToBinary(objective_log))
-	objective_binary_count[objective_binary_count==0] = weight
+	objective_binary_count = np.where(objective_binary_count==0, weight, objective_binary_count)
 	max_score = objective_binary_count.sum()
 	return score / max_score
 

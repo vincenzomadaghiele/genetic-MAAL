@@ -6,14 +6,14 @@
     "looping-rules": [
         [
             {
-                "rule-name": "Global spectral overlap",
+                "rule-name": "Rhythmic density",
                 "rule-type": "less",
-                "rule-threshold": 0.5
+                "rule-threshold": 0.4
             }
         ],
         [
             {
-                "rule-name": "Rhythmic density",
+                "rule-name": "Dynamic similarity",
                 "rule-type": "more",
                 "rule-threshold": 0.6000000000000001
             }
