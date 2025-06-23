@@ -10,7 +10,10 @@ import sys
 import argparse
 
 import fitness_functions as fit
+import mutations2 as mut
 from offlineALLclass import AutonomousLooperOffline
+
+
 
 # utils
 def makeRandomRule(RULE_NAMES, XI_VALUES, THRESHOLD_VALUES):
@@ -19,34 +22,6 @@ def makeRandomRule(RULE_NAMES, XI_VALUES, THRESHOLD_VALUES):
 	rule["rule-type"] = XI_VALUES[np.random.randint(0, high=len(XI_VALUES))]
 	rule["rule-threshold"] = THRESHOLD_VALUES[np.random.randint(0, high=len(THRESHOLD_VALUES))]
 	return rule
-
-
-def decisionLogToBinary(decisions_log):
-	# convert to binary array
-	binary_decisions = []
-	for decision in decisions_log:
-		outcome = False
-		for d in decision['decisions']:
-			if d['decision_type'] == 'I' or d['decision_type'] == 'A':
-				outcome = True
-		if outcome:
-			binary_decisions.append(1)
-		else:
-			binary_decisions.append(0)
-	return binary_decisions
-
-
-def FitnessFunction(binary_decisions, objective_binary_log):
-	# compute fitness function
-	score = np.array(binary_decisions) + np.array(objective_binary_log)
-	unique, counts = np.unique(score, return_counts=True)
-	counter = dict(zip(unique, counts))
-	try:
-		fitness = counter[2]
-	except: 
-		fitness = 0
-	return fitness
-
 
 # mutation function
 def MutationAddRandomRule(rules):
@@ -87,6 +62,16 @@ def MutationDecreaseThreshold(rules):
 		rules[idx_rule_to_change][idx_rule_component_to_change]["rule-threshold"] -= 0.1
 	return rules
 
+def MutationReverseXi(rules):
+	# increase the value of a threshold of a random rule element
+	idx_rule_to_change = np.random.randint(0, high=len(rules))
+	idx_rule_component_to_change = np.random.randint(0, high=len(rules[idx_rule_to_change]))
+	if rules[idx_rule_to_change][idx_rule_component_to_change]["rule-type"] == "less":
+		rules[idx_rule_to_change][idx_rule_component_to_change]["rule-type"] = "more"
+	else:
+		rules[idx_rule_to_change][idx_rule_component_to_change]["rule-type"] = "less"
+	return rules
+
 def RandomMutate(rules, n_mutations=1):
 	new_rules = rules.copy()
 	for _ in range(n_mutations):
@@ -101,6 +86,8 @@ def RandomMutate(rules, n_mutations=1):
 			new_rules = MutationIncreaseThreshold(rules)
 		elif mutation_type == 4:
 			new_rules = MutationDecreaseThreshold(rules)
+		elif mutation_type == 5:
+			new_rules = MutationReverseXi(rules)
 	return new_rules
 
 
@@ -118,6 +105,20 @@ if __name__ == '__main__':
 	## DEFINE SCRIPT PARAMETERS
 	iterations = args.ITERATIONS
 	threads = args.THREADS
+
+
+	## HYPERPARAMETERS
+	NUM_BEST = 2 # number of best configs to keep
+	MULT_FACTOR = 4 # number of mutated copies for each of best configurations
+	NUM_RANDOM = 5 # number of new random elements at each generation
+	N_POPULATION = NUM_BEST * (MULT_FACTOR + 1) + NUM_RANDOM
+
+	#THREADS = 6 # for multi-thread computing
+	THREADS = threads # for multi-thread computing
+	N_MAX_RULES = 5 # for computation of mutations
+	N_MIN_RULES = 1 # for computation of mutations
+	N_MUTATION_TYPES = 6 # for computation of mutations
+
 
 
 	# INITIALIZE BASIC CONFIG FILE
@@ -172,16 +173,6 @@ if __name__ == '__main__':
 	shutil.rmtree(looper_outputs_path)
 	os.mkdir(looper_outputs_path)
 
-	NUM_BEST = 5 # number of best configs to keep
-	MULT_FACTOR = 2 # number of mutated copies for each of best configurations
-	NUM_RANDOM = 3 # number of new random elements at each generation
-	N_POPULATION = NUM_BEST * (MULT_FACTOR + 1) + NUM_RANDOM
-
-	#THREADS = 6 # for multi-thread computing
-	THREADS = threads # for multi-thread computing
-	N_MAX_RULES = 5 # for computation of mutations
-	N_MIN_RULES = 1 # for computation of mutations
-	N_MUTATION_TYPES = 5 # for computation of mutations
 
 
 	print(f'Generating population of {N_POPULATION} random config files...')
@@ -268,7 +259,8 @@ if __name__ == '__main__':
 			# transform logfile to binary
 			#binary_decisions = decisionLogToBinary(decisions_log)
 			# compute fitness function as comparison
-			scores[path] = fit.wightedLoopNumberFitnessFunction(decisions_log, objective_log)
+			#scores[path] = fit.wightedLoopNumberFitnessFunction(decisions_log, objective_log)
+			scores[path] = fit.wightedBinaryFitnessFunction(decisions_log, objective_log, weigth=1)
 
 
 
@@ -295,23 +287,41 @@ if __name__ == '__main__':
 		for f in os.listdir(config_files_path):
 			os.remove(os.path.join(config_files_path, f)) # remove old config files
 		best_configs_paths = os.listdir(best_configs_path) 
-		i = 0 # count config files
+		i = 0 # count new config files
+		best_configs_list = []
 		for config_filepath in best_configs_paths:
 			# open best JSON config file
 			with open(f'{best_configs_path}/{config_filepath}', 'r') as file:
-			    config_file = json.load(file)
+				config_file = json.load(file)
 			# keep the best ones in the population
 			with open(f'{config_files_path}/config_{i}.json', 'w', encoding='utf-8') as f:
 				json.dump(config_file, f, ensure_ascii=False, indent=4)
 			i += 1
+			best_configs_list.append(config_file)
 
-			# generate random mutations
-			for _ in range(MULT_FACTOR):
-				rules = config_file["looping-rules"]
-				new_rules = RandomMutate(rules)
-				config_file["looping-rules"] = new_rules
+		# generate random mutations
+		for zz, config_file in enumerate(best_configs_list):
+			for _ in range(0,MULT_FACTOR,2):
+				# rules of this file
+				rules_1 = config_file["looping-rules"]
+
+				# extract random config file from best ones to cross-mutate with
+				other_idxs = list(range(len(best_configs_list)))
+				other_idxs.remove(zz) # remove self
+				config_2 = best_configs_list[zz]
+				rules_2 = config_2["looping-rules"]
+
+				new_rules_1, new_rules_2 = mut.crossCombine(rules_1, rules_2)
+
+				new_rules_1 = RandomMutate(new_rules_1)
+				new_rules_2 = RandomMutate(new_rules_2)
+				config_file["looping-rules"] = new_rules_1
+				config_2["looping-rules"] = new_rules_2
 				with open(f'{config_files_path}/config_{i}.json', 'w', encoding='utf-8') as f:
 					json.dump(config_file, f, ensure_ascii=False, indent=4)
+				i += 1
+				with open(f'{config_files_path}/config_{i}.json', 'w', encoding='utf-8') as f:
+					json.dump(config_2, f, ensure_ascii=False, indent=4)
 				i += 1
 
 		for _ in range(NUM_RANDOM):

@@ -6,16 +6,16 @@
     "looping-rules": [
         [
             {
-                "rule-name": "Harmonic movement - C",
+                "rule-name": "Rhythmic density",
                 "rule-type": "more",
-                "rule-threshold": 0.30000000000000004
+                "rule-threshold": 0.9
             }
         ],
         [
             {
-                "rule-name": "Dynamic changes - D",
+                "rule-name": "Rhythmic similarity",
                 "rule-type": "more",
-                "rule-threshold": 0.30000000000000004
+                "rule-threshold": 1.0
             }
         ]
     ],

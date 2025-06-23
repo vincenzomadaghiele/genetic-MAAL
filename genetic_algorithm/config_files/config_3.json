@@ -6,16 +6,16 @@
     "looping-rules": [
         [
             {
-                "rule-name": "Timbral evolution - D",
+                "rule-name": "Rhythmic density",
                 "rule-type": "more",
-                "rule-threshold": 1.0
+                "rule-threshold": 0.9
             }
         ],
         [
             {
-                "rule-name": "Global spectral overlap",
+                "rule-name": "Rhythmic similarity",
                 "rule-type": "more",
-                "rule-threshold": 0.5
+                "rule-threshold": 1.0
             }
         ]
     ],
