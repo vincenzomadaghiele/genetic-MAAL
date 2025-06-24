@@ -86,14 +86,21 @@ if __name__ == '__main__':
 	config_files_path = './genetic_algorithm/config_files'
 	best_configs_path = './genetic_algorithm/best_configs'
 	looper_outputs_path = './genetic_algorithm/looper_outputs'
-	for f in os.listdir(config_files_path):
-		os.remove(os.path.join(config_files_path, f))
-	for f in os.listdir(best_configs_path):
-		os.remove(os.path.join(best_configs_path, f))
-	shutil.rmtree(looper_outputs_path)
-	os.mkdir(looper_outputs_path)
-
-
+	if os.path.isdir(config_files_path):
+		shutil.rmtree(config_files_path)
+		os.mkdir(config_files_path)
+	else:
+		os.mkdir(config_files_path)
+	if os.path.isdir(best_configs_path):
+		shutil.rmtree(best_configs_path)
+		os.mkdir(best_configs_path)
+	else:
+		os.mkdir(best_configs_path)
+	if os.path.isdir(looper_outputs_path):
+		shutil.rmtree(looper_outputs_path)
+		os.mkdir(looper_outputs_path)
+	else:
+		os.mkdir(looper_outputs_path)
 
 	print(f'Generating population of {N_POPULATION} random config files...')
 	# INITIALIZE RANDOM CONFIG FILES
@@ -110,7 +117,6 @@ if __name__ == '__main__':
 		config_file_blank['looping-rules'] = new_rules
 		with open(f'{config_files_path}/config_{i}.json', 'w', encoding='utf-8') as f:
 			json.dump(config_file_blank, f, ensure_ascii=False, indent=4)
-
 
 
 	# RUN GENETIC ALGORITHM
@@ -141,6 +147,7 @@ if __name__ == '__main__':
 		threads = []
 		for command in command_strings:
 			threads.append(Thread(target=call_script, args=([command])))
+		#threads = [Thread(target=call_script, args=([command])) for command in command_strings]
 		# Start all threads
 		for w, t in enumerate(threads):
 			print(f'Computing ALL with config file {w}...')
@@ -148,6 +155,7 @@ if __name__ == '__main__':
 		# Wait for all threads to finish
 		for t in threads:
 			t.join()
+		#[t.join() for t in threads]
 
 
 		'''
