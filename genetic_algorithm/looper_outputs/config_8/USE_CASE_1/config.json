@@ -6,15 +6,15 @@
     "looping-rules": [
         [
             {
-                "rule-name": "Harmonic function transitions - D",
+                "rule-name": "Harmonic function transitions - C",
                 "rule-type": "less",
                 "rule-threshold": 0.6000000000000001
             }
         ],
         [
             {
-                "rule-name": "Rhythmic similarity",
-                "rule-type": "less",
+                "rule-name": "Melodic trajectory - D",
+                "rule-type": "more",
                 "rule-threshold": 0.0
             }
         ]

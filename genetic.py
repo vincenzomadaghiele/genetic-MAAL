@@ -6,6 +6,8 @@ import sys
 import argparse
 
 import numpy as np
+from threading import Thread
+import subprocess
 from subprocess import Popen # process on multiple threads
 from collections import Counter
 
@@ -14,6 +16,11 @@ import mutations as mut
 from constants import RULE_NAMES, XI_VALUES, THRESHOLD_VALUES
 from offlineALLclass import AutonomousLooperOffline
 
+
+def call_script(args):
+	#print(args.split(' '))
+	subprocess.call(args.split(' '))
+	#os.system(args)
 
 
 if __name__ == '__main__': 
@@ -129,7 +136,21 @@ if __name__ == '__main__':
 			command = f'python3 offlineALL.py --SOUNDFILE_FILEPATH {soundfile_filepath} --CONFIG_FILEPAHT {config_filepath} --OUTPUT_DIR_PATH {output_dir_path} --VERBOSE 0 --IGNORE_WARNINGS True'
 			command_strings.append(command)
 
+
 		# GENERATE LOOPER RESULTS WITH MULTI THREADS
+		threads = []
+		for command in command_strings:
+			threads.append(Thread(target=call_script, args=([command])))
+		# Start all threads
+		for w, t in enumerate(threads):
+			print(f'Computing ALL with config file {w}...')
+			t.start()
+		# Wait for all threads to finish
+		for t in threads:
+			t.join()
+
+
+		'''
 		subdiv = THREADS # num threads
 		for i in range(int(len(command_strings) / subdiv)):
 			for j in range(subdiv):
@@ -145,6 +166,7 @@ if __name__ == '__main__':
 				print(f'Computing ALL with config file {(i*subdiv+(subdiv-1)) + j}...')
 				command = command_strings[(i*subdiv+(subdiv-1)) + j]
 				os.system(command)
+		'''
 
 
 

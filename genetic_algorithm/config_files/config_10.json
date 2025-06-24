@@ -7,15 +7,15 @@
         [
             {
                 "rule-name": "Melodic trajectory - C",
-                "rule-type": "more",
-                "rule-threshold": 0.7000000000000001
+                "rule-type": "less",
+                "rule-threshold": 0.8
             }
         ],
         [
             {
-                "rule-name": "Dynamic similarity",
+                "rule-name": "Rhythmic density",
                 "rule-type": "less",
-                "rule-threshold": 0.1
+                "rule-threshold": 0.4
             }
         ]
     ],
