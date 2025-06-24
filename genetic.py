@@ -2,93 +2,17 @@ import json
 import os
 import itertools
 import shutil
-import numpy as np
-
-from subprocess import Popen # process on multiple threads
-from collections import Counter
 import sys
 import argparse
 
+import numpy as np
+from subprocess import Popen # process on multiple threads
+from collections import Counter
+
 import fitness_functions as fit
-import mutations2 as mut
+import mutations as mut
+from constants import RULE_NAMES, XI_VALUES, THRESHOLD_VALUES
 from offlineALLclass import AutonomousLooperOffline
-
-
-
-# utils
-def makeRandomRule(RULE_NAMES, XI_VALUES, THRESHOLD_VALUES):
-	rule = {}
-	rule["rule-name"] = RULE_NAMES[np.random.randint(0, high=len(RULE_NAMES))]
-	rule["rule-type"] = XI_VALUES[np.random.randint(0, high=len(XI_VALUES))]
-	rule["rule-threshold"] = THRESHOLD_VALUES[np.random.randint(0, high=len(THRESHOLD_VALUES))]
-	return rule
-
-# mutation function
-def MutationAddRandomRule(rules):
-	# add a random rule to a random loop track
-	idx_rule_to_change = np.random.randint(0, high=len(rules))
-	if len(rules[idx_rule_to_change]) < N_MAX_RULES:
-		rules[idx_rule_to_change].append(makeRandomRule(RULE_NAMES, XI_VALUES, THRESHOLD_VALUES))
-	return rules
-
-def MutationRemoveRandomRule(rules):
-	# remove a random rule from a random loop track
-	idx_rule_to_change = np.random.randint(0, high=len(rules))
-	idx_rule_component_to_change = np.random.randint(0, high=len(rules[idx_rule_to_change]))
-	if len(rules[idx_rule_to_change]) > N_MIN_RULES:
-		rules[idx_rule_to_change].remove(rules[idx_rule_to_change][idx_rule_component_to_change])
-	return rules
-
-def MutationSubstituteRandomRule(rules):
-	# substitute a rule with another random rule
-	idx_rule_to_change = np.random.randint(0, high=len(rules))
-	idx_rule_component_to_change = np.random.randint(0, high=len(rules[idx_rule_to_change]))
-	rules[idx_rule_to_change][idx_rule_component_to_change] = makeRandomRule(RULE_NAMES, XI_VALUES, THRESHOLD_VALUES)
-	return rules
-
-def MutationIncreaseThreshold(rules):
-	# increase the value of a threshold of a random rule element
-	idx_rule_to_change = np.random.randint(0, high=len(rules))
-	idx_rule_component_to_change = np.random.randint(0, high=len(rules[idx_rule_to_change]))
-	if rules[idx_rule_to_change][idx_rule_component_to_change]["rule-threshold"] > 0 and rules[idx_rule_to_change][idx_rule_component_to_change]["rule-threshold"] < 1:
-		rules[idx_rule_to_change][idx_rule_component_to_change]["rule-threshold"] += 0.1
-	return rules
-
-def MutationDecreaseThreshold(rules):
-	# increase the value of a threshold of a random rule element
-	idx_rule_to_change = np.random.randint(0, high=len(rules))
-	idx_rule_component_to_change = np.random.randint(0, high=len(rules[idx_rule_to_change]))
-	if rules[idx_rule_to_change][idx_rule_component_to_change]["rule-threshold"] > 0 and rules[idx_rule_to_change][idx_rule_component_to_change]["rule-threshold"] < 1:
-		rules[idx_rule_to_change][idx_rule_component_to_change]["rule-threshold"] -= 0.1
-	return rules
-
-def MutationReverseXi(rules):
-	# increase the value of a threshold of a random rule element
-	idx_rule_to_change = np.random.randint(0, high=len(rules))
-	idx_rule_component_to_change = np.random.randint(0, high=len(rules[idx_rule_to_change]))
-	if rules[idx_rule_to_change][idx_rule_component_to_change]["rule-type"] == "less":
-		rules[idx_rule_to_change][idx_rule_component_to_change]["rule-type"] = "more"
-	else:
-		rules[idx_rule_to_change][idx_rule_component_to_change]["rule-type"] = "less"
-	return rules
-
-def RandomMutate(rules, n_mutations=1):
-	new_rules = rules.copy()
-	for _ in range(n_mutations):
-		mutation_type = np.random.randint(0, high=N_MUTATION_TYPES)
-		if mutation_type == 0:
-			new_rules = MutationAddRandomRule(rules)
-		elif mutation_type == 1:
-			new_rules = MutationRemoveRandomRule(rules)
-		elif mutation_type == 2:
-			new_rules = MutationSubstituteRandomRule(rules)
-		elif mutation_type == 3:
-			new_rules = MutationIncreaseThreshold(rules)
-		elif mutation_type == 4:
-			new_rules = MutationDecreaseThreshold(rules)
-		elif mutation_type == 5:
-			new_rules = MutationReverseXi(rules)
-	return new_rules
 
 
 
@@ -100,25 +24,28 @@ if __name__ == '__main__':
 						help='number of iterations')
 	parser.add_argument('--THREADS', type=int, default=6,
 						help='number of threads for parallel computation')
+	parser.add_argument('--NUM_PARENTS', type=int, default=2,
+						help='number of parents selected at each iteration')
+	parser.add_argument('--NUM_OFFSPRING', type=int, default=4,
+						help='number of offspring generated at each iteration')
+	parser.add_argument('--NUM_RANDOM', type=int, default=4,
+						help='number of random offspring generated at each iteration')
 	args = parser.parse_args(sys.argv[1:])
 
+
 	## DEFINE SCRIPT PARAMETERS
-	iterations = args.ITERATIONS
-	threads = args.THREADS
+	N_ITERATIONS = args.ITERATIONS
 
-
-	## HYPERPARAMETERS
-	NUM_BEST = 2 # number of best configs to keep
-	MULT_FACTOR = 4 # number of mutated copies for each of best configurations
-	NUM_RANDOM = 5 # number of new random elements at each generation
+	NUM_BEST = args.NUM_PARENTS # number of best configs to keep
+	#NUM_BEST = 2 # number of best configs to keep
+	MULT_FACTOR = args.NUM_OFFSPRING # number of mutated copies for each of best configurations
+	#MULT_FACTOR = 4 # number of mutated copies for each of best configurations
+	NUM_RANDOM = args.NUM_RANDOM # number of new random elements at each generation
+	#NUM_RANDOM = 5 # number of new random elements at each generation
 	N_POPULATION = NUM_BEST * (MULT_FACTOR + 1) + NUM_RANDOM
 
 	#THREADS = 6 # for multi-thread computing
-	THREADS = threads # for multi-thread computing
-	N_MAX_RULES = 5 # for computation of mutations
-	N_MIN_RULES = 1 # for computation of mutations
-	N_MUTATION_TYPES = 6 # for computation of mutations
-
+	THREADS = args.THREADS # for multi-thread computing
 
 
 	# INITIALIZE BASIC CONFIG FILE
@@ -140,26 +67,12 @@ if __name__ == '__main__':
 
 	# INITIALIZE POSSIBLE SYSTEM SETTINGS
 	print()
-	RULE_NAMES = [
-					"Harmonic similarity", "Harmonic movement - C", "Harmonic movement - D",
-					"Melodic similarity", "Melodic trajectory - C", "Melodic trajectory - D",
-					"Dynamic similarity", "Dynamic changes - C", "Dynamic changes - D",
-					"Timbral similarity", "Timbral evolution - C", "Timbral evolution - D",
-					"Global spectral overlap", "Frequency range overlap",
-					"Rhythmic similarity", "Rhythmic density",
-					"Harmonic function similarity", "Harmonic function transitions - C", "Harmonic function transitions - D"
-					]
-	XI_VALUES = ["more", "less"]
-	step = 0.1
-	THRESHOLD_VALUES = np.arange(0.0, 1.0+step, step).tolist()
-
 	print("Rule names:")
 	print(RULE_NAMES)
 	print("Xi values:")
 	print(XI_VALUES)
 	print("Threshold values:")
 	print(THRESHOLD_VALUES)
-
 
 
 	# GENERAL INITS
@@ -181,9 +94,9 @@ if __name__ == '__main__':
 
 		# MAKE BASIC CONFIG FILE WITH RANDOM RULES
 		new_rules = []
-		rule = makeRandomRule(RULE_NAMES, XI_VALUES, THRESHOLD_VALUES)
-		new_rules.append([makeRandomRule(RULE_NAMES, XI_VALUES, THRESHOLD_VALUES)])
-		new_rules.append([makeRandomRule(RULE_NAMES, XI_VALUES, THRESHOLD_VALUES)])
+		rule = mut.makeRandomRule(RULE_NAMES, XI_VALUES, THRESHOLD_VALUES)
+		new_rules.append([mut.makeRandomRule(RULE_NAMES, XI_VALUES, THRESHOLD_VALUES)])
+		new_rules.append([mut.makeRandomRule(RULE_NAMES, XI_VALUES, THRESHOLD_VALUES)])
 
 		# generate config files for all rule combinations
 		config_file_blank = basic_config_file.copy()
@@ -195,7 +108,6 @@ if __name__ == '__main__':
 
 	# RUN GENETIC ALGORITHM
 	#N_ITERATIONS = 2
-	N_ITERATIONS = iterations
 	for k in range(N_ITERATIONS):
 
 		print(f'Genetic algorithm iteration {k}')
@@ -260,7 +172,7 @@ if __name__ == '__main__':
 			#binary_decisions = decisionLogToBinary(decisions_log)
 			# compute fitness function as comparison
 			#scores[path] = fit.wightedLoopNumberFitnessFunction(decisions_log, objective_log)
-			scores[path] = fit.wightedBinaryFitnessFunction(decisions_log, objective_log, weigth=1)
+			scores[path] = fit.wightedBinaryFitnessFunction(decisions_log, objective_log, weight=1)
 
 
 
@@ -268,6 +180,7 @@ if __name__ == '__main__':
 		# Find highest fitness values
 		k = Counter(scores)
 		high = k.most_common(NUM_BEST)
+		print()
 		print(f"Configurations with {NUM_BEST} highest scores:")
 		for i in high:
 			print(f'{i[0]}: {i[1]}')
@@ -313,8 +226,8 @@ if __name__ == '__main__':
 
 				new_rules_1, new_rules_2 = mut.crossCombine(rules_1, rules_2)
 
-				new_rules_1 = RandomMutate(new_rules_1)
-				new_rules_2 = RandomMutate(new_rules_2)
+				new_rules_1 = mut.RandomMutate(new_rules_1)
+				new_rules_2 = mut.RandomMutate(new_rules_2)
 				config_file["looping-rules"] = new_rules_1
 				config_2["looping-rules"] = new_rules_2
 				with open(f'{config_files_path}/config_{i}.json', 'w', encoding='utf-8') as f:
@@ -327,9 +240,9 @@ if __name__ == '__main__':
 		for _ in range(NUM_RANDOM):
 			# MAKE BASIC CONFIG FILE WITH RANDOM RULES
 			new_rules = []
-			rule = makeRandomRule(RULE_NAMES, XI_VALUES, THRESHOLD_VALUES)
-			new_rules.append([makeRandomRule(RULE_NAMES, XI_VALUES, THRESHOLD_VALUES)])
-			new_rules.append([makeRandomRule(RULE_NAMES, XI_VALUES, THRESHOLD_VALUES)])
+			rule = mut.makeRandomRule(RULE_NAMES, XI_VALUES, THRESHOLD_VALUES)
+			new_rules.append([mut.makeRandomRule(RULE_NAMES, XI_VALUES, THRESHOLD_VALUES)])
+			new_rules.append([mut.makeRandomRule(RULE_NAMES, XI_VALUES, THRESHOLD_VALUES)])
 
 			# generate config files for all rule combinations
 			config_file_blank = basic_config_file.copy()

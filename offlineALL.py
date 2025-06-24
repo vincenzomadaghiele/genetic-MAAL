@@ -1,6 +1,7 @@
 import sys
 import argparse
 import warnings
+import time
 from offlineALLclass import AutonomousLooperOffline
 
 
@@ -30,6 +31,8 @@ if __name__ == '__main__':
 	if ignorewarnings: 
 		warnings.filterwarnings("ignore")
 
+
+	start_time = time.time()
 	looper = AutonomousLooperOffline(
 									soundfile_filepath, 
 									config_filepath=config_filepath, 
@@ -37,3 +40,6 @@ if __name__ == '__main__':
 									verbose=verbose
 									)
 	looper.computeLooperTrack(output_dir_path)
+
+	stop_time = time.time()
+	print(f'Time elapsed: {stop_time-start_time:.3f} s')

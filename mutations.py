@@ -1,8 +1,22 @@
 import json
-import os
 import numpy as np
 
+from constants import RULE_NAMES, XI_VALUES, THRESHOLD_VALUES, N_MAX_RULES, N_MIN_RULES
 
+
+def crossCombine(rules_1, rules_2):
+
+	idx_rule_exchange_1 = np.random.randint(0, high=len(rules_1))
+	idx_rule_exchange_2 = np.random.randint(0, high=len(rules_2))
+	rule_exchange_1 = rules_1[idx_rule_exchange_1] 
+	rule_exchange_2 = rules_2[idx_rule_exchange_2] 
+
+	rules_1[idx_rule_exchange_1] = rule_exchange_2
+	rules_2[idx_rule_exchange_2] = rule_exchange_1
+
+	return rules_1, rules_2
+
+# utils
 def makeRandomRule(RULE_NAMES, XI_VALUES, THRESHOLD_VALUES):
 	rule = {}
 	rule["rule-name"] = RULE_NAMES[np.random.randint(0, high=len(RULE_NAMES))]
@@ -10,6 +24,7 @@ def makeRandomRule(RULE_NAMES, XI_VALUES, THRESHOLD_VALUES):
 	rule["rule-threshold"] = THRESHOLD_VALUES[np.random.randint(0, high=len(THRESHOLD_VALUES))]
 	return rule
 
+# mutation function
 def MutationAddRandomRule(rules):
 	# add a random rule to a random loop track
 	idx_rule_to_change = np.random.randint(0, high=len(rules))
@@ -20,9 +35,9 @@ def MutationAddRandomRule(rules):
 def MutationRemoveRandomRule(rules):
 	# remove a random rule from a random loop track
 	idx_rule_to_change = np.random.randint(0, high=len(rules))
+	idx_rule_component_to_change = np.random.randint(0, high=len(rules[idx_rule_to_change]))
 	if len(rules[idx_rule_to_change]) > N_MIN_RULES:
-		idx_rule_to_change = np.random.randint(0, high=len(rules[idx_rule_to_change]))
-		rules.remove(rules[idx_rule_to_change])
+		rules[idx_rule_to_change].remove(rules[idx_rule_to_change][idx_rule_component_to_change])
 	return rules
 
 def MutationSubstituteRandomRule(rules):
@@ -48,79 +63,65 @@ def MutationDecreaseThreshold(rules):
 		rules[idx_rule_to_change][idx_rule_component_to_change]["rule-threshold"] -= 0.1
 	return rules
 
+def MutationReverseXi(rules):
+	# increase the value of a threshold of a random rule element
+	idx_rule_to_change = np.random.randint(0, high=len(rules))
+	idx_rule_component_to_change = np.random.randint(0, high=len(rules[idx_rule_to_change]))
+	if rules[idx_rule_to_change][idx_rule_component_to_change]["rule-type"] == "less":
+		rules[idx_rule_to_change][idx_rule_component_to_change]["rule-type"] = "more"
+	else:
+		rules[idx_rule_to_change][idx_rule_component_to_change]["rule-type"] = "less"
+	return rules
+
 def RandomMutate(rules, n_mutations=1):
 	new_rules = rules.copy()
 	for _ in range(n_mutations):
 		mutation_type = np.random.randint(0, high=N_MUTATION_TYPES)
 		if mutation_type == 0:
 			new_rules = MutationAddRandomRule(rules)
-			print(new_rules)
 		elif mutation_type == 1:
 			new_rules = MutationRemoveRandomRule(rules)
-			print(new_rules)
 		elif mutation_type == 2:
 			new_rules = MutationSubstituteRandomRule(rules)
-			print(new_rules)
 		elif mutation_type == 3:
 			new_rules = MutationIncreaseThreshold(rules)
-			print(new_rules)
 		elif mutation_type == 4:
 			new_rules = MutationDecreaseThreshold(rules)
-			print(new_rules)
+		elif mutation_type == 5:
+			new_rules = MutationReverseXi(rules)
 	return new_rules
 
+
+N_MUTATION_TYPES = 6 # for computation of mutations
 
 
 if __name__ == '__main__': 
 
+	# load comparable log
+	logifle_path = f'genetic_algorithm/best_configs/config_0.json'
+	with open(logifle_path, 'r') as file:
+		generated_config = json.load(file)
+	# load comparable log
+	logifle_path = f'genetic_algorithm/corpus/objective_config.json'
+	with open(logifle_path, 'r') as file:
+		objective_config = json.load(file)	
 
+	print(generated_config["looping-rules"])
+	print(objective_config["looping-rules"])
 
-	# INITIALIZE POSSIBLE SYSTEM SETTINGS
+	rules_1 = generated_config["looping-rules"]
+	rules_2 = objective_config["looping-rules"]
+
+	idx_rule_exchange_1 = np.random.randint(0, high=len(rules_1))
+	idx_rule_exchange_2 = np.random.randint(0, high=len(rules_2))
+	rule_exchange_1 = rules_1[idx_rule_exchange_1] 
+	rule_exchange_2 = rules_2[idx_rule_exchange_2] 
+
+	rules_1[idx_rule_exchange_1] = rule_exchange_2
+	rules_2[idx_rule_exchange_2] = rule_exchange_1
+
 	print()
-	RULE_NAMES = [
-					"Harmonic similarity", "Harmonic movement - C", "Harmonic movement - D",
-					"Melodic similarity", "Melodic trajectory - C", "Melodic trajectory - D",
-					"Dynamic similarity", "Dynamic changes - C", "Dynamic changes - D",
-					"Timbral similarity", "Timbral evolution - C", "Timbral evolution - D",
-					"Global spectral overlap", "Frequency range overlap",
-					"Rhythmic similarity", "Rhythmic density",
-					"Harmonic function similarity", "Harmonic function transitions - C", "Harmonic function transitions - D"
-					]
-	XI_VALUES = ["more", "less"]
-	step = 0.1
-	THRESHOLD_VALUES = np.arange(0.0, 1.0+step, step).tolist()
-
-	print("Rule names:")
-	print(RULE_NAMES)
-	print("Xi values:")
-	print(XI_VALUES)
-	print("Threshold values:")
-	print(THRESHOLD_VALUES)
-
-
-	# INITIALIZE BASIC CONFIG FILE
-	configs_filepath = './genetic_algorithm/best_configs/'
-	best_configs_paths = os.listdir(configs_filepath) 
-	print(best_configs_paths)
-
-	for config_filepath in best_configs_paths:
-		# open basic JSON config file
-		with open(f'{configs_filepath}/{config_filepath}', 'r') as file:
-		    config_file = json.load(file)
-		#print(config_file)
-
-	rules = config_file["looping-rules"]
-	print(rules)
-
-	N_MAX_RULES = 5
-	N_MIN_RULES = 1
-	N_MUTATION_TYPES = 4
-
-
-	new_rules = RandomMutate(rules)
-	print(new_rules)
-
-
-
+	print(rules_1)
+	print(rules_2)
 
 

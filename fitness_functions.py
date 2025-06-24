@@ -2,7 +2,6 @@ import json
 import numpy as np
 
 
-
 # process decisions log
 def decisionLogToBinary(decisions_log):
 	# convert to binary array

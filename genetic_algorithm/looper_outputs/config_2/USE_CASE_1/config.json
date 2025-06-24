@@ -6,16 +6,16 @@
     "looping-rules": [
         [
             {
-                "rule-name": "Rhythmic density",
+                "rule-name": "Melodic trajectory - D",
                 "rule-type": "more",
-                "rule-threshold": 0.9
+                "rule-threshold": 0.2
             }
         ],
         [
             {
-                "rule-name": "Rhythmic similarity",
-                "rule-type": "more",
-                "rule-threshold": 1.0
+                "rule-name": "Melodic trajectory - D",
+                "rule-type": "less",
+                "rule-threshold": 0.2
             }
         ]
     ],

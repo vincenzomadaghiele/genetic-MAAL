@@ -6,16 +6,16 @@
     "looping-rules": [
         [
             {
-                "rule-name": "Frequency range overlap",
+                "rule-name": "Melodic trajectory - D",
                 "rule-type": "less",
-                "rule-threshold": 0.9
+                "rule-threshold": 0.6000000000000001
             }
         ],
         [
             {
-                "rule-name": "Harmonic movement - D",
-                "rule-type": "less",
-                "rule-threshold": 0.9
+                "rule-name": "Rhythmic similarity",
+                "rule-type": "more",
+                "rule-threshold": 0.7000000000000001
             }
         ]
     ],
