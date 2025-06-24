@@ -18,9 +18,7 @@ from offlineALLclass import AutonomousLooperOffline
 
 
 def call_script(args):
-	#print(args.split(' '))
 	subprocess.call(args.split(' '))
-	#os.system(args)
 
 
 if __name__ == '__main__': 
@@ -36,6 +34,8 @@ if __name__ == '__main__':
 	parser.add_argument('--NUM_OFFSPRING', type=int, default=4,
 						help='number of offspring generated at each iteration')
 	parser.add_argument('--NUM_RANDOM', type=int, default=4,
+						help='number of random offspring generated at each iteration')
+	parser.add_argument('--NUM_MUTATIONS', type=int, default=2,
 						help='number of random offspring generated at each iteration')
 	args = parser.parse_args(sys.argv[1:])
 
@@ -53,6 +53,7 @@ if __name__ == '__main__':
 
 	#THREADS = 6 # for multi-thread computing
 	THREADS = args.THREADS # for multi-thread computing
+	NUM_MUTATIONS = args.NUM_MUTATIONS # for multi-thread computing
 
 
 	# INITIALIZE BASIC CONFIG FILE
@@ -147,7 +148,6 @@ if __name__ == '__main__':
 		threads = []
 		for command in command_strings:
 			threads.append(Thread(target=call_script, args=([command])))
-		#threads = [Thread(target=call_script, args=([command])) for command in command_strings]
 		# Start all threads
 		for w, t in enumerate(threads):
 			print(f'Computing ALL with config file {w}...')
@@ -155,27 +155,6 @@ if __name__ == '__main__':
 		# Wait for all threads to finish
 		for t in threads:
 			t.join()
-		#[t.join() for t in threads]
-
-
-		'''
-		subdiv = THREADS # num threads
-		for i in range(int(len(command_strings) / subdiv)):
-			for j in range(subdiv):
-				print(f'Computing ALL with config file {i*subdiv + j}...')
-			processes = [Popen(command_strings[i*subdiv + j], shell=True) for j in range(subdiv)]
-			# collect statuses
-			exitcodes = [p.wait() for p in processes]
-
-		# remainder single-exectution
-		remaining_indices = len(command_strings) - (i*subdiv+(subdiv-1))
-		if remaining_indices > 0:
-			for j in range(remaining_indices):
-				print(f'Computing ALL with config file {(i*subdiv+(subdiv-1)) + j}...')
-				command = command_strings[(i*subdiv+(subdiv-1)) + j]
-				os.system(command)
-		'''
-
 
 
 
@@ -256,8 +235,8 @@ if __name__ == '__main__':
 
 				new_rules_1, new_rules_2 = mut.crossCombine(rules_1, rules_2)
 
-				new_rules_1 = mut.RandomMutate(new_rules_1)
-				new_rules_2 = mut.RandomMutate(new_rules_2)
+				new_rules_1 = mut.RandomMutate(new_rules_1, n_mutations=NUM_MUTATIONS)
+				new_rules_2 = mut.RandomMutate(new_rules_2, n_mutations=NUM_MUTATIONS)
 				config_file["looping-rules"] = new_rules_1
 				config_2["looping-rules"] = new_rules_2
 				with open(f'{config_files_path}/config_{i}.json', 'w', encoding='utf-8') as f:

@@ -21,6 +21,7 @@ class AutonomousLooperOffline():
 				soundfile_filepath,
 				config_filepath='./config.json',
 				max_signal_size=10000000,
+				sr=44100,
 				seed=None,
 				plotFlag=False,
 				makeVideo=False, 
@@ -76,7 +77,7 @@ class AutonomousLooperOffline():
 
 		# LOAD AUDIO TRACK  
 		self.soundfile_filepath = soundfile_filepath
-		self.signal, self.sr = librosa.load(soundfile_filepath, sr=44100, mono=True)
+		self.signal, self.sr = librosa.load(soundfile_filepath, sr=sr, mono=True)
 		self.signal = self.signal[:self.MAX_SIGNAL_SIZE]
 
 		if self.verbose >= 1:
