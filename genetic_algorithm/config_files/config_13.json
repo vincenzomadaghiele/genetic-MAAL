@@ -6,16 +6,16 @@
     "looping-rules": [
         [
             {
-                "rule-name": "Harmonic function transitions - C",
+                "rule-name": "Frequency range overlap",
                 "rule-type": "less",
-                "rule-threshold": 0.8
+                "rule-threshold": 0.1
             }
         ],
         [
             {
-                "rule-name": "Dynamic changes - C",
-                "rule-type": "more",
-                "rule-threshold": 0.7000000000000001
+                "rule-name": "Harmonic function similarity",
+                "rule-type": "less",
+                "rule-threshold": 0.8
             }
         ]
     ],

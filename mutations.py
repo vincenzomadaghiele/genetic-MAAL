@@ -1,8 +1,6 @@
 import json
 import numpy as np
-
 from constants import RULE_NAMES, XI_VALUES, THRESHOLD_VALUES, N_MAX_RULES, N_MIN_RULES
-
 
 def crossCombine(rules_1, rules_2):
 
@@ -23,6 +21,9 @@ def makeRandomRule(RULE_NAMES, XI_VALUES, THRESHOLD_VALUES):
 	rule["rule-type"] = XI_VALUES[np.random.randint(0, high=len(XI_VALUES))]
 	rule["rule-threshold"] = THRESHOLD_VALUES[np.random.randint(0, high=len(THRESHOLD_VALUES))]
 	return rule
+
+
+N_MUTATION_TYPES = 6 # for computation of mutations
 
 # mutation function
 def MutationAddRandomRule(rules):
@@ -91,8 +92,6 @@ def RandomMutate(rules, n_mutations=1):
 			new_rules = MutationReverseXi(rules)
 	return new_rules
 
-
-N_MUTATION_TYPES = 6 # for computation of mutations
 
 
 if __name__ == '__main__': 

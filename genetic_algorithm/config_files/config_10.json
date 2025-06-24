@@ -6,16 +6,16 @@
     "looping-rules": [
         [
             {
-                "rule-name": "Dynamic changes - D",
+                "rule-name": "Timbral evolution - C",
                 "rule-type": "less",
-                "rule-threshold": 0.6000000000000001
+                "rule-threshold": 0.2
             }
         ],
         [
             {
-                "rule-name": "Melodic trajectory - D",
-                "rule-type": "more",
-                "rule-threshold": 0.5
+                "rule-name": "Melodic trajectory - C",
+                "rule-type": "less",
+                "rule-threshold": 0.6000000000000001
             }
         ]
     ],

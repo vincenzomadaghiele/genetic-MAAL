@@ -7,15 +7,20 @@
         [
             {
                 "rule-name": "Timbral evolution - C",
+                "rule-type": "less",
+                "rule-threshold": 1.0
+            },
+            {
+                "rule-name": "Harmonic movement - D",
                 "rule-type": "more",
                 "rule-threshold": 1.0
             }
         ],
         [
             {
-                "rule-name": "Timbral evolution - D",
-                "rule-type": "less",
-                "rule-threshold": 0.9
+                "rule-name": "Harmonic function transitions - C",
+                "rule-type": "more",
+                "rule-threshold": 0.4
             }
         ]
     ],
