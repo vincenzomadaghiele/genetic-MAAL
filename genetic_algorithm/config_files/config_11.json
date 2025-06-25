@@ -6,16 +6,16 @@
     "looping-rules": [
         [
             {
-                "rule-name": "Melodic similarity",
-                "rule-type": "less",
-                "rule-threshold": 0.7000000000000001
+                "rule-name": "Rhythmic similarity",
+                "rule-type": "more",
+                "rule-threshold": 0.6000000000000001
             }
         ],
         [
             {
-                "rule-name": "Melodic similarity",
-                "rule-type": "less",
-                "rule-threshold": 0.1
+                "rule-name": "Rhythmic similarity",
+                "rule-type": "more",
+                "rule-threshold": 0.6000000000000001
             }
         ]
     ],

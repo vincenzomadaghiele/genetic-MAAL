@@ -4,6 +4,7 @@ import itertools
 import shutil
 import sys
 import argparse
+import random
 
 import numpy as np
 from threading import Thread
@@ -27,13 +28,13 @@ if __name__ == '__main__':
 	parser = argparse.ArgumentParser()
 	parser.add_argument('--ITERATIONS', type=int, default=2,
 						help='number of iterations')
-	parser.add_argument('--NUM_PARENTS', type=int, default=2,
+	parser.add_argument('--NUM_PARENTS', type=int, default=8,
 						help='number of parents selected at each iteration')
-	parser.add_argument('--NUM_OFFSPRING', type=int, default=4,
+	parser.add_argument('--NUM_OFFSPRING', type=int, default=10,
 						help='number of offspring generated at each iteration')
 	parser.add_argument('--NUM_RANDOM', type=int, default=4,
 						help='number of random offspring generated at each iteration')
-	parser.add_argument('--NUM_MUTATIONS', type=int, default=3,
+	parser.add_argument('--NUM_MUTATIONS', type=int, default=4,
 						help='number of random offspring generated at each iteration')
 	parser.add_argument('--FITNESS_FUNCTION', type=str, default="binary",
 						help='options: binary, weightedBinary, loopNumber, weightedLoopNumber')
@@ -46,20 +47,21 @@ if __name__ == '__main__':
 	N_ITERATIONS = args.ITERATIONS
 
 	NUM_BEST = args.NUM_PARENTS # number of best configs to keep
-	#NUM_BEST = 2 # number of best configs to keep
-	MULT_FACTOR = args.NUM_OFFSPRING # number of mutated copies for each of best configurations
-	#MULT_FACTOR = 4 # number of mutated copies for each of best configurations
+	NUM_OFFSPRING = args.NUM_OFFSPRING # number of mutated copies for each of best configurations
 	NUM_RANDOM = args.NUM_RANDOM # number of new random elements at each generation
-	#NUM_RANDOM = 5 # number of new random elements at each generation
-	N_POPULATION = NUM_BEST * (MULT_FACTOR + 1) + NUM_RANDOM
+	#N_POPULATION = NUM_BEST * (MULT_FACTOR + 1) + NUM_RANDOM
+	
 	NUM_MUTATIONS = args.NUM_MUTATIONS # for multi-thread computing
 	FITNESS_FUNCTION = args.FITNESS_FUNCTION # for multi-thread computing
 	FINTESS_WEIGTH = args.FINTESS_WEIGTH
 
+	NUM_KEEP = 2
+	N_POPULATION = NUM_KEEP + NUM_OFFSPRING + NUM_RANDOM
+
 
 	# INITIALIZE BASIC CONFIG FILE
 	# define soundfile and basic config
-	soundfile_filepath = './genetic_algorithm/corpus/USE_CASE_1.wav'
+	soundfile_filepath = './genetic_algorithm/corpus/USE_CASE_2.wav'
 	starting_config_filepath = './genetic_algorithm/corpus/objective_config.json'
 	
 	# open basic JSON config file
@@ -175,7 +177,7 @@ if __name__ == '__main__':
 		scores = {}
 		for path in looper_outputs_paths:
 			# open logifle JSON
-			logifle_path = f'{looper_outputs_path}/{path}/USE_CASE_1/decisions_log.json'
+			logifle_path = f'{looper_outputs_path}/{path}/USE_CASE_2/decisions_log.json'
 			with open(logifle_path, 'r') as file:
 			    decisions_log = json.load(file)
 			# transform logfile to binary
@@ -193,77 +195,74 @@ if __name__ == '__main__':
 				scores[path] = fit.weightedLoopNumberFitnessFunction(decisions_log, objective_log, weight=FINTESS_WEIGTH)
 
 
-
 		# SELECTION FITTEST
-		# Find highest fitness values
+		# Select highest fitness values
 		k = Counter(scores)
 		high = k.most_common(NUM_BEST)
 		print()
 		print(f"Configurations with {NUM_BEST} highest scores:")
+		config_names = []
+		config_scores = []
 		for i in high:
-			print(f'{i[0]}: {i[1]:.3f}')
+			print(f'{i[0]}: {i[1]:.3f} - score {np.exp(10*i[1])/100:.2f}')
+			config_names.append(i[0])
+			config_scores.append(np.exp(10*i[1])/100)
 
-			# save highest in best_configs folder
-			best_config_path = f'{looper_outputs_path}/{i[0]}/USE_CASE_1/config.json'
+			# transfer fittest in best_configs folder
+			best_config_path = f'{looper_outputs_path}/{i[0]}/USE_CASE_2/config.json'
 			with open(best_config_path, 'r') as file:
 				best_config = json.load(file)
 			with open(f'{best_configs_path}/{i[0]}.json', 'w', encoding='utf-8') as f:
 				json.dump(best_config, f, ensure_ascii=False, indent=4)
 
 
-		# probability of selecting parents based on: 
-		# - fitness
-		# - number of rules (less is better)
-
-		print('Computing mutations...')
-		print()
-		print()
-		# COMPUTE MUTATIONS
-		for f in os.listdir(config_files_path):
-			os.remove(os.path.join(config_files_path, f)) # remove old config files
-		best_configs_paths = os.listdir(best_configs_path) 
+		# keep the best NUM_KEEP config files
 		i = 0 # count new config files
-		best_configs_list = []
-		for config_filepath in best_configs_paths:
+		for ii in range(NUM_KEEP):
 			# open best JSON config file
-			with open(f'{best_configs_path}/{config_filepath}', 'r') as file:
+			with open(f'{best_configs_path}/{config_names[ii]}.json', 'r') as file:
 				config_file = json.load(file)
 			# keep the best ones in the population
 			with open(f'{config_files_path}/config_{i}.json', 'w', encoding='utf-8') as f:
 				json.dump(config_file, f, ensure_ascii=False, indent=4)
 			i += 1
-			best_configs_list.append(config_file)
 
-		# generate random mutations
-		for zz, config_file in enumerate(best_configs_list):
-			for _ in range(0,MULT_FACTOR,2):
-				# rules of this file
-				rules_1 = config_file["looping-rules"]
+		# compute mutations
+		print('Computing mutations...')
+		print()
+		print()
+		for _ in range(0, NUM_OFFSPRING, 2):
+			# extract two random parents according to the weights probabilities
+			configs = random.choices(config_names, weights=config_scores, k=2)
 
-				# extract random config file from best ones to cross-mutate with
-				other_idxs = list(range(len(best_configs_list)))
-				other_idxs.remove(zz) # remove self
-				config_2 = best_configs_list[zz]
-				rules_2 = config_2["looping-rules"]
+			# open config files
+			with open(f'{best_configs_path}/{configs[0]}.json', 'r') as file:
+				config_1 = json.load(file)
+			with open(f'{best_configs_path}/{configs[1]}.json', 'r') as file:
+				config_2 = json.load(file)
 
-				# crossover
-				new_rules_1, new_rules_2 = mut.crossCombine(rules_1, rules_2)
+			# extract rules
+			rules_1 = config_1["looping-rules"]
+			rules_2 = config_2["looping-rules"]
 
-				# mutation
-				new_rules_1 = mut.RandomMutate(new_rules_1, n_mutations=NUM_MUTATIONS)
-				new_rules_2 = mut.RandomMutate(new_rules_2, n_mutations=NUM_MUTATIONS)
-				config_file["looping-rules"] = new_rules_1
-				config_2["looping-rules"] = new_rules_2
-				with open(f'{config_files_path}/config_{i}.json', 'w', encoding='utf-8') as f:
-					json.dump(config_file, f, ensure_ascii=False, indent=4)
-				i += 1
-				with open(f'{config_files_path}/config_{i}.json', 'w', encoding='utf-8') as f:
-					json.dump(config_2, f, ensure_ascii=False, indent=4)
-				i += 1
+			# crossover
+			new_rules_1, new_rules_2 = mut.crossCombine(rules_1, rules_2)
+			# mutation
+			new_rules_1 = mut.RandomMutate(new_rules_1, n_mutations=NUM_MUTATIONS)
+			new_rules_2 = mut.RandomMutate(new_rules_2, n_mutations=NUM_MUTATIONS)
+
+			config_file["looping-rules"] = new_rules_1
+			config_2["looping-rules"] = new_rules_2
+			with open(f'{config_files_path}/config_{i}.json', 'w', encoding='utf-8') as f:
+				json.dump(config_file, f, ensure_ascii=False, indent=4)
+			i += 1
+			with open(f'{config_files_path}/config_{i}.json', 'w', encoding='utf-8') as f:
+				json.dump(config_2, f, ensure_ascii=False, indent=4)
+			i += 1
 
 
+		# MAKE SOME NEW CONFIG FILES WITH COMPLETELY RANDOM RULES
 		for _ in range(NUM_RANDOM):
-			# MAKE BASIC CONFIG FILE WITH RANDOM RULES
 			new_rules = []
 			rule = mut.makeRandomRule(RULE_NAMES, XI_VALUES, THRESHOLD_VALUES)
 			new_rules.append([mut.makeRandomRule(RULE_NAMES, XI_VALUES, THRESHOLD_VALUES)])

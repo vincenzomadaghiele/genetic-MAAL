@@ -6,8 +6,13 @@
     "looping-rules": [
         [
             {
-                "rule-name": "Melodic trajectory - D",
+                "rule-name": "Dynamic similarity",
                 "rule-type": "less",
+                "rule-threshold": 0.5
+            },
+            {
+                "rule-name": "Timbral similarity",
+                "rule-type": "mmore",
                 "rule-threshold": 0.5
             }
         ],
@@ -27,3 +32,4 @@
     "maxLoopsRepetition": 20,
     "loopChange-rule": "better"
 }
+
