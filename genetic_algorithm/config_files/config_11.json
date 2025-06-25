@@ -6,16 +6,16 @@
     "looping-rules": [
         [
             {
-                "rule-name": "Harmonic movement - D",
+                "rule-name": "Melodic similarity",
                 "rule-type": "less",
-                "rule-threshold": 0.1
+                "rule-threshold": 0.7000000000000001
             }
         ],
         [
             {
-                "rule-name": "Harmonic function transitions - D",
+                "rule-name": "Melodic similarity",
                 "rule-type": "less",
-                "rule-threshold": 0.9
+                "rule-threshold": 0.1
             }
         ]
     ],

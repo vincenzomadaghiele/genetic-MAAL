@@ -2,13 +2,13 @@ import numpy as np
 
 
 RULE_NAMES = [
-				"Harmonic similarity", "Harmonic movement - C", "Harmonic movement - D",
+				#"Harmonic similarity", "Harmonic movement - C", "Harmonic movement - D",
 				"Melodic similarity", "Melodic trajectory - C", "Melodic trajectory - D",
-				"Dynamic similarity", "Dynamic changes - C", "Dynamic changes - D",
-				"Timbral similarity", "Timbral evolution - C", "Timbral evolution - D",
-				"Global spectral overlap", "Frequency range overlap",
+				#"Dynamic similarity", "Dynamic changes - C", "Dynamic changes - D",
+				#"Timbral similarity", "Timbral evolution - C", "Timbral evolution - D",
+				#"Global spectral overlap", "Frequency range overlap",
 				"Rhythmic similarity", "Rhythmic density",
-				"Harmonic function similarity", "Harmonic function transitions - C", "Harmonic function transitions - D"
+				#"Harmonic function similarity", "Harmonic function transitions - C", "Harmonic function transitions - D"
 				]
 
 XI_VALUES = ["more", "less"]
@@ -16,7 +16,7 @@ XI_VALUES = ["more", "less"]
 step = 0.1
 THRESHOLD_VALUES = np.arange(0.0, 1.0+step, step).tolist()
 
-N_MAX_RULES = 3 # for computation of mutations
+N_MAX_RULES = 1 # for computation of mutations
 N_MIN_RULES = 1 # for computation of mutations
 
 

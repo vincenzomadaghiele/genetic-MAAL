@@ -6,26 +6,16 @@
     "looping-rules": [
         [
             {
-                "rule-name": "Frequency range overlap",
-                "rule-type": "more",
-                "rule-threshold": 0.30000000000000004
-            },
-            {
-                "rule-name": "Harmonic function transitions - D",
+                "rule-name": "Melodic trajectory - D",
                 "rule-type": "less",
-                "rule-threshold": 0.9
+                "rule-threshold": 0.1
             }
         ],
         [
             {
-                "rule-name": "Timbral evolution - C",
-                "rule-type": "more",
-                "rule-threshold": 1.0
-            },
-            {
-                "rule-name": "Harmonic function transitions - C",
-                "rule-type": "more",
-                "rule-threshold": 0.2
+                "rule-name": "Melodic trajectory - C",
+                "rule-type": "less",
+                "rule-threshold": 0.1
             }
         ]
     ],

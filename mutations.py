@@ -1,4 +1,5 @@
 import json
+import random
 import numpy as np
 from constants import RULE_NAMES, XI_VALUES, THRESHOLD_VALUES, N_MAX_RULES, N_MIN_RULES
 
@@ -74,22 +75,52 @@ def MutationReverseXi(rules):
 		rules[idx_rule_to_change][idx_rule_component_to_change]["rule-type"] = "less"
 	return rules
 
+
+def mutationsCheck(rules):
+	for loop_track_rules in rules:
+		if len(loop_track_rules) > 1:
+			for rule in loop_track_rules:
+				if rule["rule-type"] == "less" and rule["rule-threshold"] == 0:
+					# remove rule
+					loop_track_rules.remove(rule)
+				if rule["rule-type"] == "more" and rule["rule-threshold"] == 1:
+					# remove rule
+					loop_track_rules.remove(rule)
+		else:
+			# only one rule in this loop track
+			if loop_track_rules[0]["rule-type"] =="less" and loop_track_rules[0]["rule-threshold"] == 0:
+				loop_track_rules[0]["rule-threshold"] = 0.5
+			if loop_track_rules[0]["rule-type"] =="more" and loop_track_rules[0]["rule-threshold"] == 1:
+				loop_track_rules[0]["rule-threshold"] = 0.5
+	return rules
+
+
 def RandomMutate(rules, n_mutations=1):
+	# probability of selecting rules:...
 	new_rules = rules.copy()
+	possible_mutations = list(range(N_MUTATION_TYPES))
+	mutations_weights = [20, 20, 10, 50, 50, 20]
 	for _ in range(n_mutations):
-		mutation_type = np.random.randint(0, high=N_MUTATION_TYPES)
+		mutation_type = random.choices(possible_mutations, weights=mutations_weights, k=1)
+		#mutation_type = np.random.randint(0, high=N_MUTATION_TYPES)
 		if mutation_type == 0:
 			new_rules = MutationAddRandomRule(rules)
+			new_rules = mutationsCheck(new_rules)
 		elif mutation_type == 1:
 			new_rules = MutationRemoveRandomRule(rules)
+			new_rules = mutationsCheck(new_rules)
 		elif mutation_type == 2:
 			new_rules = MutationSubstituteRandomRule(rules)
+			new_rules = mutationsCheck(new_rules)
 		elif mutation_type == 3:
 			new_rules = MutationIncreaseThreshold(rules)
+			new_rules = mutationsCheck(new_rules)
 		elif mutation_type == 4:
 			new_rules = MutationDecreaseThreshold(rules)
+			new_rules = mutationsCheck(new_rules)
 		elif mutation_type == 5:
 			new_rules = MutationReverseXi(rules)
+			new_rules = mutationsCheck(new_rules)
 	return new_rules
 
 

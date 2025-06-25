@@ -27,16 +27,18 @@ if __name__ == '__main__':
 	parser = argparse.ArgumentParser()
 	parser.add_argument('--ITERATIONS', type=int, default=2,
 						help='number of iterations')
-	parser.add_argument('--THREADS', type=int, default=6,
-						help='number of threads for parallel computation')
 	parser.add_argument('--NUM_PARENTS', type=int, default=2,
 						help='number of parents selected at each iteration')
 	parser.add_argument('--NUM_OFFSPRING', type=int, default=4,
 						help='number of offspring generated at each iteration')
 	parser.add_argument('--NUM_RANDOM', type=int, default=4,
 						help='number of random offspring generated at each iteration')
-	parser.add_argument('--NUM_MUTATIONS', type=int, default=2,
+	parser.add_argument('--NUM_MUTATIONS', type=int, default=3,
 						help='number of random offspring generated at each iteration')
+	parser.add_argument('--FITNESS_FUNCTION', type=str, default="binary",
+						help='options: binary, weightedBinary, loopNumber, weightedLoopNumber')
+	parser.add_argument('--FINTESS_WEIGTH', type=float, default=0.8,
+						help='weight to use for weighted fitness functions')
 	args = parser.parse_args(sys.argv[1:])
 
 
@@ -50,10 +52,9 @@ if __name__ == '__main__':
 	NUM_RANDOM = args.NUM_RANDOM # number of new random elements at each generation
 	#NUM_RANDOM = 5 # number of new random elements at each generation
 	N_POPULATION = NUM_BEST * (MULT_FACTOR + 1) + NUM_RANDOM
-
-	#THREADS = 6 # for multi-thread computing
-	THREADS = args.THREADS # for multi-thread computing
 	NUM_MUTATIONS = args.NUM_MUTATIONS # for multi-thread computing
+	FITNESS_FUNCTION = args.FITNESS_FUNCTION # for multi-thread computing
+	FINTESS_WEIGTH = args.FINTESS_WEIGTH
 
 
 	# INITIALIZE BASIC CONFIG FILE
@@ -127,7 +128,7 @@ if __name__ == '__main__':
 		print(f'Genetic algorithm iteration {k}')
 		print('-'*50)
 
-		# GENERATE ALL RESULTS FROM CONFIG FILE
+		# GENERATE ALL RESULTS FROM CONFIG FILES
 		shutil.rmtree(looper_outputs_path) # remove old files
 		os.mkdir(looper_outputs_path) 
 		config_files_list = os.listdir(config_files_path) 
@@ -182,18 +183,25 @@ if __name__ == '__main__':
 			# compute fitness function as comparison
 			#scores[path] = fit.wightedLoopNumberFitnessFunction(decisions_log, objective_log)
 			#scores[path] = fit.wightedBinaryFitnessFunction(decisions_log, objective_log, weight=1)
-			scores[path] = fit.binaryFitnessFunction(decisions_log, objective_log)
+			if FITNESS_FUNCTION == "binary":
+				scores[path] = fit.binaryFitnessFunction(decisions_log, objective_log)
+			elif FITNESS_FUNCTION == "weightedBinary":
+				scores[path] = fit.weightedBinaryFitnessFunction(decisions_log, objective_log, weight=FINTESS_WEIGTH)
+			elif FITNESS_FUNCTION == "loopNumber":
+				scores[path] = fit.loopNumberFitnessFunction(decisions_log, objective_log)
+			elif FITNESS_FUNCTION == "weightedLoopNumber":
+				scores[path] = fit.weightedLoopNumberFitnessFunction(decisions_log, objective_log, weight=FINTESS_WEIGTH)
 
 
 
-		# SELECT FITTEST
+		# SELECTION FITTEST
 		# Find highest fitness values
 		k = Counter(scores)
 		high = k.most_common(NUM_BEST)
 		print()
 		print(f"Configurations with {NUM_BEST} highest scores:")
 		for i in high:
-			print(f'{i[0]}: {i[1]}')
+			print(f'{i[0]}: {i[1]:.3f}')
 
 			# save highest in best_configs folder
 			best_config_path = f'{looper_outputs_path}/{i[0]}/USE_CASE_1/config.json'
@@ -202,6 +210,10 @@ if __name__ == '__main__':
 			with open(f'{best_configs_path}/{i[0]}.json', 'w', encoding='utf-8') as f:
 				json.dump(best_config, f, ensure_ascii=False, indent=4)
 
+
+		# probability of selecting parents based on: 
+		# - fitness
+		# - number of rules (less is better)
 
 		print('Computing mutations...')
 		print()
@@ -234,8 +246,10 @@ if __name__ == '__main__':
 				config_2 = best_configs_list[zz]
 				rules_2 = config_2["looping-rules"]
 
+				# crossover
 				new_rules_1, new_rules_2 = mut.crossCombine(rules_1, rules_2)
 
+				# mutation
 				new_rules_1 = mut.RandomMutate(new_rules_1, n_mutations=NUM_MUTATIONS)
 				new_rules_2 = mut.RandomMutate(new_rules_2, n_mutations=NUM_MUTATIONS)
 				config_file["looping-rules"] = new_rules_1
@@ -246,6 +260,7 @@ if __name__ == '__main__':
 				with open(f'{config_files_path}/config_{i}.json', 'w', encoding='utf-8') as f:
 					json.dump(config_2, f, ensure_ascii=False, indent=4)
 				i += 1
+
 
 		for _ in range(NUM_RANDOM):
 			# MAKE BASIC CONFIG FILE WITH RANDOM RULES

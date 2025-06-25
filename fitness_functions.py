@@ -39,7 +39,7 @@ def binaryFitnessFunction(comparable_log, objective_log):
 	return np.equal(comparable_binary, objective_binary).sum() / np.shape(objective_binary)[0]
 
 
-def wightedBinaryFitnessFunction(comparable_log, objective_log, weight=0.5):
+def weightedBinaryFitnessFunction(comparable_log, objective_log, weight=0.5):
 	# the weight makes 0s in the score count less
 	comparable_binary = np.array(decisionLogToBinary(comparable_log))
 	objective_binary = np.array(decisionLogToBinary(objective_log))
@@ -61,7 +61,7 @@ def loopNumberFitnessFunction(comparable_log, objective_log):
 	return np.equal(comparable_binary, objective_binary).sum() / np.shape(objective_binary)[0]
 
 
-def wightedLoopNumberFitnessFunction(comparable_log, objective_log, weight=0.5):
+def weightedLoopNumberFitnessFunction(comparable_log, objective_log, weight=0.5):
 	# the weight makes 0s in the score count less
 	comparable_binary = np.array(decisionLogToTrackNum(comparable_log))
 	objective_binary = np.array(decisionLogToTrackNum(objective_log))
