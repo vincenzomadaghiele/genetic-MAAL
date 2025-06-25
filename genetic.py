@@ -181,7 +181,8 @@ if __name__ == '__main__':
 			#binary_decisions = decisionLogToBinary(decisions_log)
 			# compute fitness function as comparison
 			#scores[path] = fit.wightedLoopNumberFitnessFunction(decisions_log, objective_log)
-			scores[path] = fit.wightedBinaryFitnessFunction(decisions_log, objective_log, weight=1)
+			#scores[path] = fit.wightedBinaryFitnessFunction(decisions_log, objective_log, weight=1)
+			scores[path] = fit.binaryFitnessFunction(decisions_log, objective_log)
 
 
 
