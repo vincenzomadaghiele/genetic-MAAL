@@ -5,18 +5,29 @@ from constants import RULE_NAMES, XI_VALUES, THRESHOLD_VALUES, N_MAX_RULES, N_MI
 
 def crossCombine(rules_1, rules_2):
 
-	'''
 	idx_rule_exchange_1 = np.random.randint(0, high=len(rules_1))
 	idx_rule_exchange_2 = np.random.randint(0, high=len(rules_2))
 
-	if rules_1[idx_rule_exchange_1] != rules_2[idx_rule_exchange_2]:
-		# cross-combine only  if rules are different
-		rule_exchange_1 = rules_1[idx_rule_exchange_1] 
-		rule_exchange_2 = rules_2[idx_rule_exchange_2] 
-		rules_1[idx_rule_exchange_1] = rule_exchange_2
-		rules_2[idx_rule_exchange_2] = rule_exchange_1
-	'''
+	rule_components_names_1 = [rule_component["rule-name"] for rule_component in rules_1[idx_rule_exchange_1]]
+	rule_components_types_1 = [rule_component["rule-type"] for rule_component in rules_1[idx_rule_exchange_1]]
+	rule_components_names_2 = [rule_component["rule-name"] for rule_component in rules_2[idx_rule_exchange_2]]
+	rule_components_types_2 = [rule_component["rule-type"] for rule_component in rules_2[idx_rule_exchange_2]]
+
+	rule_components_types_1 = sorted(rule_components_names_1, key=lambda x: rule_components_names_1.index(x))
+	rule_components_names_1 = sorted(rule_components_names_1)
+	rule_components_types_2 = sorted(rule_components_names_2, key=lambda x: rule_components_names_2.index(x))
+	rule_components_names_2 = sorted(rule_components_names_2)
+
+	if rule_components_names_1 != rule_components_names_2:
+		if rule_components_types_1 != rule_components_types_2:
+			# cross-combine only if rules are different (not all same name and type)
+			rule_exchange_1 = rules_1[idx_rule_exchange_1] 
+			rule_exchange_2 = rules_2[idx_rule_exchange_2] 
+			rules_1[idx_rule_exchange_1] = rule_exchange_2
+			rules_2[idx_rule_exchange_2] = rule_exchange_1
+
 	return rules_1, rules_2
+
 
 # utils
 def makeRandomRule(RULE_NAMES, XI_VALUES, THRESHOLD_VALUES):

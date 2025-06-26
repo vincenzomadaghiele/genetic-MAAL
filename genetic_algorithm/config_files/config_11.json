@@ -6,23 +6,16 @@
     "looping-rules": [
         [
             {
-                "rule-name": "Dynamic changes - D",
+                "rule-name": "Frequency range overlap",
                 "rule-type": "more",
                 "rule-threshold": 0.8
             }
         ],
         [
             {
-                "rule-name": "Dynamic changes - D",
+                "rule-name": "Frequency range overlap",
                 "rule-type": "more",
                 "rule-threshold": 0.8
-            }
-        ],
-        [
-            {
-                "rule-name": "Rhythmic density",
-                "rule-type": "more",
-                "rule-threshold": 0.4
             }
         ]
     ],
