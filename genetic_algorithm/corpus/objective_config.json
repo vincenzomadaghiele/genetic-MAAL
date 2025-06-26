@@ -17,13 +17,6 @@
                 "rule-type": "more",
                 "rule-threshold": 0.7
             }
-        ],
-        [
-            {
-                "rule-name": "Rhythmic density",
-                "rule-type": "less",
-                "rule-threshold": 0.3
-            }
         ]
     ],
     "startup-mode": "repetition",

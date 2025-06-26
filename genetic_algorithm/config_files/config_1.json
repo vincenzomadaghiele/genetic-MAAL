@@ -6,9 +6,9 @@
     "looping-rules": [
         [
             {
-                "rule-name": "Timbral similarity",
-                "rule-type": "more",
-                "rule-threshold": 0.6000000000000001
+                "rule-name": "Frequency range overlap",
+                "rule-type": "less",
+                "rule-threshold": 0.5
             }
         ],
         [
@@ -20,9 +20,9 @@
         ],
         [
             {
-                "rule-name": "Dynamic similarity",
-                "rule-type": "more",
-                "rule-threshold": 0.6000000000000001
+                "rule-name": "Rhythmic density",
+                "rule-type": "less",
+                "rule-threshold": 0.8
             }
         ]
     ],

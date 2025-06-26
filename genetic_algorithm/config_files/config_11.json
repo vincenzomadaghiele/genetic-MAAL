@@ -13,16 +13,16 @@
         ],
         [
             {
-                "rule-name": "Timbral similarity",
-                "rule-type": "more",
-                "rule-threshold": 0.0
+                "rule-name": "Timbral evolution - D",
+                "rule-type": "less",
+                "rule-threshold": 0.6000000000000001
             }
         ],
         [
             {
-                "rule-name": "Rhythmic density",
+                "rule-name": "Timbral evolution - D",
                 "rule-type": "less",
-                "rule-threshold": 0.8
+                "rule-threshold": 0.6000000000000001
             }
         ]
     ],
