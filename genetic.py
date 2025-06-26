@@ -38,7 +38,7 @@ if __name__ == '__main__':
 						help='number of offspring generated at each iteration')
 	parser.add_argument('--NUM_RANDOM', type=int, default=4,
 						help='number of random offspring generated at each iteration')
-	parser.add_argument('--NUM_MUTATIONS', type=int, default=4,
+	parser.add_argument('--NUM_MUTATIONS', type=int, default=8,
 						help='number of mutations for each new element at each iteration')
 	parser.add_argument('--NUM_KEEP', type=int, default=2,
 						help='number of best configurations kept at each iteration')
@@ -62,6 +62,7 @@ if __name__ == '__main__':
 
 
 	print()
+	print()
 	print('GENETIC ALGORITHM FOR LEARNING MAAL RULE SETS')
 	print('-' * 50)
 	print()
@@ -79,7 +80,6 @@ if __name__ == '__main__':
 			threads.append(Thread(target=call_script, args=([command])))
 	[t.start() for t in threads]
 	[t.join() for t in threads]
-	print()
 
 
 	# LOAD BASIC CONFIG FILE
@@ -260,10 +260,9 @@ if __name__ == '__main__':
 		# MAKE SOME NEW CONFIG FILES WITH COMPLETELY RANDOM RULES
 		for _ in range(NUM_RANDOM):
 			new_rules = []
-			rule = mut.makeRandomRule(RULE_NAMES, XI_VALUES, THRESHOLD_VALUES)
-			new_rules.append([mut.makeRandomRule(RULE_NAMES, XI_VALUES, THRESHOLD_VALUES)])
-			new_rules.append([mut.makeRandomRule(RULE_NAMES, XI_VALUES, THRESHOLD_VALUES)])
-
+			for _ in range(len(rules)):
+				new_rules.append([mut.makeRandomRule(RULE_NAMES, XI_VALUES, THRESHOLD_VALUES)])
+			
 			# generate config files for all rule combinations
 			config_file_blank = basic_config_file.copy()
 			config_file_blank['looping-rules'] = new_rules
@@ -271,5 +270,16 @@ if __name__ == '__main__':
 				json.dump(config_file_blank, f, ensure_ascii=False, indent=4)
 			i += 1
 
+
+	print(f'Best {NUM_KEEP} configurations: ')
+	for ii in range(NUM_KEEP):
+		print()
+		print(f'{high[ii][0]} - fitness {high[ii][1]:.3f}')
+		print('-'*50)
+		print('Rule set:')
+		with open(f'{best_configs_path}/{high[ii][0]}.json', 'r') as file:
+			best_config = json.load(file)
+		print(json.dumps(best_config["looping-rules"], indent=4))
+		print()
 
 

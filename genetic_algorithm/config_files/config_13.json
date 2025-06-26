@@ -6,16 +6,23 @@
     "looping-rules": [
         [
             {
-                "rule-name": "Timbral evolution - C",
+                "rule-name": "Timbral similarity",
                 "rule-type": "less",
-                "rule-threshold": 0.9
+                "rule-threshold": 0.2
             }
         ],
         [
             {
-                "rule-name": "Dynamic similarity",
+                "rule-name": "Timbral evolution - D",
+                "rule-type": "more",
+                "rule-threshold": 0.7000000000000001
+            }
+        ],
+        [
+            {
+                "rule-name": "Global spectral overlap",
                 "rule-type": "less",
-                "rule-threshold": 1.0
+                "rule-threshold": 0.4
             }
         ]
     ],
