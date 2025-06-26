@@ -6,23 +6,23 @@
     "looping-rules": [
         [
             {
-                "rule-name": "Dynamic similarity",
+                "rule-name": "Timbral similarity",
+                "rule-type": "more",
+                "rule-threshold": 0.6000000000000001
+            }
+        ],
+        [
+            {
+                "rule-name": "Timbral evolution - D",
                 "rule-type": "less",
-                "rule-threshold": 0.2
+                "rule-threshold": 0.6000000000000001
             }
         ],
         [
             {
                 "rule-name": "Dynamic similarity",
-                "rule-type": "less",
-                "rule-threshold": 0.2
-            }
-        ],
-        [
-            {
-                "rule-name": "Dynamic similarity",
-                "rule-type": "less",
-                "rule-threshold": 0.2
+                "rule-type": "more",
+                "rule-threshold": 0.6000000000000001
             }
         ]
     ],

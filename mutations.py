@@ -8,7 +8,7 @@ def crossCombine(rules_1, rules_2):
 	idx_rule_exchange_1 = np.random.randint(0, high=len(rules_1))
 	idx_rule_exchange_2 = np.random.randint(0, high=len(rules_2))
 
-	if rules_1[idx_rule_exchange_1]["rule-name"] != rules_2[idx_rule_exchange_2]["rule-name"]:
+	if rules_1[idx_rule_exchange_1] != rules_2[idx_rule_exchange_2]:
 		# cross-combine only  if rules are different
 		rule_exchange_1 = rules_1[idx_rule_exchange_1] 
 		rule_exchange_2 = rules_2[idx_rule_exchange_2] 

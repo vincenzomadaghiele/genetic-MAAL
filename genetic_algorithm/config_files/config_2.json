@@ -6,23 +6,23 @@
     "looping-rules": [
         [
             {
-                "rule-name": "Dynamic similarity",
+                "rule-name": "Global spectral overlap",
                 "rule-type": "less",
-                "rule-threshold": 0.2
+                "rule-threshold": 0.8
             }
         ],
         [
             {
-                "rule-name": "Dynamic similarity",
+                "rule-name": "Rhythmic density",
                 "rule-type": "less",
-                "rule-threshold": 0.2
+                "rule-threshold": 0.1
             }
         ],
         [
             {
-                "rule-name": "Dynamic similarity",
+                "rule-name": "Dynamic changes - C",
                 "rule-type": "less",
-                "rule-threshold": 0.2
+                "rule-threshold": 0.9
             }
         ]
     ],
