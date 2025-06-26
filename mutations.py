@@ -5,6 +5,7 @@ from constants import RULE_NAMES, XI_VALUES, THRESHOLD_VALUES, N_MAX_RULES, N_MI
 
 def crossCombine(rules_1, rules_2):
 
+	'''
 	idx_rule_exchange_1 = np.random.randint(0, high=len(rules_1))
 	idx_rule_exchange_2 = np.random.randint(0, high=len(rules_2))
 
@@ -14,7 +15,7 @@ def crossCombine(rules_1, rules_2):
 		rule_exchange_2 = rules_2[idx_rule_exchange_2] 
 		rules_1[idx_rule_exchange_1] = rule_exchange_2
 		rules_2[idx_rule_exchange_2] = rule_exchange_1
-
+	'''
 	return rules_1, rules_2
 
 # utils
