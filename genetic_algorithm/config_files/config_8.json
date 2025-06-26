@@ -1,21 +1,21 @@
 {
-    "tempo": 105,
+    "tempo": 120,
     "beats_per_loop": 4,
     "min_loop_beats": 4,
     "rhythm_subdivision": 16,
     "looping-rules": [
         [
             {
-                "rule-name": "Rhythmic similarity",
+                "rule-name": "Timbral evolution - D",
                 "rule-type": "more",
-                "rule-threshold": 0.6000000000000001
+                "rule-threshold": 0.9
             }
         ],
         [
             {
-                "rule-name": "Rhythmic similarity",
-                "rule-type": "more",
-                "rule-threshold": 0.6000000000000001
+                "rule-name": "Dynamic changes - D",
+                "rule-type": "less",
+                "rule-threshold": 0.9
             }
         ]
     ],
