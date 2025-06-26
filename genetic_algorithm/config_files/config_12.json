@@ -6,16 +6,16 @@
     "looping-rules": [
         [
             {
-                "rule-name": "Dynamic similarity",
+                "rule-name": "Dynamic changes - D",
                 "rule-type": "less",
-                "rule-threshold": 0.30000000000000004
+                "rule-threshold": 0.9
             }
         ],
         [
             {
-                "rule-name": "Dynamic changes - D",
-                "rule-type": "less",
-                "rule-threshold": 0.1
+                "rule-name": "Rhythmic similarity",
+                "rule-type": "more",
+                "rule-threshold": 0.0
             }
         ]
     ],

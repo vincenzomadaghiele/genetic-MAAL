@@ -7,15 +7,22 @@
         [
             {
                 "rule-name": "Dynamic similarity",
+                "rule-type": "less",
+                "rule-threshold": 0.2
+            }
+        ],
+        [
+            {
+                "rule-name": "Timbral evolution - C",
                 "rule-type": "more",
-                "rule-threshold": 0.0
+                "rule-threshold": 0.2
             }
         ],
         [
             {
                 "rule-name": "Dynamic similarity",
-                "rule-type": "more",
-                "rule-threshold": 0.0
+                "rule-type": "less",
+                "rule-threshold": 0.2
             }
         ]
     ],

@@ -82,23 +82,10 @@ if __name__ == '__main__':
 	print()
 
 
-	# INITIALIZE BASIC CONFIG FILE
-	# define soundfile and basic config
-	# open basic JSON config file
+	# LOAD BASIC CONFIG FILE
 	with open(starting_config_filepath, 'r') as file:
 	    basic_config_file = json.load(file)
 	rules = basic_config_file['looping-rules']
-
-
-	# INITIALIZE POSSIBLE SYSTEM SETTINGS
-	print()
-	print("Rule names:")
-	print(RULE_NAMES)
-	print("Xi values:")
-	print(XI_VALUES)
-	print("Threshold values:")
-	print(THRESHOLD_VALUES)
-
 
 	# GENERAL INITS
 	config_files_path = './genetic_algorithm/config_files'
@@ -121,6 +108,7 @@ if __name__ == '__main__':
 		os.mkdir(looper_outputs_path)
 
 	# INITIALIZE RANDOM CONFIG FILES
+	print()
 	print(f'Generating population of {N_POPULATION} random config files...')
 	for i in range(N_POPULATION):
 
@@ -139,7 +127,8 @@ if __name__ == '__main__':
 	# RUN GENETIC ALGORITHM
 	soundfile_filepath = './genetic_algorithm/corpus/USE_CASE_2.wav'
 	for k in range(N_ITERATIONS):
-
+		
+		print()
 		print(f'Genetic algorithm iteration {k}')
 		print('-'*50)
 
@@ -166,6 +155,7 @@ if __name__ == '__main__':
 
 		# EVALUATE FITNESS FUNCTION
 		# open JSON logfile to use for objective
+		print()
 		print('Evaluating fitness function...')
 
 		# open JSON logfiles of generated for search
