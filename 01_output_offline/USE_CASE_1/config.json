@@ -6,7 +6,7 @@
     "looping-rules": [
         [
             {
-                "rule-name": "Melodic trajectory - D",
+                "rule-name": "Dynamic similarity",
                 "rule-type": "less",
                 "rule-threshold": 0.5
             }

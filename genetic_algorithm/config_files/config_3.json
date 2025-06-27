@@ -1,21 +1,35 @@
 {
-    "tempo": 120,
+    "tempo": 105,
     "beats_per_loop": 4,
     "min_loop_beats": 4,
     "rhythm_subdivision": 16,
     "looping-rules": [
         [
             {
-                "rule-name": "Dynamic similarity",
+                "rule-name": "Harmonic similarity",
                 "rule-type": "more",
-                "rule-threshold": 0.6000000000000001
+                "rule-threshold": 0.4
             }
         ],
         [
             {
-                "rule-name": "Timbral evolution - D",
-                "rule-type": "more",
-                "rule-threshold": 0.9
+                "rule-name": "Dynamic changes - D",
+                "rule-type": "less",
+                "rule-threshold": 0.8
+            }
+        ],
+        [
+            {
+                "rule-name": "Melodic trajectory - D",
+                "rule-type": "less",
+                "rule-threshold": 0.8
+            }
+        ],
+        [
+            {
+                "rule-name": "Dynamic changes - D",
+                "rule-type": "less",
+                "rule-threshold": 0.6000000000000001
             }
         ]
     ],

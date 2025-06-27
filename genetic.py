@@ -72,6 +72,11 @@ if __name__ == '__main__':
 	sound_corpus_filepath = './genetic_algorithm/corpus/sound' # dir where all the sound examples are
 	starting_config_filepath = './genetic_algorithm/corpus/objective_config.json'
 	corpus_output_dir_path = './genetic_algorithm/corpus/looper_outputs'
+	if os.path.isdir(corpus_output_dir_path):
+		shutil.rmtree(corpus_output_dir_path)
+		os.mkdir(corpus_output_dir_path)
+	else:
+		os.mkdir(corpus_output_dir_path)
 	threads = []
 	for soundfile in os.listdir(sound_corpus_filepath):
 		if soundfile != '.DS_Store':
@@ -80,7 +85,6 @@ if __name__ == '__main__':
 			threads.append(Thread(target=call_script, args=([command])))
 	[t.start() for t in threads]
 	[t.join() for t in threads]
-
 
 	# LOAD BASIC CONFIG FILE
 	with open(starting_config_filepath, 'r') as file:
@@ -125,7 +129,6 @@ if __name__ == '__main__':
 
 
 	# RUN GENETIC ALGORITHM
-	soundfile_filepath = './genetic_algorithm/corpus/USE_CASE_2.wav'
 	for k in range(N_ITERATIONS):
 		
 		print()
@@ -281,5 +284,4 @@ if __name__ == '__main__':
 			best_config = json.load(file)
 		print(json.dumps(best_config["looping-rules"], indent=4))
 		print()
-
 

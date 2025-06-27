@@ -2,8 +2,8 @@ import numpy as np
 
 
 RULE_NAMES = [
-				#"Harmonic similarity", "Harmonic movement - C", "Harmonic movement - D",
-				#"Melodic similarity", "Melodic trajectory - C", "Melodic trajectory - D",
+				"Harmonic similarity", "Harmonic movement - C", "Harmonic movement - D",
+				"Melodic similarity", "Melodic trajectory - C", "Melodic trajectory - D",
 				"Dynamic similarity", "Dynamic changes - C", "Dynamic changes - D",
 				"Timbral similarity", "Timbral evolution - C", "Timbral evolution - D",
 				"Global spectral overlap", "Frequency range overlap",
