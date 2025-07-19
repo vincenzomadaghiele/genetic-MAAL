@@ -24,7 +24,7 @@ def loopStart_handler(address, *args):
 		print()
 		print('-'*50)
 		print('Saving decision log')
-		with open(f'decisions_log.json', 'w', encoding='utf-8') as f:
+		with open(f'performance/decisions_log.json', 'w', encoding='utf-8') as f:
 			json.dump(decision_log, f, ensure_ascii=False, indent=4)
 
 
