@@ -130,6 +130,7 @@ class AutonomousLooperOnline():
 		self.previous_descriptors = [[] for _ in range(self.N_BARS_STARTUP)]
 		self.all_descriptors = []
 		self.BARS_COUNT = 0
+		self.decisions_log = []
 		
 		# compute candidate segment divisions
 		self.candidate_segments_divisions = []
@@ -154,6 +155,7 @@ class AutonomousLooperOnline():
 		# OSC SERVER
 		dispatcher = Dispatcher()
 		dispatcher.map("/features/*", self.liveFeaturesIn_handler)
+		dispatcher.map("/startInteraction", self.startInteraction)
 		dispatcher.set_default_handler(self.default_handler)
 
 		# define client
@@ -165,13 +167,28 @@ class AutonomousLooperOnline():
 
 	def launchPD(self, UBUNTU):
 		if not UBUNTU:
-			pd_looper_path = './02_ALL_PD/_main_v2.pd'
+			pd_looper_path = './02_ALL_PD/_main_v3.pd'
 			#command = macos_pd_executable + f' -send "; N_LOOPS {self.N_LOOPS}; BPM {self.TEMPO}; fftsize {self.FFT_WINDOW}; hopsize {self.FFT_HOP_SIZE}; " ' + pd_looper_path
 			command = macos_pd_executable + f' -send "; N_LOOPS {self.N_LOOPS}; BPM {self.TEMPO}; BEATS_PER_LOOP {self.BEATS_PER_LOOP}; PORT_SND {self.port_rcv}; PORT_RCV {self.port_snd}; " ' + pd_looper_path
 			os.system(command)
 
 	def default_handler(self, address, *args):
 	    print(f"DEFAULT {address}: {len(args)}")
+
+	def startInteraction(self, address, *args):
+		if args[0] == 1:
+			print()
+			print('Creating new decision log')
+			print('-'*50)
+			print()
+			self.decisions_log = []
+			LOOP_TRACKS_NUMS = []
+		elif args[0] == 0:
+			print()
+			print('-'*50)
+			print('Saving decision log')
+			with open(f'02_ALL_PD/recording/decisions_log.json', 'w', encoding='utf-8') as f:
+				json.dump(self.decisions_log, f, ensure_ascii=False, indent=4)
 
 	def liveFeaturesIn_handler(self, address, *args):
 		#print(f"{address}: {len(args)}")
@@ -199,20 +216,6 @@ class AutonomousLooperOnline():
 			elif feature_name == 'onsets':
 				self.onsets = np.abs(np.array(args))
 				self.binaryRhythms_sequence = self.getBinaryRhythm(self.onsets)
-				'''
-				interval_size = int(self.N_BAR_SAMPLES / self.RHYTHM_SUBDIVISIONS)
-				binary_rhythm = []
-				for i in range(0, self.N_BAR_SAMPLES, interval_size):
-					# if there is a onset in the bar division 1, otherwise 0
-					flag = 0
-					flag_dynamic = 0
-					for onset in self.onsets:
-						if onset > i and onset <= i+interval_size:
-							flag = 1
-					binary_rhythm.append(flag)
-				self.onsets_sequence = (self.onsets / self.FFT_HOP_SIZE).astype(int)
-				self.binaryRhythms_sequence = binary_rhythm
-				'''
 				self.featuresInCounter += 1
 		else:
 			if feature_name == 'chroma':
@@ -255,6 +258,13 @@ class AutonomousLooperOnline():
 			print(f'SEGMENT {self.BARS_COUNT}')
 			print('-'*50)
 
+
+			# update log
+			decisions_bar = {}
+			decisions_bar['subdivision_index (m)'] = self.BARS_COUNT
+			decisions_bar['decisions'] = []
+
+
 			# compute tonnetz from chroma
 			self.tonnetz_sequence = librosa.feature.tonnetz(chroma=self.chroma_sequence, sr=self.sr)
 			for i in range(self.N_LOOPS):
@@ -263,6 +273,9 @@ class AutonomousLooperOnline():
 			# compute bar loudness
 			bar_mean_loudness = self.loudness_sequence[0, :].mean() # mean loudness of bar
 			if not any(self.active_loops):
+
+				updated = False
+
 				# INITIAL OPERATIONAL MODE
 				# check that the bar is not completely silent
 				if bar_mean_loudness > self.silence_threshold:
@@ -278,21 +291,48 @@ class AutonomousLooperOnline():
 							if not any(self.active_loops): # check that loops haven't been activated in the meantime
 								# check if repetition rules are satisfied
 								rules_satisfied, satisfaction_degree = self.evaluateStartupRepetitionCriteria(self.looping_rules[i], previous_metrics, comparison_metrics)
-								print(f'Loop {i+1}')
-								print(f'Rule satisfaction degree {satisfaction_degree:.3f}')
+								# print(f'Loop {i+1}')
+								# print(f'Rule satisfaction degree {satisfaction_degree:.3f}')
+
+								print('')
+								print(f'Decision I_{i+1} ---> Segment selected for loop {i+1}')
+
 								#if all(rules_satisfied): 
 								if satisfaction_degree >= self.STARTUP_SIMILARITY_THR: 
 									print(f'Segment selected for loop {i+1}')
 									self.client.send_message(f"/loopdecision/loop/{self.candidate_segments_divisions[-1]}", str(i))
 									self.bars_loop_persisted[i] = 0
 									self.active_loops[i] = True
+									updated = True
+
+									# update log
+									decisions_element = {}
+									decisions_element['decision_type'] = 'I'
+									decisions_element['loop_track (i)'] = i
+									decisions_element['num_beats (T_l)'] = self.candidate_segments_divisions[-1]
+									decisions_element['satisfaction_degree'] = float(satisfaction_degree)
+									decisions_bar['decisions'].append(decisions_element)
+
 					newdescriptors = []
 					for descriptor in bar_sequence_descriptors:
 						newdescriptors.append(descriptor.copy())
 					self.previous_descriptors.append(newdescriptors)
 					del self.previous_descriptors[0] # remove firts element of bar list (make circular buffer)
 			
+				if not updated:
+					print('')
+					print(f'Decision R ---> No updates')
+					# update log
+					decisions_element = {}
+					decisions_element['decision_type'] = 'R'
+					decisions_element['loop_track (i)'] = None
+					decisions_element['num_beats (T_l)'] = None
+					decisions_element['satisfaction_degree'] = None
+					decisions_bar['decisions'].append(decisions_element)
+
 			else:
+
+				updated = False
 
 				# BASIC OPERATIONAL MODE
 				all_loops_satisfaction_degrees = [0 for _ in range(self.N_LOOPS)]
@@ -353,39 +393,94 @@ class AutonomousLooperOnline():
 					if all_loops_rules_satisfied[i]:
 						if self.bars_loop_persisted[i] >= self.MIN_LOOPS_REPETITION:
 							if self.LOOP_CHANGE_RULE == "newer":
+								# print('')
+								# print('-'*50)
+								# print(f'Bar {self.BARS_COUNT} selected for loop {i+1}')
+								# print('-'*50)
+
 								print('')
-								print('-'*50)
-								print(f'Bar {self.BARS_COUNT} selected for loop {i+1}')
-								print('-'*50)
+								print(f'Decision A_{i+1} ---> Segment selected for loop {i+1}')
+
 								self.client.send_message(f"/loopdecision/loop/{str(self.candidate_segments_divisions[selected_candidate_nums[i]])}", str(i))
 								self.bars_loop_persisted[i] = 0
 								self.active_loops[i] = True
 								self.selected_loops_satisfaction_degrees[i] = sum(rules_satisfaction_degree)/len(rules_satisfaction_degree)
+								
+								updated = True
+
+								# update log
+								decisions_element = {}
+								decisions_element['decision_type'] = 'A'
+								decisions_element['loop_track (i)'] = i
+								decisions_element['num_beats (T_l)'] = self.candidate_segments_divisions[selected_candidate_nums[i]]
+								decisions_element['satisfaction_degree'] = float(self.selected_loops_satisfaction_degrees[i])
+								decisions_bar['decisions'].append(decisions_element)
+
 								break
 
 							elif self.LOOP_CHANGE_RULE == "better":
 								if sum(rules_satisfaction_degree)/len(rules_satisfaction_degree) >= self.selected_loops_satisfaction_degrees[i]:
+									
 									print('')
-									print('-'*50)
-									print(f'Bar {self.BARS_COUNT} selected for loop {i+1}')
-									print('')
+									print(f'Decision A_{i+1} ---> Segment selected for loop {i+1}')
+
+									# print('')
+									# print('-'*50)
+									# print(f'Bar {self.BARS_COUNT} selected for loop {i+1}')
+									# print('')
 									self.client.send_message(f"/loopdecision/loop/{str(self.candidate_segments_divisions[selected_candidate_nums[i]])}", str(i))
 									self.bars_loop_persisted[i] = 0
 									self.active_loops[i] = True
 									self.selected_loops_satisfaction_degrees[i] = sum(rules_satisfaction_degree)/len(rules_satisfaction_degree)
+									
+									updated = True
+
+									# update log
+									decisions_element = {}
+									decisions_element['decision_type'] = 'A'
+									decisions_element['loop_track (i)'] = i
+									decisions_element['num_beats (T_l)'] = self.candidate_segments_divisions[selected_candidate_nums[i]]
+									decisions_element['satisfaction_degree'] = float(self.selected_loops_satisfaction_degrees[i])
+									decisions_bar['decisions'].append(decisions_element)
+
 									break
 				
 
 				# CHECK IF LOOP SHOULD BE DROPPED
 				for i in range(self.N_LOOPS):
 					if self.bars_loop_persisted[i] >= self.MAX_LOOPS_REPETITION:
+						print('')
+						print(f'Decision Z_{i+1} ---> Clearing loop {i+1} audio buffer')
+
 						self.client.send_message("/loopdecision/drop", str(i))
 						self.bars_loop_persisted[i] = 0
 						self.selected_loops_satisfaction_degrees[i] = 0
 						self.active_loops[i] = False
+						updated = True
+						# save dropped to dict
+
+						# update log
+						decisions_element = {}
+						decisions_element['decision_type'] = 'Z'
+						decisions_element['loop_track (i)'] = i
+						decisions_element['num_beats (T_l)'] = None
+						decisions_element['satisfaction_degree'] = None
+						decisions_bar['decisions'].append(decisions_element)
 					else: 
 						self.bars_loop_persisted[i] += 1
 			
+				if not updated:
+					print('')
+					print(f'Decision R ---> No updates')
+					# update log
+					decisions_element = {}
+					decisions_element['decision_type'] = 'R'
+					decisions_element['loop_track (i)'] = None
+					decisions_element['num_beats (T_l)'] = None
+					decisions_element['satisfaction_degree'] = None
+					decisions_bar['decisions'].append(decisions_element)
+
+			self.decisions_log.append(decisions_bar)
 			self.BARS_COUNT += 1
 
 	def evaluateLoopingRules(self, looping_rules, comparison_metrics):

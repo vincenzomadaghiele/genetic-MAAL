@@ -26,6 +26,9 @@ def loopStart_handler(address, *args):
 		print('Saving decision log')
 		with open(f'performance/decisions_log.json', 'w', encoding='utf-8') as f:
 			json.dump(decision_log, f, ensure_ascii=False, indent=4)
+		performance_info = { "BASE_BPM": BASE_BPM, "BEATS_PER_LOOP": BEATS_PER_LOOP }
+		with open(f'performance/performance_info.json', 'w', encoding='utf-8') as f:
+			json.dump(performance_info, f, ensure_ascii=False, indent=4)
 
 
 def hello_handler(address, *args):

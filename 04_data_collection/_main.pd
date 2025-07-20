@@ -1,4 +1,4 @@
-#N canvas 2194 48 1194 691 12;
+#N canvas 318 48 1194 691 12;
 #X obj 116 55 loop_mother 1;
 #X obj 116 225 dac~ 1;
 #X obj 347 379 loop_track 2 1;
