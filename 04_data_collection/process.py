@@ -28,7 +28,7 @@ if __name__ == '__main__':
 	BEATS_PER_LOOP = info["BEATS_PER_LOOP"]
 	BASE_BPM = info["BASE_BPM"]
 
-	# LOAD AUDIO TRACKS  
+	# LOAD AUDIO TRACKS
 	sr = 44100
 	MAX_SIGNAL_SIZE = 2000000000
 	signal, sr = librosa.load(dryin_filepath, sr=sr, mono=True)
