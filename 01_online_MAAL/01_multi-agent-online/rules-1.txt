@@ -1,0 +1,8 @@
+RULE;
+"rule-name": "Harmonic similarity";
+"rule-type": "more";
+"rule-threshold": 0.5;
+RULE;
+"rule-name": "Rhythmic density";
+"rule-type": "less";
+"rule-threshold": 0.5;
