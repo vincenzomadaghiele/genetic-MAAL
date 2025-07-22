@@ -1,24 +1,22 @@
-# ALL: Autonomous Live Looper
+# MAAL: Multi-Agent Autonomous Looper
 
-The Autonomous Live Looper (ALL) is a co-creative sampler/looper based on a multi-agent logic algorithm and machine listening. The ALL is composed of several agents, each controlling a loop track, which can autonomously decide to sample and play back segments of a live vocal performance by listening to each other. 
-The Autonomous Live Looper aims to expands the possibilities for indirect control, interaction, and co-creativity in live looping for improvising musicians. 
-
-<img src="https://github.com/vincenzomadaghiele/ALL-Autonomous-Live-Looper/blob/main/ALL_GUI.png" alt="drawing"  width="100%"/>
+The Multi-Agent Autonomous Looper (MAAL) is a co-creative sampler/looper based on a multi-agent logic algorithm and machine listening. The MAAL is composed of several agents, each controlling a loop track, which can autonomously decide to sample and play back segments of a live vocal performance by listening to each other. 
+The Multi-Agent Autonomous Looper aims to expands the possibilities for indirect control, interaction, and co-creativity in live looping for improvising musicians. 
 
 
 More information about the project is in the paper:
 > Vincenzo Madaghiele, Stefano Fasciani, Tejaswinee Kelkar, Çagri Erdem.
-> [**ALL: Autonomous Live Looper for improvised co-creation of musical structures**]().
+> [**MAAL: a multi-agent autonomous live looper for improvised co-creation of musical structures**]().
 > In _Proceedings of AI and Music Creativity Conference (AIMC) 2025_, 10-12 September 2025, Bruxelles (BE).
 
 
 ## Installation
 
 #### Python
-Download and install anaconda [here](https://puredata.info/downloads).
+Download and install anaconda [here](https://www.anaconda.com/download).
 Open a terminal and run the following instructions to install the dependencies:
 ```
-conda env create -f looper-environment.yml
+conda env create -f environment.yml
 conda activate looper
 ```
 
@@ -33,11 +31,11 @@ The `iem_tab` library for PD is used for buffer operations in PD, it can be inst
 The `else` library for PD is used for GUI objects in PD, it can be installed by typing `else` in the deken externals manager (`Help -> find externals`) and clicking on `install`.
 
 
-## Offline ALL
+## Offline MAAL
 
-Open a terminal. Configure the settings of the looper by modifying a configuration file like `config.json` in this repository; set the audiofile to be used for the offline ALL in the python script. Then run:
+Open a terminal. Configure the settings of the looper by modifying a configuration file like `00_offline_MAAL/config.json` in this repository; set the audiofile to be used for the offline ALL in the python script. Then run:
 ```
-python3 offlineALL.py --SOUNDFILE_FILEPATH <path/to/soundfile.wav> --CONFIG_FILEPAHT <path/to/configfile.json> --OUTPUT_DIR_PATH <path/to/outputdir>
+python3 00_offline_MAAL/offlineMAAL.py --SOUNDFILE_FILEPATH <path/to/soundfile.wav> --CONFIG_FILEPAHT <path/to/configfile.json> --OUTPUT_DIR_PATH <path/to/outputdir>
 ```
 This will generate a the corresponding audiotracks and visualizations in a new folder with the same name as the soudfile in `<path/to/outputdir>`.
 
@@ -45,15 +43,15 @@ This will generate a the corresponding audiotracks and visualizations in a new f
 
 ## Online ALL
 
-Open a terminal. Configure the settings of the looper by modifying a configuration file like `config.json` in this repository. Then run:
+Open a terminal. Configure the settings of the looper by modifying a configuration file like `01_online_MAAL/config.json` in this repository. Then run:
 ```
-python3 onlineALL.py --CONFIG_FILEPAHT <path/to/configfile.json>
+python3 01_online_MAAL/onlineMAAL.py --CONFIG_FILEPAHT <path/to/configfile.json>
 ```
 This python script will load and set up a PD patch as well.
 
 
 ## Configuration options
-The ALL can be configured by changing the settings in a `./config.json` file. This is a list of the possible configuration options:
+The ALL can be configured by changing the settings in a `config.json` file. This is a list of the possible configuration options:
 
 | Settings name | Description | Value range |
 | --- | --- | :--: |
@@ -105,7 +103,7 @@ The all works by comparing sound segments according to specific sequence-level c
 ```
 @inproceedings{madaghiele2024RLimpro,
   author    = {Madaghiele, Vincenzo and Fasciani, Stefano and Kelkar, Tejaswinee and Erdem, Çagri},
-  title     = {{ALL: Autonomous Live Looper for improvised co-creation of musical structures}},
+  title     = {{MAAL: a multi-agent autonomous live looper for improvised co-creation of musical structures}},
   booktitle = {Proceedings of AI and Music Creativity Conference (AIMC)},
   year      = {2025},
   month     = {09},
