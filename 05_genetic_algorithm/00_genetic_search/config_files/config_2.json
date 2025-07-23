@@ -6,23 +6,23 @@
     "looping-rules": [
         [
             {
-                "rule-name": "Rhythmic similarity",
+                "rule-name": "Timbral evolution - C",
                 "rule-type": "less",
-                "rule-threshold": 0.2
-            }
-        ],
-        [
-            {
-                "rule-name": "Harmonic movement - C",
-                "rule-type": "more",
                 "rule-threshold": 0.30000000000000004
             }
         ],
         [
             {
-                "rule-name": "Dynamic similarity",
+                "rule-name": "Harmonic movement - D",
+                "rule-type": "less",
+                "rule-threshold": 0.1
+            }
+        ],
+        [
+            {
+                "rule-name": "Dynamic changes - C",
                 "rule-type": "more",
-                "rule-threshold": 0.2
+                "rule-threshold": 0.9
             }
         ]
     ],
