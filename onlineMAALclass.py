@@ -194,9 +194,9 @@ class AutonomousLooperOnline():
 			save_log_path = '/'.join(save_log_path)
 			with open(f'{save_log_path}/recording/decisions_log.json', 'w', encoding='utf-8') as f:
 				json.dump(self.decisions_log, f, ensure_ascii=False, indent=4)
-		performance_info = { "BASE_BPM": self.TEMPO, "BEATS_PER_LOOP": self.BEATS_PER_LOOP }
-		with open(f'{save_log_path}/performance_info.json', 'w', encoding='utf-8') as f:
-			json.dump(performance_info, f, ensure_ascii=False, indent=4)
+			performance_info = { "BASE_BPM": self.TEMPO, "BEATS_PER_LOOP": self.BEATS_PER_LOOP }
+			with open(f'{save_log_path}/recording/performance_info.json', 'w', encoding='utf-8') as f:
+				json.dump(performance_info, f, ensure_ascii=False, indent=4)
 
 	def liveFeaturesIn_handler(self, address, *args):
 		#print(f"{address}: {len(args)}")

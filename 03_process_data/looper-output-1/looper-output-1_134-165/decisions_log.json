@@ -1,0 +1,82 @@
+[
+    {
+        "subdivision_index (m)": 33.0,
+        "decisions": [
+            {
+                "decision_type": "A",
+                "loop_track (i)": 3,
+                "num_beats (T_l)": 1.0
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 34.0,
+        "decisions": [
+            {
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 35.0,
+        "decisions": [
+            {
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 36.0,
+        "decisions": [
+            {
+                "decision_type": "A",
+                "loop_track (i)": 1,
+                "num_beats (T_l)": 1.0
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 37.0,
+        "decisions": [
+            {
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 38.0,
+        "decisions": [
+            {
+                "decision_type": "A",
+                "loop_track (i)": 2,
+                "num_beats (T_l)": 1.0
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 39.0,
+        "decisions": [
+            {
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 40.0,
+        "decisions": [
+            {
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null
+            }
+        ]
+    }
+]

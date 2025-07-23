@@ -1,0 +1,62 @@
+[
+    {
+        "subdivision_index (m)": 76.0,
+        "decisions": [
+            {
+                "decision_type": "A",
+                "loop_track (i)": 1,
+                "num_beats (T_l)": 1.0
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 77.0,
+        "decisions": [
+            {
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 78.0,
+        "decisions": [
+            {
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 79.0,
+        "decisions": [
+            {
+                "decision_type": "A",
+                "loop_track (i)": 0,
+                "num_beats (T_l)": 1.0
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 80.0,
+        "decisions": [
+            {
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 81.0,
+        "decisions": [
+            {
+                "decision_type": "A",
+                "loop_track (i)": 1,
+                "num_beats (T_l)": 1.0
+            }
+        ]
+    }
+]

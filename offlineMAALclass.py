@@ -141,7 +141,7 @@ class AutonomousLooperOffline():
 		
 		# for intial state
 		previous_bars = [np.zeros(self.BEAT_SAMPLES * self.BEATS_PER_LOOP) for _ in range(self.N_BARS_STARTUP-1)]
-		silence_threshold = 0.0003
+		silence_threshold = 0.0000003
 		user_set_bar_count = 0
 
 		for n in range(0,self.BEATS_PER_LOOP):
@@ -172,8 +172,6 @@ class AutonomousLooperOffline():
 			candidate_segments = []
 			for n in self.candidate_segments_divisions:
 
-				#print(n)
-				#print(int(self.signal_subdivided_samples[bar_num]) - int(self.signal_subdivided_samples[bar_num-n]))
 
 				segment = self.signal[int(self.signal_subdivided_samples[bar_num - n]):int(self.signal_subdivided_samples[bar_num])]
 				segment_mean_loudness = librosa.feature.rms(y=segment)[0].mean() # mean loudness of bar

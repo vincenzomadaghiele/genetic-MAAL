@@ -1,5 +1,5 @@
 {
-    "tempo": 80,
+    "tempo": 120,
     "beats_per_loop": 8,
     "min_loop_beats": 8,
     "rhythm_subdivision": 16,
@@ -20,14 +20,7 @@
         ],
         [
             {
-                "rule-name": "Rhythmic density",
-                "rule-type": "less",
-                "rule-threshold": 0.3
-            }
-        ],
-        [
-            {
-                "rule-name": "Melodic trajectory - D",
+                "rule-name": "Rhythmic similarity",
                 "rule-type": "more",
                 "rule-threshold": 0.7
             }

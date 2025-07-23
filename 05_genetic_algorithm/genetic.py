@@ -282,6 +282,12 @@ if __name__ == '__main__':
 			i += 1
 
 
+	results_output_dir_path = './05_genetic_algorithm/00_genetic_search/results'
+	if os.path.isdir(results_output_dir_path):
+		shutil.rmtree(results_output_dir_path)
+		os.mkdir(results_output_dir_path)
+	else:
+		os.mkdir(results_output_dir_path)
 	print(f'Best {NUM_KEEP} configurations: ')
 	for ii in range(NUM_KEEP):
 		print()
@@ -292,6 +298,7 @@ if __name__ == '__main__':
 			best_config = json.load(file)
 		print(json.dumps(best_config["looping-rules"], indent=4))
 		print()
-
+		with open(f'{results_output_dir_path}/{high[ii][0]}.json', 'w', encoding='utf-8') as f:
+			json.dump(best_config, f, ensure_ascii=False, indent=4)
 
 

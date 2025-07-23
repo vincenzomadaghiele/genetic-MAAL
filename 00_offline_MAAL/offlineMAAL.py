@@ -13,7 +13,7 @@ if __name__ == '__main__':
 
 	# parse arguments
 	parser = argparse.ArgumentParser()
-	parser.add_argument('--SOUNDFILE_FILEPATH', type=str, default='./00_offline_MAAL/00_corpus/USE_CASE_1.wav',
+	parser.add_argument('--SOUNDFILE_FILEPATH', type=str, default='./00_offline_MAAL/00_corpus/looper-output-2_30-240.wav',
 						help='name of the folder containing the soundfile')
 	parser.add_argument('--CONFIG_FILEPAHT', type=str, default='./00_offline_MAAL/config.json',
 						help='path to the configuration file')
