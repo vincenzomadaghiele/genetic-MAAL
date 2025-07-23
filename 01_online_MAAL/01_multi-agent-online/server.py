@@ -96,6 +96,7 @@ class LoopAgent():
 		# OTHER STATE VARIABLES
 		self.ACTIVE = False
 		self.REPETITION_NUMBER = 0 # how many times this loop has been going
+		self.LAST_SATISFACTION_DEGREE = 0
 
 		# checking features received
 		self.EXPECTED_NUM_FEATURES = self.N_CHROMA + self.N_MELBANDS + self.N_SPECTRALSHAPE + self.N_LOUDNESS + self.N_ONSET + self.N_PITCH
@@ -587,7 +588,6 @@ class MultiAgentAutonomousLooperOnline():
 		dispatcher.map("/BEATS_PER_LOOP", self.beatsPerLoop_handler)
 		dispatcher.map("/BASE_BPM", self.baseBpm_handler)
 		dispatcher.map("/END_OF_SUBDIV", self.endOfSubdivs_handler)
-		dispatcher.map("/decision/*", self.decision_handler)
 		dispatcher.map("/features/*", self.liveFeaturesIn_handler)
 		dispatcher.set_default_handler(self.default_handler)
 
@@ -598,18 +598,22 @@ class MultiAgentAutonomousLooperOnline():
 		server = BlockingOSCUDPServer((self.ip, self.port_rcv), dispatcher)
 		server.serve_forever()  # Blocks forever
 
+	def endOfSubdivs_handler(self, address, *args):
+		print()
+		print('-'*20)
+		print(f'End of subdivision: {int(args[0])}')
+
 
 	def loopStart_handler(self, address, *args):
 		if args[0] == 1:
 			print()
-			print('Creating new decision log')
-			print('-'*50)
+			print('Creating new decision log...')
 			print()
 			self.decision_log = []
 		elif args[0] == 0:
 			print()
-			print('-'*50)
-			print('Saving decision log')
+			print('Saving decision log...')
+			print()
 			with open(f'performance/decisions_log.json', 'w', encoding='utf-8') as f:
 				json.dump(self.decision_log, f, ensure_ascii=False, indent=4)
 			performance_info = { "BASE_BPM": self.BASE_BPM, "BEATS_PER_LOOP": self.BEATS_PER_LOOP }
@@ -618,7 +622,8 @@ class MultiAgentAutonomousLooperOnline():
 
 	def hello_handler(self, address, *args):
 		# register loop agent
-		newLoopAgent = LoopAgent(sr=self.sr,
+		newLoopAgent = LoopAgent(loop_track_num=int(args[0]),
+								sr=self.sr,
 								fft_window=self.FFT_WINDOW,
 								fft_hopSize=self.FFT_HOP_SIZE,
 								BEATS_PER_LOOP=self.BEATS_PER_LOOP,
@@ -627,10 +632,18 @@ class MultiAgentAutonomousLooperOnline():
 								RHYTHM_SUBDIVISIONS=self.RHYTHM_SUBDIVISIONS
 							)
 		self.LOOP_AGENTS[int(args[0])] = newLoopAgent
+		self.loops_satisfaction_degrees[int(args[0])] = None
+		self.loops_rules_satisfied[int(args[0])] = False
+		self.loops_selected_subdivision_nums[int(args[0])] = None
+		self.loops_updated[int(args[0])] = False
 		print(f'Loop agents: {self.LOOP_AGENTS}')
 
 	def reset_handler(self, address, *args):
 		self.LOOP_AGENTS = {}
+		self.loops_satisfaction_degrees = {}
+		self.loops_rules_satisfied = {}
+		self.loops_selected_subdivision_nums = {}
+		self.loops_updated = {}
 		print('RESET')
 
 	def beatsPerLoop_handler(self, address, *args):
@@ -708,7 +721,25 @@ class MultiAgentAutonomousLooperOnline():
 			loopAgent.tonnetz_context = librosa.feature.tonnetz(chroma=loopAgent.chroma_context, sr=loopAgent.sr)
 
 			loop_satisfaction_degree, loop_rules_satisfied, selected_candidate_num = loopAgent.computeSatsifactionCoefficient()
+			self.loops_satisfaction_degrees[loop_num] = loop_satisfaction_degree
+			self.loops_rules_satisfied[loop_num] = loop_rules_satisfied
+			self.loops_selected_subdivision_nums[loop_num] = selected_candidate_num
+			self.loops_updated[loop_num] = True
 
+			if all(self.loops_updated.values()):
+				print('ALL COMPUTED')
+				print(self.loops_satisfaction_degrees)
+				print(self.loops_rules_satisfied)
+				print(self.loops_selected_subdivision_nums)
+
+				# make decision
+
+				# for all loopAgents:
+				# loopAgent.updateState() # check if drop, update counter...
+
+				# update state variables
+				for key in self.loops_updated.keys():
+					self.loops_updated[key] = False
 
 
 if __name__ == '__main__': 
