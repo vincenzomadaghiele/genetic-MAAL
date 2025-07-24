@@ -94,7 +94,7 @@
                 "decision_type": "I",
                 "loop_track (i)": 0,
                 "num_beats (T_l)": 1,
-                "satisfaction_degree": 0.5
+                "satisfaction_degree": 0.38687046505411904
             }
         ]
     },
@@ -146,10 +146,10 @@
         "subdivision_index (m)": 13,
         "decisions": [
             {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
+                "decision_type": "A",
+                "loop_track (i)": 1,
+                "num_beats (T_l)": 1,
+                "satisfaction_degree": 0.26102602136797065
             }
         ]
     },
@@ -157,10 +157,10 @@
         "subdivision_index (m)": 14,
         "decisions": [
             {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
+                "decision_type": "A",
+                "loop_track (i)": 2,
+                "num_beats (T_l)": 1,
+                "satisfaction_degree": 0.2589927437680934
             }
         ]
     },
@@ -168,10 +168,10 @@
         "subdivision_index (m)": 15,
         "decisions": [
             {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
+                "decision_type": "A",
+                "loop_track (i)": 3,
+                "num_beats (T_l)": 1,
+                "satisfaction_degree": 0.18691555803421173
             }
         ]
     },
@@ -223,10 +223,10 @@
         "subdivision_index (m)": 20,
         "decisions": [
             {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
+                "decision_type": "A",
+                "loop_track (i)": 1,
+                "num_beats (T_l)": 1,
+                "satisfaction_degree": 0.28950102226721375
             }
         ]
     }

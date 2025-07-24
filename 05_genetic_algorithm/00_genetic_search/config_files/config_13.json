@@ -7,20 +7,27 @@
         [
             {
                 "rule-name": "Harmonic movement - D",
-                "rule-type": "more",
-                "rule-threshold": 0.4
-            }
-        ],
-        [
-            {
-                "rule-name": "Timbral evolution - C",
                 "rule-type": "less",
                 "rule-threshold": 0.9
             }
         ],
         [
             {
-                "rule-name": "Harmonic similarity",
+                "rule-name": "Timbral similarity",
+                "rule-type": "less",
+                "rule-threshold": 0.8
+            }
+        ],
+        [
+            {
+                "rule-name": "Melodic trajectory - C",
+                "rule-type": "more",
+                "rule-threshold": 0.8
+            }
+        ],
+        [
+            {
+                "rule-name": "Harmonic movement - D",
                 "rule-type": "more",
                 "rule-threshold": 0.6000000000000001
             }
