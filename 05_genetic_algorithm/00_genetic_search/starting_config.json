@@ -24,6 +24,13 @@
                 "rule-type": "more",
                 "rule-threshold": 0.7
             }
+        ],
+        [
+            {
+                "rule-name": "Rhythmic similarity",
+                "rule-type": "more",
+                "rule-threshold": 0.7
+            }
         ]
     ],
     "startup-mode": "repetition",

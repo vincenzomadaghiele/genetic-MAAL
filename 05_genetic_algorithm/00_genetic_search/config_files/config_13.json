@@ -8,21 +8,21 @@
             {
                 "rule-name": "Harmonic movement - D",
                 "rule-type": "more",
-                "rule-threshold": 0.5
+                "rule-threshold": 0.4
             }
         ],
         [
             {
-                "rule-name": "Global spectral overlap",
+                "rule-name": "Timbral evolution - C",
                 "rule-type": "less",
-                "rule-threshold": 0.5
+                "rule-threshold": 0.9
             }
         ],
         [
             {
-                "rule-name": "Rhythmic density",
-                "rule-type": "less",
-                "rule-threshold": 0.30000000000000004
+                "rule-name": "Harmonic similarity",
+                "rule-type": "more",
+                "rule-threshold": 0.6000000000000001
             }
         ]
     ],

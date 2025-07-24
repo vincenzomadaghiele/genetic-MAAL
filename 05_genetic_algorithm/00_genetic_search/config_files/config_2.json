@@ -20,9 +20,9 @@
         ],
         [
             {
-                "rule-name": "Dynamic changes - C",
+                "rule-name": "Rhythmic density",
                 "rule-type": "more",
-                "rule-threshold": 0.9
+                "rule-threshold": 0.1
             }
         ]
     ],

@@ -6,9 +6,9 @@
     "looping-rules": [
         [
             {
-                "rule-name": "Melodic trajectory - D",
-                "rule-type": "more",
-                "rule-threshold": 0.9
+                "rule-name": "Timbral evolution - C",
+                "rule-type": "less",
+                "rule-threshold": 0.30000000000000004
             }
         ],
         [

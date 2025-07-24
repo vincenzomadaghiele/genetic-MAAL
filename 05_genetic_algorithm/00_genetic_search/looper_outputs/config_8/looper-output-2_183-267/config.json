@@ -6,9 +6,9 @@
     "looping-rules": [
         [
             {
-                "rule-name": "Dynamic changes - D",
-                "rule-type": "less",
-                "rule-threshold": 0.7000000000000001
+                "rule-name": "Dynamic changes - C",
+                "rule-type": "more",
+                "rule-threshold": 0.9
             }
         ],
         [

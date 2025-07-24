@@ -20,9 +20,9 @@
         ],
         [
             {
-                "rule-name": "Harmonic movement - D",
+                "rule-name": "Melodic trajectory - C",
                 "rule-type": "less",
-                "rule-threshold": 0.4
+                "rule-threshold": 0.30000000000000004
             }
         ]
     ],
