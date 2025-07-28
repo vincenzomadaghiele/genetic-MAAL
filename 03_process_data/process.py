@@ -12,7 +12,7 @@ import shutil
 if __name__ == '__main__': 
 
 	# load sound files from performance
-	perf_filepath = './03_process_data/looper-output-2'
+	perf_filepath = './03_process_data/MAAL-2'
 	dryin_filepath = f'{perf_filepath}/dry-in.wav'
 	loops_paths = [path if path.split('.')[0].split('-')[0] == 'loop' else None for path in os.listdir(perf_filepath)]
 	loops_paths = [x for x in loops_paths if x is not None]	
@@ -215,8 +215,8 @@ if __name__ == '__main__':
 
 		return 
 
-	start_time = 183
-	stop_time = 267
+	start_time = 320
+	stop_time = 450
 	cutPerformance(start_time=start_time, stop_time=stop_time)
 
 
