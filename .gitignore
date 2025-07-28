@@ -1,6 +1,7 @@
 01_online_MAAL/00_MAAL_PD/recording/*.wav
 02_quantized_looper/performance/*.wav
 03_process_data/*/*.wav
+03_process_data/*/*/*.wav
 04_exhaustive_search/00_search/looper_outputs/*/*/*.wav
 05_genetic_algorithm/00_genetic_search/looper_outputs/*/*/*.wav
 *.png
