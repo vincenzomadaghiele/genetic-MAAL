@@ -6,30 +6,30 @@
     "looping-rules": [
         [
             {
-                "rule-name": "Harmonic similarity",
+                "rule-name": "Dynamic similarity",
                 "rule-type": "more",
-                "rule-threshold": 0.1
+                "rule-threshold": 0.2
             }
         ],
         [
             {
-                "rule-name": "Melodic similarity",
+                "rule-name": "Frequency range overlap",
                 "rule-type": "more",
-                "rule-threshold": 0.1
+                "rule-threshold": 0.5
             }
         ],
         [
             {
-                "rule-name": "Harmonic movement - C",
-                "rule-type": "more",
-                "rule-threshold": 0.8
+                "rule-name": "Melodic trajectory - D",
+                "rule-type": "less",
+                "rule-threshold": 0.4
             }
         ],
         [
             {
-                "rule-name": "Timbral evolution - C",
+                "rule-name": "Dynamic changes - C",
                 "rule-type": "more",
-                "rule-threshold": 0.9
+                "rule-threshold": 0.7000000000000001
             }
         ]
     ],
