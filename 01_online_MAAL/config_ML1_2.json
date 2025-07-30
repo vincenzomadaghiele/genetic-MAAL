@@ -37,7 +37,7 @@
     "startup-repetition-numBars": 2,
     "startup-similarityThreshold": 0.001,
     "startup-firstLoopBar": 4,
-    "minLoopsRepetition": 4,
-    "maxLoopsRepetition": 20,
+    "minLoopsRepetition": 8,
+    "maxLoopsRepetition": 24,
     "loopChange-rule": "better"
 }

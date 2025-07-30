@@ -1,7 +1,7 @@
 #N canvas 602 38 910 916 12;
 #X declare -lib zexy;
 #X declare -lib iem_tab;
-#N canvas 0 38 1512 916 AutonomousLiveLooper 1;
+#N canvas 0 38 1512 916 AutonomousLiveLooper 0;
 #X obj 382 124 cnv 19 420 508 empty empty AUTONOMOUS\ LIVE\ LOOPER 80 25 0 20 #feffc6 #404040 0;
 #X obj 110 124 cnv 19 265 190 empty empty AUDIO\ IN 80 25 0 20 #ffe3c6 #404040 0;
 #X obj 110 319 cnv 19 265 170 empty empty INTERACTION 60 25 0 20 #c7c6ff #404040 0;
@@ -14,7 +14,7 @@
 #X text 1214 103 SENDING DESCRIPTORS TO PYTHON;
 #N canvas 498 536 632 357 (subpatch) 0;
 #X array \$0-live-input 1 float 3;
-#A 0 -0.0256979;
+#A 0 -0.96;
 #X coords 0 1 1 -1 220 50 1 0 0;
 #X restore 137 219 graph;
 #X obj 140 219 hsl 215 50 0 1 0 0 empty \$0-rec-location-rcv empty -2 -10 0 12 #fcfcfc #ff0400 #000000 0 1;
@@ -242,7 +242,7 @@
 #X obj 437 472 array size \$0-loops-11.show;
 #N canvas 527 565 735 381 (subpatch) 0;
 #X array \$0-sequence 1 float 3;
-#A 0 0.0270103;
+#A 0 -0.000209847;
 #X coords 0 1 1 -1 200 70 1 0 0;
 #X restore 445 361 graph;
 #X text 530 338 PING-PONG BUFFER;
@@ -592,7 +592,7 @@
 #X obj 1144 782 limiter;
 #N canvas 527 565 735 381 (subpatch) 0;
 #X array \$0-loops-0.show 1 float 3;
-#A 0 0;
+#A 0 0.00282069;
 #X coords 0 1 1 -1 120 50 1 0 0;
 #X restore 407 187 graph;
 #N canvas 527 565 735 381 (subpatch) 0;
@@ -632,7 +632,7 @@
 #X restore 665 187 graph;
 #N canvas 527 565 735 381 (subpatch) 0;
 #X array \$0-loops-3.show 1 float 3;
-#A 0 0.0150266;
+#A 0 0;
 #X coords 0 1 1 -1 120 50 1 0 0;
 #X restore 406 396 graph;
 #N canvas 527 565 735 381 (subpatch) 0;
@@ -832,7 +832,6 @@
 #X obj 1393 208 sel 0 1;
 #X msg 1393 233 0;
 #X msg 1416 421 1;
-#X obj 1088 475 print;
 #X obj 826 748 print;
 #X connect 3 0 6 0;
 #X connect 6 0 5 0;
@@ -844,7 +843,6 @@
 #X connect 23 0 24 0;
 #X connect 26 0 62 0;
 #X connect 27 0 54 0;
-#X connect 27 0 197 0;
 #X connect 28 0 30 0;
 #X connect 29 0 26 0;
 #X connect 30 0 174 1;
@@ -929,7 +927,7 @@
 #X connect 171 0 172 0;
 #X connect 172 0 180 0;
 #X connect 172 0 33 0;
-#X connect 174 0 198 0;
+#X connect 174 0 197 0;
 #X connect 174 0 119 0;
 #X connect 175 0 160 0;
 #X connect 176 0 143 0;

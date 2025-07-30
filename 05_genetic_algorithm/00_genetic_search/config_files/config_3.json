@@ -13,23 +13,23 @@
         ],
         [
             {
-                "rule-name": "Dynamic changes - D",
+                "rule-name": "Harmonic movement - D",
                 "rule-type": "more",
-                "rule-threshold": 0.6000000000000001
+                "rule-threshold": 0.9
             }
         ],
         [
             {
-                "rule-name": "Rhythmic density",
-                "rule-type": "more",
-                "rule-threshold": 0.30000000000000004
+                "rule-name": "Melodic trajectory - D",
+                "rule-type": "less",
+                "rule-threshold": 0.4
             }
         ],
         [
             {
-                "rule-name": "Melodic similarity",
+                "rule-name": "Dynamic changes - C",
                 "rule-type": "more",
-                "rule-threshold": 0.1
+                "rule-threshold": 0.7000000000000001
             }
         ]
     ],

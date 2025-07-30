@@ -1,6 +1,7 @@
 import json
 import os
 import threading
+import collections
 import librosa
 import numpy as np
 import numpy.lib.recfunctions
@@ -19,7 +20,9 @@ class LoopAgent():
 			BEATS_PER_LOOP=8,
 			MIN_BEATS_PER_LOOP=4,
 			BASE_BPM=120,
-			RHYTHM_SUBDIVISIONS=16
+			RHYTHM_SUBDIVISIONS=16,
+			MIN_REPETITIONS=4,
+			MAX_REPETITIONS=32
 		):
 
 		# properties
@@ -27,6 +30,8 @@ class LoopAgent():
 		self.BASE_BPM = BASE_BPM
 		self.RHYTHM_SUBDIVISIONS = int(RHYTHM_SUBDIVISIONS)
 		self.MIN_BEATS_PER_LOOP = int(MIN_BEATS_PER_LOOP)
+		self.MIN_REPETITIONS = int(MIN_REPETITIONS)
+		self.MAX_REPETITIONS = int(MAX_REPETITIONS)
 		self.verbose = 1
 		self.loop_track_num = loop_track_num
 
@@ -112,6 +117,24 @@ class LoopAgent():
 		self.min_loop_division = self.candidate_segments_divisions[0]
 		print(f'Candidate segment divisions: {self.candidate_segments_divisions}')		
 
+	def updateState(self, decision):
+
+		if decision == 'A' and self.REPETITION_NUMBER > self.MIN_REPETITIONS:
+			outcome = 'A'
+			print(f'Decision A_{self.loop_track_num} ---> Segment selected for loop {self.loop_track_num}')
+			self.REPETITION_NUMBER = 0
+		elif self.REPETITION_NUMBER >= self.MAX_REPETITIONS:
+			# DROP LOOP
+			print(f'Decision Z_{self.loop_track_num} ---> Clearing loop {self.loop_track_num} audio buffer')
+			outcome = 'Z'
+			# send loop drop
+			self.REPETITION_NUMBER = 0
+		else:
+			print(f'Decision R_{self.loop_track_num} ---> No update on loop {self.loop_track_num}')
+			outcome = 'R'
+			self.REPETITION_NUMBER += 1
+
+		return outcome
 
 	def computeSatsifactionCoefficient(self):
 
@@ -143,9 +166,9 @@ class LoopAgent():
 		loop_rules_satisfied = True if candidates_satisfaction_degrees[max_candidates_satisfaction_degree] != 0 else False
 		selected_candidate_num = max_candidates_satisfaction_degree
 		
-		print(f'Loop track L_{self.loop_track_num}')
-		print(f'Most satisfactory candidate is segment {max_candidates_satisfaction_degree+1}')
-		print(f'Rule satisfaction degree {loop_satisfaction_degree:.3f}')
+		# print(f'Loop track L_{self.loop_track_num}')
+		# print(f'Most satisfactory candidate is segment {max_candidates_satisfaction_degree+1}')
+		# print(f'Rule satisfaction degree {loop_satisfaction_degree:.3f}')
 
 		return loop_satisfaction_degree, loop_rules_satisfied, selected_candidate_num
 
@@ -592,7 +615,7 @@ class MultiAgentAutonomousLooperOnline():
 		dispatcher.set_default_handler(self.default_handler)
 
 		# define client
-		client = udp_client.SimpleUDPClient(self.ip, self.port_snd)
+		self.client = udp_client.SimpleUDPClient(self.ip, self.port_snd)
 
 		# define server
 		server = BlockingOSCUDPServer((self.ip, self.port_rcv), dispatcher)
@@ -600,8 +623,8 @@ class MultiAgentAutonomousLooperOnline():
 
 	def endOfSubdivs_handler(self, address, *args):
 		print()
-		print('-'*20)
 		print(f'End of subdivision: {int(args[0])}')
+		print('-'*20)
 
 
 	def loopStart_handler(self, address, *args):
@@ -665,81 +688,99 @@ class MultiAgentAutonomousLooperOnline():
 		feature_component_num = int(address.split('/')[-1].split('-')[-1])
 		# print(f'rcvd: {loop_num}/{signal_context}/{feature_name}-{feature_component_num}')
 
-		loopAgent = self.LOOP_AGENTS[loop_num]
+		if self.LOOP_AGENTS:
+			loopAgent = self.LOOP_AGENTS[loop_num]
 
-		# SIMPLE FEATURE RECEIVER
-		if signal_context == "signal":
-			if feature_name == 'chroma':
-				loopAgent.chroma_sequence[feature_component_num, :] = np.array(args)[:loopAgent.N_FFT_FRAMES]
-				loopAgent.featuresInCounter_sequence += 1
-			elif feature_name == 'spectralshape':
-				loopAgent.spectralshape_sequence[feature_component_num, :] = np.array(args)[:loopAgent.N_FFT_FRAMES]
-				loopAgent.featuresInCounter_sequence += 1
-			elif feature_name == 'melbands':
-				loopAgent.melbands_sequence[feature_component_num, :] = np.array(args)[:loopAgent.N_FFT_FRAMES]
-				loopAgent.featuresInCounter_sequence += 1
-			elif feature_name == 'loudness':
-				loopAgent.loudness_sequence[feature_component_num, :] = np.array(args)[:loopAgent.N_FFT_FRAMES]
-				loopAgent.featuresInCounter_sequence += 1
-			elif feature_name == 'pitch':
-				loopAgent.pitch_sequence[feature_component_num, :] = np.array(args)[:loopAgent.N_FFT_FRAMES]
-				loopAgent.featuresInCounter_sequence += 1
-			elif feature_name == 'onsets':
-				loopAgent.onsets = np.abs(np.array(args))
-				loopAgent.binaryRhythms_sequence = loopAgent.getBinaryRhythm(loopAgent.onsets)
-				loopAgent.featuresInCounter_sequence += 1
+			# SIMPLE FEATURE RECEIVER
+			if signal_context == "signal":
+				if feature_name == 'chroma':
+					loopAgent.chroma_sequence[feature_component_num, :] = np.array(args)[:loopAgent.N_FFT_FRAMES]
+					loopAgent.featuresInCounter_sequence += 1
+				elif feature_name == 'spectralshape':
+					loopAgent.spectralshape_sequence[feature_component_num, :] = np.array(args)[:loopAgent.N_FFT_FRAMES]
+					loopAgent.featuresInCounter_sequence += 1
+				elif feature_name == 'melbands':
+					loopAgent.melbands_sequence[feature_component_num, :] = np.array(args)[:loopAgent.N_FFT_FRAMES]
+					loopAgent.featuresInCounter_sequence += 1
+				elif feature_name == 'loudness':
+					loopAgent.loudness_sequence[feature_component_num, :] = np.array(args)[:loopAgent.N_FFT_FRAMES]
+					loopAgent.featuresInCounter_sequence += 1
+				elif feature_name == 'pitch':
+					loopAgent.pitch_sequence[feature_component_num, :] = np.array(args)[:loopAgent.N_FFT_FRAMES]
+					loopAgent.featuresInCounter_sequence += 1
+				elif feature_name == 'onsets':
+					loopAgent.onsets = np.abs(np.array(args))
+					loopAgent.binaryRhythms_sequence = loopAgent.getBinaryRhythm(loopAgent.onsets)
+					loopAgent.featuresInCounter_sequence += 1
 
-		elif signal_context == "context":
-			if feature_name == 'chroma':
-				loopAgent.chroma_context[feature_component_num, :] = np.array(args)[:loopAgent.N_FFT_FRAMES]
-				loopAgent.featuresInCounter_context += 1
-			elif feature_name == 'spectralshape':
-				loopAgent.spectralshape_context[feature_component_num, :] = np.array(args)[:loopAgent.N_FFT_FRAMES]
-				loopAgent.featuresInCounter_context += 1
-			elif feature_name == 'melbands':
-				loopAgent.melbands_context[feature_component_num, :] = np.array(args)[:loopAgent.N_FFT_FRAMES]
-				loopAgent.featuresInCounter_context += 1
-			elif feature_name == 'loudness':
-				loopAgent.loudness_context[feature_component_num, :] = np.array(args)[:loopAgent.N_FFT_FRAMES]
-				loopAgent.featuresInCounter_context += 1
-			elif feature_name == 'pitch':
-				loopAgent.pitch_context[feature_component_num, :] = np.array(args)[:loopAgent.N_FFT_FRAMES]
-				loopAgent.featuresInCounter_context += 1
-			elif feature_name == 'onsets':
-				loopAgent.onsets_context = np.abs(np.array(args))
-				loopAgent.binaryRhythms_context = loopAgent.getBinaryRhythm(loopAgent.onsets_context)
-				loopAgent.featuresInCounter_context += 1
+			elif signal_context == "context":
+				if feature_name == 'chroma':
+					loopAgent.chroma_context[feature_component_num, :] = np.array(args)[:loopAgent.N_FFT_FRAMES]
+					loopAgent.featuresInCounter_context += 1
+				elif feature_name == 'spectralshape':
+					loopAgent.spectralshape_context[feature_component_num, :] = np.array(args)[:loopAgent.N_FFT_FRAMES]
+					loopAgent.featuresInCounter_context += 1
+				elif feature_name == 'melbands':
+					loopAgent.melbands_context[feature_component_num, :] = np.array(args)[:loopAgent.N_FFT_FRAMES]
+					loopAgent.featuresInCounter_context += 1
+				elif feature_name == 'loudness':
+					loopAgent.loudness_context[feature_component_num, :] = np.array(args)[:loopAgent.N_FFT_FRAMES]
+					loopAgent.featuresInCounter_context += 1
+				elif feature_name == 'pitch':
+					loopAgent.pitch_context[feature_component_num, :] = np.array(args)[:loopAgent.N_FFT_FRAMES]
+					loopAgent.featuresInCounter_context += 1
+				elif feature_name == 'onsets':
+					loopAgent.onsets_context = np.abs(np.array(args))
+					loopAgent.binaryRhythms_context = loopAgent.getBinaryRhythm(loopAgent.onsets_context)
+					loopAgent.featuresInCounter_context += 1
 
-		# ACTION WHEN ALL FEATURES HAVE BEEN RECIEVED
-		if loopAgent.featuresInCounter_sequence == loopAgent.EXPECTED_NUM_FEATURES and loopAgent.featuresInCounter_context == loopAgent.EXPECTED_NUM_FEATURES:
-			print(f'Loop {loop_num}: all features recieved')
-			loopAgent.featuresInCounter_sequence = 0
-			loopAgent.featuresInCounter_context = 0
+			# ACTION WHEN ALL FEATURES HAVE BEEN RECIEVED
+			if loopAgent.featuresInCounter_sequence >= loopAgent.EXPECTED_NUM_FEATURES and loopAgent.featuresInCounter_context >= loopAgent.EXPECTED_NUM_FEATURES:
+				# print(f'Loop {loop_num}: all features recieved')
+				loopAgent.featuresInCounter_sequence = 0
+				loopAgent.featuresInCounter_context = 0
 
-			# compute tonnetz from chroma
-			loopAgent.tonnetz_sequence = librosa.feature.tonnetz(chroma=loopAgent.chroma_sequence, sr=loopAgent.sr)
-			loopAgent.tonnetz_context = librosa.feature.tonnetz(chroma=loopAgent.chroma_context, sr=loopAgent.sr)
+				# compute tonnetz from chroma
+				loopAgent.tonnetz_sequence = librosa.feature.tonnetz(chroma=loopAgent.chroma_sequence, sr=loopAgent.sr)
+				loopAgent.tonnetz_context = librosa.feature.tonnetz(chroma=loopAgent.chroma_context, sr=loopAgent.sr)
 
-			loop_satisfaction_degree, loop_rules_satisfied, selected_candidate_num = loopAgent.computeSatsifactionCoefficient()
-			self.loops_satisfaction_degrees[loop_num] = loop_satisfaction_degree
-			self.loops_rules_satisfied[loop_num] = loop_rules_satisfied
-			self.loops_selected_subdivision_nums[loop_num] = selected_candidate_num
-			self.loops_updated[loop_num] = True
+				loop_satisfaction_degree, loop_rules_satisfied, selected_candidate_num = loopAgent.computeSatsifactionCoefficient()
+				self.loops_satisfaction_degrees[loop_num] = loop_satisfaction_degree
+				self.loops_rules_satisfied[loop_num] = loop_rules_satisfied
+				self.loops_selected_subdivision_nums[loop_num] = selected_candidate_num
+				self.loops_updated[loop_num] = True
 
-			if all(self.loops_updated.values()):
-				print('ALL COMPUTED')
-				print(self.loops_satisfaction_degrees)
-				print(self.loops_rules_satisfied)
-				print(self.loops_selected_subdivision_nums)
 
-				# make decision
+				if all(self.loops_updated.values()):
+					# print('ALL COMPUTED')
 
-				# for all loopAgents:
-				# loopAgent.updateState() # check if drop, update counter...
+					# make decision
+					self.loops_satisfaction_degrees = collections.OrderedDict(sorted(self.loops_satisfaction_degrees.items()))
+					self.loops_rules_satisfied = collections.OrderedDict(sorted(self.loops_rules_satisfied.items()))
+					self.loops_selected_subdivision_nums = collections.OrderedDict(sorted(self.loops_selected_subdivision_nums.items()))
 
-				# update state variables
-				for key in self.loops_updated.keys():
-					self.loops_updated[key] = False
+					# print(self.loops_satisfaction_degrees)
+					# print(self.loops_rules_satisfied)
+					# print(self.loops_selected_subdivision_nums)
+
+					all_loops_satisfaction_degrees = [self.loops_satisfaction_degrees[i] if self.loops_rules_satisfied[i] else 0 for i in list(self.loops_satisfaction_degrees.keys())]
+					loops_sorted_by_satisfaction_degree = np.argsort(np.array(all_loops_satisfaction_degrees)).tolist()
+					MAX_A = 1
+					A_counter = 0
+					for i in range(len(loops_sorted_by_satisfaction_degree)):				
+						if self.loops_rules_satisfied[i] and A_counter < MAX_A:
+							decision_outcome = self.LOOP_AGENTS[i].updateState('A')
+							if decision_outcome == 'A':
+								self.client.send_message("/loopdecision/A", str(i))
+								A_counter += 1
+							elif decision_outcome == 'Z':
+								self.client.send_message("/loopdecision/Z", str(i))
+						else:
+							decision_outcome = self.LOOP_AGENTS[i].updateState('R')
+
+					# update state variables
+					for key in self.loops_updated.keys():
+						self.loops_updated[key] = False
 
 
 if __name__ == '__main__': 
