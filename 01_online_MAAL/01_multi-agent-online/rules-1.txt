@@ -3,6 +3,6 @@ rule-name:Harmonic similarity;
 rule-type:more;
 rule-threshold:0.5;
 RULE;
-rule-name:Rhythmic density;
+rule-name:Dynamic similarity;
 rule-type:less;
 rule-threshold:0.5;

@@ -591,6 +591,8 @@ class MultiAgentAutonomousLooperOnline():
 		self.MIN_BEATS_PER_LOOP = 4
 		self.BASE_BPM = 120
 		self.RHYTHM_SUBDIVISIONS = 16
+		self.MIN_REPETITIONS = 8
+		self.MAX_REPETITIONS = 24
 
 		# BUFFER SIZES CONFIGURATIONS
 		self.sr = sr
@@ -652,7 +654,9 @@ class MultiAgentAutonomousLooperOnline():
 								BEATS_PER_LOOP=self.BEATS_PER_LOOP,
 								MIN_BEATS_PER_LOOP=self.MIN_BEATS_PER_LOOP,
 								BASE_BPM=self.BASE_BPM, 
-								RHYTHM_SUBDIVISIONS=self.RHYTHM_SUBDIVISIONS
+								RHYTHM_SUBDIVISIONS=self.RHYTHM_SUBDIVISIONS,
+								MIN_REPETITIONS=self.MIN_REPETITIONS,
+								MAX_REPETITIONS=self.MAX_REPETITIONS
 							)
 		self.LOOP_AGENTS[int(args[0])] = newLoopAgent
 		self.loops_satisfaction_degrees[int(args[0])] = None
