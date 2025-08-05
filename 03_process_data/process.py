@@ -28,10 +28,11 @@ if __name__ == '__main__':
 	with open(f'{perf_filepath}/info.json', 'r') as file:
 	    info = json.load(file)
 	BEATS_PER_LOOP = info["BEATS_PER_LOOP"]
+	BEATS_PER_LOOP = 16
 	BASE_BPM = info["BASE_BPM"]
 
 	# LOAD AUDIO TRACKS
-	sr = 44100
+	sr = 22050
 	signal, sr = librosa.load(dryin_filepath, sr=sr, mono=True)
 	signal = signal
 	loops_audiotracks = []
@@ -43,16 +44,17 @@ if __name__ == '__main__':
 	tempo_bps = BASE_BPM / 60 # beats per second
 	beat_seconds = 1 / tempo_bps # duration of one beat [seconds]
 	BEAT_SAMPLES = int(beat_seconds * sr) # number of samples of one beat
-	NUM_BEATS = int(signal.shape[0] / BEAT_SAMPLES) # number of beats in the track
+	NUM_BEATS = int(signal.shape[0] / BEAT_SAMPLES)/2 # number of beats in the track
 
 	N_LOOPS = len(loops_paths)
-	min_loop_division = 8
+	min_loop_division = 16
 	signal_subdivided_samples = [(i * BEAT_SAMPLES * min_loop_division) for i in range(int(NUM_BEATS / min_loop_division))] # samples at which each looped bar starts
 
 	loops_bars = [[] for _ in range(N_LOOPS)]
 	for decision in decisions_log:
 		if decision["decisions"][0]["decision_type"] == "A" or decision["decisions"][0]["decision_type"] == "I":
-			loops_bars[int(decision["decisions"][0]["loop_track (i)"])].append(int(decision["subdivision_index (m)"]))
+			# loops_bars[int(decision["decisions"][0]["loop_track (i)"])].append(int(decision["subdivision_index (m)"]))
+			loops_bars[int(decision["decisions"][0]["loop_track (i)"])].append(int(decision["subdivision_index (m)"])+1)
 
 	# print(loops_bars)
 
@@ -69,7 +71,7 @@ if __name__ == '__main__':
 	colors = [colorsys.hsv_to_rgb(np.random.random(), 0.8, 0.9) for n in range(N_LOOPS)]
 	vertical_line_length = np.max(signal)+ 0.1
 	librosa.display.waveshow(signal, sr=sr, ax=ax[0], label='original signal', alpha=0.4)
-	# ax[0].vlines(librosa.samples_to_time(signal_subdivided_samples), -1*vertical_line_length, vertical_line_length, color='black', alpha=0.9, linestyle='--', lw=0.8)
+	ax[0].vlines(librosa.samples_to_time(signal_subdivided_samples), -1*vertical_line_length, vertical_line_length, color='black', alpha=0.9, linestyle='--', lw=0.8)
 	# plot loops
 	for n in range(N_LOOPS):
 		librosa.display.waveshow(loops_audiotracks[n], sr=sr, ax=ax[n+1], label=f'loop {n+1}', alpha=0.7, color=colors[n])
@@ -215,8 +217,8 @@ if __name__ == '__main__':
 
 		return 
 
-	start_time = 320
-	stop_time = 450
+	start_time = 260
+	stop_time = 470
 	cutPerformance(start_time=start_time, stop_time=stop_time)
 
 
