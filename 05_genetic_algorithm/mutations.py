@@ -44,8 +44,8 @@ N_MUTATION_TYPES = 6 # for computation of mutations
 def MutationAddRandomRule(rules):
 	# add a random rule to a random loop track
 	idx_rule_to_change = np.random.randint(0, high=len(rules))
-	# if len(rules[idx_rule_to_change]) < N_MAX_RULES:
-	rules[idx_rule_to_change].append(makeRandomRule(RULE_NAMES, XI_VALUES, THRESHOLD_VALUES))
+	if len(rules[idx_rule_to_change]) < N_MAX_RULES:
+		rules[idx_rule_to_change].append(makeRandomRule(RULE_NAMES, XI_VALUES, THRESHOLD_VALUES))
 	return rules
 
 def MutationRemoveRandomRule(rules):
@@ -113,7 +113,7 @@ def RandomMutate(rules, n_mutations=1):
 	# probability of selecting rules:...
 	new_rules = rules.copy()
 	possible_mutations = list(range(N_MUTATION_TYPES))
-	mutations_weights = [60, 30, 40, 60, 60, 30]
+	mutations_weights = [40, 40, 40, 60, 60, 30]
 	for _ in range(n_mutations):
 		mutation_type = random.choices(possible_mutations, weights=mutations_weights, k=1)
 		#mutation_type = np.random.randint(0, high=N_MUTATION_TYPES)

@@ -16,7 +16,7 @@ XI_VALUES = ["more", "less"]
 step = 0.1
 THRESHOLD_VALUES = np.arange(0.1, 1.0, step).tolist()
 
-N_MAX_RULES = 5 # for computation of mutations
+N_MAX_RULES = 4 # for computation of mutations
 N_MIN_RULES = 1 # for computation of mutations
 
 
