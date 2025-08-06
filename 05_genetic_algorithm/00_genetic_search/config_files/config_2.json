@@ -6,35 +6,35 @@
     "looping-rules": [
         [
             {
-                "rule-name": "Harmonic movement - C",
+                "rule-name": "Dynamic similarity",
                 "rule-type": "more",
-                "rule-threshold": 0.20000000000000004
+                "rule-threshold": 0.4
             }
         ],
         [
             {
-                "rule-name": "Dynamic changes - D",
-                "rule-type": "more",
-                "rule-threshold": 0.30000000000000004
-            }
-        ],
-        [
-            {
-                "rule-name": "Timbral evolution - C",
+                "rule-name": "Frequency range overlap",
                 "rule-type": "less",
-                "rule-threshold": 0.7000000000000001
+                "rule-threshold": 0.6
+            }
+        ],
+        [
+            {
+                "rule-name": "Melodic trajectory - D",
+                "rule-type": "less",
+                "rule-threshold": 0.30000000000000004
             },
             {
-                "rule-name": "Harmonic movement - D",
+                "rule-name": "Frequency range overlap",
                 "rule-type": "less",
-                "rule-threshold": 0.9
+                "rule-threshold": 0.4
             }
         ],
         [
             {
-                "rule-name": "Dynamic changes - D",
-                "rule-type": "more",
-                "rule-threshold": 0.5
+                "rule-name": "Global spectral overlap",
+                "rule-type": "less",
+                "rule-threshold": 0.30000000000000016
             }
         ]
     ],

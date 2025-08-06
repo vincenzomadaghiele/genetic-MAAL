@@ -7,39 +7,54 @@
         [
             {
                 "rule-name": "Melodic trajectory - C",
-                "rule-type": "more",
-                "rule-threshold": 0.4
-            }
-        ],
-        [
-            {
-                "rule-name": "Harmonic movement - C",
                 "rule-type": "less",
-                "rule-threshold": 0.6
+                "rule-threshold": 0.2
             },
             {
-                "rule-name": "Global spectral overlap",
-                "rule-type": "more",
-                "rule-threshold": 0.1
-            }
-        ],
-        [
-            {
-                "rule-name": "Rhythmic density",
+                "rule-name": "Timbral similarity",
                 "rule-type": "less",
                 "rule-threshold": 0.5
             }
         ],
         [
             {
-                "rule-name": "Dynamic similarity",
+                "rule-name": "Melodic trajectory - C",
                 "rule-type": "more",
-                "rule-threshold": 0.20000000000000004
+                "rule-threshold": 0.7000000000000001
             },
             {
-                "rule-name": "Rhythmic density",
+                "rule-name": "Timbral evolution - C",
                 "rule-type": "less",
                 "rule-threshold": 0.4
+            }
+        ],
+        [
+            {
+                "rule-name": "Rhythmic similarity",
+                "rule-type": "less",
+                "rule-threshold": 0.2
+            },
+            {
+                "rule-name": "Dynamic similarity",
+                "rule-type": "less",
+                "rule-threshold": 0.6000000000000001
+            }
+        ],
+        [
+            {
+                "rule-name": "Dynamic changes - D",
+                "rule-type": "less",
+                "rule-threshold": 0.7000000000000001
+            },
+            {
+                "rule-name": "Rhythmic similarity",
+                "rule-type": "less",
+                "rule-threshold": 0.1
+            },
+            {
+                "rule-name": "Melodic similarity",
+                "rule-type": "more",
+                "rule-threshold": 0.8
             }
         ]
     ],
