@@ -769,7 +769,7 @@ class MultiAgentAutonomousLooperOnline():
 
 					all_loops_satisfaction_degrees = [self.loops_satisfaction_degrees[i] if self.loops_rules_satisfied[i] else 0 for i in list(self.loops_satisfaction_degrees.keys())]
 					loops_sorted_by_satisfaction_degree = np.argsort(np.array(all_loops_satisfaction_degrees)).tolist()
-					MAX_A = 1
+					MAX_A = 1 # MAXIMUM NUMBER OF DECISIONS PER SEGMENT
 					A_counter = 0
 					for i in range(len(loops_sorted_by_satisfaction_degree)):				
 						if self.loops_rules_satisfied[i] and A_counter < MAX_A:

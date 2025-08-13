@@ -39,7 +39,7 @@
                 "decision_type": "I",
                 "loop_track (i)": 0,
                 "num_beats (T_l)": 8,
-                "satisfaction_degree": 0.33513356534675454
+                "satisfaction_degree": 0.34375
             }
         ]
     },
@@ -135,10 +135,10 @@
         "subdivision_index (m)": 12,
         "decisions": [
             {
-                "decision_type": "A",
-                "loop_track (i)": 1,
-                "num_beats (T_l)": 8,
-                "satisfaction_degree": 0.20209962628747213
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null,
+                "satisfaction_degree": null
             }
         ]
     },
@@ -146,10 +146,10 @@
         "subdivision_index (m)": 13,
         "decisions": [
             {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
+                "decision_type": "A",
+                "loop_track (i)": 0,
+                "num_beats (T_l)": 8,
+                "satisfaction_degree": 0.10000000000000003
             }
         ]
     },
@@ -190,10 +190,10 @@
         "subdivision_index (m)": 17,
         "decisions": [
             {
-                "decision_type": "A",
-                "loop_track (i)": 3,
-                "num_beats (T_l)": 8,
-                "satisfaction_degree": 0.21336428795635048
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null,
+                "satisfaction_degree": null
             }
         ]
     },
@@ -201,10 +201,10 @@
         "subdivision_index (m)": 18,
         "decisions": [
             {
-                "decision_type": "A",
-                "loop_track (i)": 4,
-                "num_beats (T_l)": 8,
-                "satisfaction_degree": 0.18890798611616777
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null,
+                "satisfaction_degree": null
             }
         ]
     },
@@ -212,10 +212,10 @@
         "subdivision_index (m)": 19,
         "decisions": [
             {
-                "decision_type": "A",
-                "loop_track (i)": 6,
-                "num_beats (T_l)": 8,
-                "satisfaction_degree": 0.1520406811705294
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null,
+                "satisfaction_degree": null
             }
         ]
     },
@@ -223,10 +223,10 @@
         "subdivision_index (m)": 20,
         "decisions": [
             {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
+                "decision_type": "A",
+                "loop_track (i)": 1,
+                "num_beats (T_l)": 8,
+                "satisfaction_degree": 0.11465864651254076
             }
         ]
     },
@@ -234,10 +234,10 @@
         "subdivision_index (m)": 21,
         "decisions": [
             {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
+                "decision_type": "A",
+                "loop_track (i)": 3,
+                "num_beats (T_l)": 8,
+                "satisfaction_degree": 0.19074556648391458
             }
         ]
     },
@@ -245,10 +245,10 @@
         "subdivision_index (m)": 22,
         "decisions": [
             {
-                "decision_type": "A",
-                "loop_track (i)": 1,
-                "num_beats (T_l)": 8,
-                "satisfaction_degree": 0.2562507650523963
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null,
+                "satisfaction_degree": null
             }
         ]
     },
@@ -267,32 +267,8 @@
         "subdivision_index (m)": 24,
         "decisions": [
             {
-                "decision_type": "Z",
-                "loop_track (i)": 0,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            },
-            {
-                "decision_type": "Z",
-                "loop_track (i)": 2,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            },
-            {
-                "decision_type": "Z",
-                "loop_track (i)": 5,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            },
-            {
-                "decision_type": "Z",
-                "loop_track (i)": 7,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            },
-            {
-                "decision_type": "Z",
-                "loop_track (i)": 8,
+                "decision_type": "R",
+                "loop_track (i)": null,
                 "num_beats (T_l)": null,
                 "satisfaction_degree": null
             }
@@ -302,10 +278,10 @@
         "subdivision_index (m)": 25,
         "decisions": [
             {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
+                "decision_type": "A",
+                "loop_track (i)": 0,
+                "num_beats (T_l)": 8,
+                "satisfaction_degree": 0.10000000000000003
             }
         ]
     },
@@ -335,10 +311,10 @@
         "subdivision_index (m)": 28,
         "decisions": [
             {
-                "decision_type": "A",
-                "loop_track (i)": 4,
-                "num_beats (T_l)": 8,
-                "satisfaction_degree": 0.21242781153205767
+                "decision_type": "Z",
+                "loop_track (i)": 2,
+                "num_beats (T_l)": null,
+                "satisfaction_degree": null
             }
         ]
     },
@@ -347,9 +323,9 @@
         "decisions": [
             {
                 "decision_type": "A",
-                "loop_track (i)": 6,
+                "loop_track (i)": 1,
                 "num_beats (T_l)": 8,
-                "satisfaction_degree": 0.19131490740872675
+                "satisfaction_degree": 0.20778577645920338
             }
         ]
     },
@@ -390,10 +366,10 @@
         "subdivision_index (m)": 33,
         "decisions": [
             {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
+                "decision_type": "A",
+                "loop_track (i)": 0,
+                "num_beats (T_l)": 8,
+                "satisfaction_degree": 0.10000000000000003
             }
         ]
     },
@@ -412,10 +388,10 @@
         "subdivision_index (m)": 35,
         "decisions": [
             {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
+                "decision_type": "A",
+                "loop_track (i)": 3,
+                "num_beats (T_l)": 8,
+                "satisfaction_degree": 0.22812622309370206
             }
         ]
     },
@@ -434,14 +410,8 @@
         "subdivision_index (m)": 37,
         "decisions": [
             {
-                "decision_type": "A",
-                "loop_track (i)": 8,
-                "num_beats (T_l)": 8,
-                "satisfaction_degree": 0.15568203595995286
-            },
-            {
-                "decision_type": "Z",
-                "loop_track (i)": 3,
+                "decision_type": "R",
+                "loop_track (i)": null,
                 "num_beats (T_l)": null,
                 "satisfaction_degree": null
             }
@@ -485,9 +455,9 @@
         "decisions": [
             {
                 "decision_type": "A",
-                "loop_track (i)": 4,
+                "loop_track (i)": 0,
                 "num_beats (T_l)": 8,
-                "satisfaction_degree": 0.23666169547710758
+                "satisfaction_degree": 0.13923808775475346
             }
         ]
     },
@@ -495,8 +465,8 @@
         "subdivision_index (m)": 42,
         "decisions": [
             {
-                "decision_type": "Z",
-                "loop_track (i)": 1,
+                "decision_type": "R",
+                "loop_track (i)": null,
                 "num_beats (T_l)": null,
                 "satisfaction_degree": null
             }
@@ -528,32 +498,8 @@
         "subdivision_index (m)": 45,
         "decisions": [
             {
-                "decision_type": "A",
-                "loop_track (i)": 8,
-                "num_beats (T_l)": 8,
-                "satisfaction_degree": 0.18170930568165208
-            },
-            {
-                "decision_type": "Z",
-                "loop_track (i)": 0,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            },
-            {
-                "decision_type": "Z",
-                "loop_track (i)": 2,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            },
-            {
-                "decision_type": "Z",
-                "loop_track (i)": 5,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            },
-            {
-                "decision_type": "Z",
-                "loop_track (i)": 7,
+                "decision_type": "R",
+                "loop_track (i)": null,
                 "num_beats (T_l)": null,
                 "satisfaction_degree": null
             }
@@ -563,10 +509,10 @@
         "subdivision_index (m)": 46,
         "decisions": [
             {
-                "decision_type": "A",
-                "loop_track (i)": 3,
-                "num_beats (T_l)": 8,
-                "satisfaction_degree": 0.22088435500254827
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null,
+                "satisfaction_degree": null
             }
         ]
     },
@@ -596,8 +542,8 @@
         "subdivision_index (m)": 49,
         "decisions": [
             {
-                "decision_type": "Z",
-                "loop_track (i)": 6,
+                "decision_type": "R",
+                "loop_track (i)": null,
                 "num_beats (T_l)": null,
                 "satisfaction_degree": null
             }
@@ -619,9 +565,9 @@
         "decisions": [
             {
                 "decision_type": "A",
-                "loop_track (i)": 1,
+                "loop_track (i)": 0,
                 "num_beats (T_l)": 8,
-                "satisfaction_degree": 0.13991705366924886
+                "satisfaction_degree": 0.15042457619415972
             }
         ]
     },
@@ -640,8 +586,14 @@
         "subdivision_index (m)": 53,
         "decisions": [
             {
-                "decision_type": "R",
-                "loop_track (i)": null,
+                "decision_type": "Z",
+                "loop_track (i)": 1,
+                "num_beats (T_l)": null,
+                "satisfaction_degree": null
+            },
+            {
+                "decision_type": "Z",
+                "loop_track (i)": 2,
                 "num_beats (T_l)": null,
                 "satisfaction_degree": null
             }
@@ -651,10 +603,10 @@
         "subdivision_index (m)": 54,
         "decisions": [
             {
-                "decision_type": "A",
-                "loop_track (i)": 3,
-                "num_beats (T_l)": 8,
-                "satisfaction_degree": 0.25763370351908016
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null,
+                "satisfaction_degree": null
             }
         ]
     },
@@ -662,10 +614,10 @@
         "subdivision_index (m)": 55,
         "decisions": [
             {
-                "decision_type": "A",
-                "loop_track (i)": 8,
-                "num_beats (T_l)": 8,
-                "satisfaction_degree": 0.21633844233630165
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null,
+                "satisfaction_degree": null
             }
         ]
     },
@@ -706,8 +658,8 @@
         "subdivision_index (m)": 59,
         "decisions": [
             {
-                "decision_type": "R",
-                "loop_track (i)": null,
+                "decision_type": "Z",
+                "loop_track (i)": 3,
                 "num_beats (T_l)": null,
                 "satisfaction_degree": null
             }
@@ -728,8 +680,8 @@
         "subdivision_index (m)": 61,
         "decisions": [
             {
-                "decision_type": "Z",
-                "loop_track (i)": 4,
+                "decision_type": "R",
+                "loop_track (i)": null,
                 "num_beats (T_l)": null,
                 "satisfaction_degree": null
             }
@@ -740,9 +692,9 @@
         "decisions": [
             {
                 "decision_type": "A",
-                "loop_track (i)": 6,
+                "loop_track (i)": 1,
                 "num_beats (T_l)": 8,
-                "satisfaction_degree": 0.07309593251867252
+                "satisfaction_degree": 0.13800155001585898
             }
         ]
     },
@@ -750,10 +702,10 @@
         "subdivision_index (m)": 63,
         "decisions": [
             {
-                "decision_type": "A",
-                "loop_track (i)": 1,
-                "num_beats (T_l)": 8,
-                "satisfaction_degree": 0.15000000000000002
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null,
+                "satisfaction_degree": null
             }
         ]
     },
@@ -783,26 +735,8 @@
         "subdivision_index (m)": 66,
         "decisions": [
             {
-                "decision_type": "Z",
-                "loop_track (i)": 0,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            },
-            {
-                "decision_type": "Z",
-                "loop_track (i)": 2,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            },
-            {
-                "decision_type": "Z",
-                "loop_track (i)": 5,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            },
-            {
-                "decision_type": "Z",
-                "loop_track (i)": 7,
+                "decision_type": "R",
+                "loop_track (i)": null,
                 "num_beats (T_l)": null,
                 "satisfaction_degree": null
             }
@@ -856,10 +790,10 @@
         "subdivision_index (m)": 71,
         "decisions": [
             {
-                "decision_type": "A",
-                "loop_track (i)": 1,
-                "num_beats (T_l)": 8,
-                "satisfaction_degree": 0.1582863139741893
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null,
+                "satisfaction_degree": null
             }
         ]
     },
@@ -879,9 +813,9 @@
         "decisions": [
             {
                 "decision_type": "A",
-                "loop_track (i)": 4,
+                "loop_track (i)": 3,
                 "num_beats (T_l)": 8,
-                "satisfaction_degree": 0.1954192464568144
+                "satisfaction_degree": 0.10573201783833491
             }
         ]
     },
@@ -889,8 +823,8 @@
         "subdivision_index (m)": 74,
         "decisions": [
             {
-                "decision_type": "Z",
-                "loop_track (i)": 3,
+                "decision_type": "R",
+                "loop_track (i)": null,
                 "num_beats (T_l)": null,
                 "satisfaction_degree": null
             }
@@ -900,14 +834,8 @@
         "subdivision_index (m)": 75,
         "decisions": [
             {
-                "decision_type": "A",
-                "loop_track (i)": 6,
-                "num_beats (T_l)": 8,
-                "satisfaction_degree": 0.1757254669605934
-            },
-            {
                 "decision_type": "Z",
-                "loop_track (i)": 8,
+                "loop_track (i)": 0,
                 "num_beats (T_l)": null,
                 "satisfaction_degree": null
             }
@@ -939,8 +867,8 @@
         "subdivision_index (m)": 78,
         "decisions": [
             {
-                "decision_type": "R",
-                "loop_track (i)": null,
+                "decision_type": "Z",
+                "loop_track (i)": 2,
                 "num_beats (T_l)": null,
                 "satisfaction_degree": null
             }
@@ -972,10 +900,10 @@
         "subdivision_index (m)": 81,
         "decisions": [
             {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
+                "decision_type": "A",
+                "loop_track (i)": 3,
+                "num_beats (T_l)": 8,
+                "satisfaction_degree": 0.12490462786344536
             }
         ]
     },
@@ -994,10 +922,10 @@
         "subdivision_index (m)": 83,
         "decisions": [
             {
-                "decision_type": "A",
-                "loop_track (i)": 3,
-                "num_beats (T_l)": 8,
-                "satisfaction_degree": 0.18772745126073737
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null,
+                "satisfaction_degree": null
             }
         ]
     },
@@ -1016,15 +944,26 @@
         "subdivision_index (m)": 85,
         "decisions": [
             {
-                "decision_type": "A",
-                "loop_track (i)": 1,
-                "num_beats (T_l)": 8,
-                "satisfaction_degree": 0.21399825492683555
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null,
+                "satisfaction_degree": null
             }
         ]
     },
     {
         "subdivision_index (m)": 86,
+        "decisions": [
+            {
+                "decision_type": "A",
+                "loop_track (i)": 1,
+                "num_beats (T_l)": 8,
+                "satisfaction_degree": 0.16486038377170756
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 87,
         "decisions": [
             {
                 "decision_type": "R",
@@ -1035,48 +974,13 @@
         ]
     },
     {
-        "subdivision_index (m)": 87,
-        "decisions": [
-            {
-                "decision_type": "A",
-                "loop_track (i)": 4,
-                "num_beats (T_l)": 8,
-                "satisfaction_degree": 0.19964926892720336
-            },
-            {
-                "decision_type": "Z",
-                "loop_track (i)": 0,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            },
-            {
-                "decision_type": "Z",
-                "loop_track (i)": 2,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            },
-            {
-                "decision_type": "Z",
-                "loop_track (i)": 5,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            },
-            {
-                "decision_type": "Z",
-                "loop_track (i)": 7,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            }
-        ]
-    },
-    {
         "subdivision_index (m)": 88,
         "decisions": [
             {
                 "decision_type": "A",
-                "loop_track (i)": 8,
+                "loop_track (i)": 0,
                 "num_beats (T_l)": 8,
-                "satisfaction_degree": 0.20513556322830712
+                "satisfaction_degree": 0.10000000000000003
             }
         ]
     },
@@ -1128,10 +1032,10 @@
         "subdivision_index (m)": 93,
         "decisions": [
             {
-                "decision_type": "A",
-                "loop_track (i)": 1,
-                "num_beats (T_l)": 8,
-                "satisfaction_degree": 0.2167016630550202
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null,
+                "satisfaction_degree": null
             }
         ]
     },
@@ -1139,10 +1043,10 @@
         "subdivision_index (m)": 94,
         "decisions": [
             {
-                "decision_type": "A",
-                "loop_track (i)": 3,
-                "num_beats (T_l)": 8,
-                "satisfaction_degree": 0.2148730043971348
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null,
+                "satisfaction_degree": null
             }
         ]
     },
@@ -1150,8 +1054,8 @@
         "subdivision_index (m)": 95,
         "decisions": [
             {
-                "decision_type": "Z",
-                "loop_track (i)": 6,
+                "decision_type": "R",
+                "loop_track (i)": null,
                 "num_beats (T_l)": null,
                 "satisfaction_degree": null
             }
@@ -1209,593 +1113,6 @@
                 "loop_track (i)": null,
                 "num_beats (T_l)": null,
                 "satisfaction_degree": null
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 101,
-        "decisions": [
-            {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 102,
-        "decisions": [
-            {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 103,
-        "decisions": [
-            {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 104,
-        "decisions": [
-            {
-                "decision_type": "A",
-                "loop_track (i)": 6,
-                "num_beats (T_l)": 8,
-                "satisfaction_degree": 0.15000000000000002
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 105,
-        "decisions": [
-            {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 106,
-        "decisions": [
-            {
-                "decision_type": "A",
-                "loop_track (i)": 1,
-                "num_beats (T_l)": 8,
-                "satisfaction_degree": 0.2982125865128986
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 107,
-        "decisions": [
-            {
-                "decision_type": "A",
-                "loop_track (i)": 3,
-                "num_beats (T_l)": 8,
-                "satisfaction_degree": 0.2411222111462475
-            },
-            {
-                "decision_type": "Z",
-                "loop_track (i)": 4,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 108,
-        "decisions": [
-            {
-                "decision_type": "Z",
-                "loop_track (i)": 0,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            },
-            {
-                "decision_type": "Z",
-                "loop_track (i)": 2,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            },
-            {
-                "decision_type": "Z",
-                "loop_track (i)": 5,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            },
-            {
-                "decision_type": "Z",
-                "loop_track (i)": 7,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            },
-            {
-                "decision_type": "Z",
-                "loop_track (i)": 8,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 109,
-        "decisions": [
-            {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 110,
-        "decisions": [
-            {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 111,
-        "decisions": [
-            {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 112,
-        "decisions": [
-            {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 113,
-        "decisions": [
-            {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 114,
-        "decisions": [
-            {
-                "decision_type": "A",
-                "loop_track (i)": 6,
-                "num_beats (T_l)": 8,
-                "satisfaction_degree": 0.28387556979157935
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 115,
-        "decisions": [
-            {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 116,
-        "decisions": [
-            {
-                "decision_type": "A",
-                "loop_track (i)": 4,
-                "num_beats (T_l)": 8,
-                "satisfaction_degree": 0.21750281773840785
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 117,
-        "decisions": [
-            {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 118,
-        "decisions": [
-            {
-                "decision_type": "A",
-                "loop_track (i)": 8,
-                "num_beats (T_l)": 8,
-                "satisfaction_degree": 0.16953013395599725
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 119,
-        "decisions": [
-            {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 120,
-        "decisions": [
-            {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 121,
-        "decisions": [
-            {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 122,
-        "decisions": [
-            {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 123,
-        "decisions": [
-            {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 124,
-        "decisions": [
-            {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 125,
-        "decisions": [
-            {
-                "decision_type": "A",
-                "loop_track (i)": 4,
-                "num_beats (T_l)": 8,
-                "satisfaction_degree": 0.23389159540801935
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 126,
-        "decisions": [
-            {
-                "decision_type": "Z",
-                "loop_track (i)": 1,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 127,
-        "decisions": [
-            {
-                "decision_type": "Z",
-                "loop_track (i)": 3,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 128,
-        "decisions": [
-            {
-                "decision_type": "A",
-                "loop_track (i)": 6,
-                "num_beats (T_l)": 8,
-                "satisfaction_degree": 0.3639841144254149
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 129,
-        "decisions": [
-            {
-                "decision_type": "Z",
-                "loop_track (i)": 0,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            },
-            {
-                "decision_type": "Z",
-                "loop_track (i)": 2,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            },
-            {
-                "decision_type": "Z",
-                "loop_track (i)": 5,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            },
-            {
-                "decision_type": "Z",
-                "loop_track (i)": 7,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 130,
-        "decisions": [
-            {
-                "decision_type": "A",
-                "loop_track (i)": 8,
-                "num_beats (T_l)": 8,
-                "satisfaction_degree": 0.3082410203223812
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 131,
-        "decisions": [
-            {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 132,
-        "decisions": [
-            {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 133,
-        "decisions": [
-            {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 134,
-        "decisions": [
-            {
-                "decision_type": "A",
-                "loop_track (i)": 4,
-                "num_beats (T_l)": 8,
-                "satisfaction_degree": 0.33843178412141484
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 135,
-        "decisions": [
-            {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 136,
-        "decisions": [
-            {
-                "decision_type": "A",
-                "loop_track (i)": 1,
-                "num_beats (T_l)": 8,
-                "satisfaction_degree": 0.14692919034890084
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 137,
-        "decisions": [
-            {
-                "decision_type": "A",
-                "loop_track (i)": 3,
-                "num_beats (T_l)": 8,
-                "satisfaction_degree": 0.3324187009705688
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 138,
-        "decisions": [
-            {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 139,
-        "decisions": [
-            {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 140,
-        "decisions": [
-            {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 141,
-        "decisions": [
-            {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 142,
-        "decisions": [
-            {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 143,
-        "decisions": [
-            {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 144,
-        "decisions": [
-            {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 145,
-        "decisions": [
-            {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 146,
-        "decisions": [
-            {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 147,
-        "decisions": [
-            {
-                "decision_type": "R",
-                "loop_track (i)": null,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 148,
-        "decisions": [
-            {
-                "decision_type": "Z",
-                "loop_track (i)": 6,
-                "num_beats (T_l)": null,
-                "satisfaction_degree": null
-            }
-        ]
-    },
-    {
-        "subdivision_index (m)": 149,
-        "decisions": [
-            {
-                "decision_type": "A",
-                "loop_track (i)": 1,
-                "num_beats (T_l)": 8,
-                "satisfaction_degree": 0.20443742174912044
             }
         ]
     }
