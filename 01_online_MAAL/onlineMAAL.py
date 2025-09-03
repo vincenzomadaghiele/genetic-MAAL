@@ -9,7 +9,7 @@ from onlineMAALclass import AutonomousLooperOnline
 if __name__ == '__main__': 
 
 	parser = argparse.ArgumentParser()
-	parser.add_argument('--CONFIG_FILEPAHT', type=str, default='./01_online_MAAL/config_1_2.json',
+	parser.add_argument('--CONFIG_FILEPAHT', type=str, default='./01_online_MAAL/config_2.json',
 						help='path to the configuration file')
 	parser.add_argument('--MAAL_PD_FILEPAHT', type=str, default='./01_online_MAAL/00_MAAL_PD/_main.pd',
 						help='path to the PD MAAL patch')

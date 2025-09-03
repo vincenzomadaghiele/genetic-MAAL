@@ -12,7 +12,7 @@ import shutil
 if __name__ == '__main__': 
 
 	# load sound files from performance
-	perf_filepath = './03_process_data/MAAL-2'
+	perf_filepath = './03_process_data/MAAL2'
 	dryin_filepath = f'{perf_filepath}/dry-in.wav'
 	loops_paths = [path if path.split('.')[0].split('-')[0] == 'loop' else None for path in os.listdir(perf_filepath)]
 	loops_paths = [x for x in loops_paths if x is not None]	
@@ -28,11 +28,11 @@ if __name__ == '__main__':
 	with open(f'{perf_filepath}/info.json', 'r') as file:
 	    info = json.load(file)
 	BEATS_PER_LOOP = info["BEATS_PER_LOOP"]
-	BEATS_PER_LOOP = 16
+	BEATS_PER_LOOP = 8
 	BASE_BPM = info["BASE_BPM"]
 
 	# LOAD AUDIO TRACKS
-	sr = 22050
+	sr = 44100
 	signal, sr = librosa.load(dryin_filepath, sr=sr, mono=True)
 	signal = signal
 	loops_audiotracks = []
@@ -47,8 +47,10 @@ if __name__ == '__main__':
 	NUM_BEATS = int(signal.shape[0] / BEAT_SAMPLES)/2 # number of beats in the track
 
 	N_LOOPS = len(loops_paths)
-	min_loop_division = 16
+	min_loop_division = 8
 	signal_subdivided_samples = [(i * BEAT_SAMPLES * min_loop_division) for i in range(int(NUM_BEATS / min_loop_division))] # samples at which each looped bar starts
+
+	print(signal_subdivided_samples)
 
 	loops_bars = [[] for _ in range(N_LOOPS)]
 	for decision in decisions_log:
@@ -56,13 +58,13 @@ if __name__ == '__main__':
 			# loops_bars[int(decision["decisions"][0]["loop_track (i)"])].append(int(decision["subdivision_index (m)"]))
 			loops_bars[int(decision["decisions"][0]["loop_track (i)"])].append(int(decision["subdivision_index (m)"])+1)
 
-	# print(loops_bars)
+
+	print(loops_bars)
 
 	# BUG!!!
 	# prov = loops_bars[-1]
 	# loops_bars[-1] = loops_bars[1]
 	# loops_bars[1] = prov
-
 
 	# COMPUTE SUMMARY FIGURE
 	fig, ax = plt.subplots(N_LOOPS+1, figsize=(12,N_LOOPS*2-2), gridspec_kw={'height_ratios': np.ones((N_LOOPS)).tolist().insert(0,3)})
@@ -79,10 +81,12 @@ if __name__ == '__main__':
 		loop_in_sig = np.zeros_like(signal)
 		for j, bar_num in enumerate(loops_bars[n]):
 			num_samples_selected_segment = BEAT_SAMPLES * BEATS_PER_LOOP
+			bar_num -= 1
+			print(int(signal_subdivided_samples[bar_num-1]))
 			#num_samples_selected_segment = self.candidate_segments_divisions[loops_candidate_num[n][j]] * min_loop_division * BEAT_SAMPLES
 			loop_in_sig[int(signal_subdivided_samples[bar_num-1]):int(signal_subdivided_samples[bar_num-1])+num_samples_selected_segment] = signal[int(signal_subdivided_samples[bar_num-1]):int(signal_subdivided_samples[bar_num-1])+num_samples_selected_segment]
-			ax[0].vlines(librosa.samples_to_time(int(signal_subdivided_samples[bar_num-1])+num_samples_selected_segment, sr=sr), -1*vertical_line_length, vertical_line_length, color=colors[n], alpha=0.9, linestyle='--', lw=0.8)
-			ax[n+1].vlines(librosa.samples_to_time(int(signal_subdivided_samples[bar_num-1])+num_samples_selected_segment, sr=sr), -1*vertical_line_length, vertical_line_length, color='black', alpha=0.8, linestyle='--', lw=0.8)
+			ax[0].vlines(librosa.samples_to_time(int(signal_subdivided_samples[bar_num-1])+num_samples_selected_segment, sr=0.5*sr), -1*vertical_line_length, vertical_line_length, color=colors[n], alpha=0.9, linestyle='--', lw=0.8)
+			ax[n+1].vlines(librosa.samples_to_time(int(signal_subdivided_samples[bar_num-1])+num_samples_selected_segment, sr=0.5*sr), -1*vertical_line_length, vertical_line_length, color='black', alpha=0.8, linestyle='--', lw=0.8)
 		ax[0].plot(librosa.samples_to_time(np.arange(0, signal.shape[0]), sr=sr), loop_in_sig, label=f'loop {n+1}', alpha=0.6, color=colors[n])
 	
 		# ax[n+1].vlines(librosa.samples_to_time(signal_subdivided_samples), -1*vertical_line_length, vertical_line_length, color='black', alpha=0.9, linestyle='--', lw=0.8)
@@ -134,19 +138,27 @@ if __name__ == '__main__':
 		else:
 			os.mkdir(newpath)
 
+		print(start_time, stop_time)
+
 		# time to closest bar samples
-		start_sample = librosa.time_to_samples(start_time, sr=sr)
-		stop_sample = librosa.time_to_samples(stop_time, sr=sr)
+		# start_sample = librosa.time_to_samples(start_time, sr=sr)
+		# stop_sample = librosa.time_to_samples(stop_time, sr=sr)
+		# print(start_sample, stop_sample)
+		start_sample = 1058400
+		stop_sample = 7761600
+
 		start_sample, start_bar_n = find_nearest(np.array(signal_subdivided_samples), start_sample)
 		stop_sample, stop_bar_n = find_nearest(np.array(signal_subdivided_samples), stop_sample)
 
-		cut_signal = np.array(signal[start_sample:stop_sample])
+		print(start_sample, stop_sample)
+
+		cut_signal = np.array(signal[start_sample*2:stop_sample*2])
 
 		sf.write(f'{newpath}/{sound_name}_{int(start_time)}-{int(stop_time)}.wav', cut_signal, sr, subtype='PCM_24')
 		
 		cut_loop_audiotracks = []
 		for j, loop_track in enumerate(loops_audiotracks):
-			cut_loop_audiotracks.append(np.array(loop_track[start_sample:stop_sample]))
+			cut_loop_audiotracks.append(np.array(loop_track[start_sample*2:stop_sample*2]))
 			sf.write(f'{newpath}/loop-{j}_{int(start_time)}-{int(stop_time)}.wav', cut_loop_audiotracks[j], sr, subtype='PCM_24')
 
 		# SAVE SOUND FILES TO DISK
@@ -177,10 +189,11 @@ if __name__ == '__main__':
 			loop_in_sig = np.zeros_like(signal)
 			for j, bar_num in enumerate(loops_bars[n]):
 				num_samples_selected_segment = BEAT_SAMPLES * BEATS_PER_LOOP
+				bar_num -= 1
 				#num_samples_selected_segment = self.candidate_segments_divisions[loops_candidate_num[n][j]] * min_loop_division * BEAT_SAMPLES
 				loop_in_sig[int(signal_subdivided_samples[bar_num-1]):int(signal_subdivided_samples[bar_num-1])+num_samples_selected_segment] = signal[int(signal_subdivided_samples[bar_num-1]):int(signal_subdivided_samples[bar_num-1])+num_samples_selected_segment]
-				ax[0].vlines(librosa.samples_to_time(int(signal_subdivided_samples[bar_num-1])+num_samples_selected_segment, sr=sr), -1*vertical_line_length, vertical_line_length, color=colors[n], alpha=0.9, linestyle='--', lw=0.8)
-				ax[n+1].vlines(librosa.samples_to_time(int(signal_subdivided_samples[bar_num-1])+num_samples_selected_segment, sr=sr), -1*vertical_line_length, vertical_line_length, color='black', alpha=0.8, linestyle='--', lw=0.8)
+				ax[0].vlines(librosa.samples_to_time(int(signal_subdivided_samples[bar_num-1])+num_samples_selected_segment, sr=0.5*sr), -1*vertical_line_length, vertical_line_length, color=colors[n], alpha=0.9, linestyle='--', lw=0.8)
+				ax[n+1].vlines(librosa.samples_to_time(int(signal_subdivided_samples[bar_num-1])+num_samples_selected_segment, sr=0.5*sr), -1*vertical_line_length, vertical_line_length, color='black', alpha=0.8, linestyle='--', lw=0.8)
 			ax[0].plot(librosa.samples_to_time(np.arange(0, signal.shape[0]), sr=sr), loop_in_sig, label=f'loop {n+1}', alpha=0.6, color=colors[n])
 		
 			# ax[n+1].vlines(librosa.samples_to_time(signal_subdivided_samples), -1*vertical_line_length, vertical_line_length, color='black', alpha=0.9, linestyle='--', lw=0.8)
@@ -217,8 +230,8 @@ if __name__ == '__main__':
 
 		return 
 
-	start_time = 260
-	stop_time = 470
+	start_time = 60
+	stop_time = 360
 	cutPerformance(start_time=start_time, stop_time=stop_time)
 
 

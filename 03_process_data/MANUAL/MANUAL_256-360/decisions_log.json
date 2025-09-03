@@ -1,0 +1,332 @@
+[
+    {
+        "subdivision_index (m)": 59.0,
+        "decisions": [
+            {
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 60.0,
+        "decisions": [
+            {
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 61.0,
+        "decisions": [
+            {
+                "decision_type": "A",
+                "loop_track (i)": 1,
+                "num_beats (T_l)": 1.0
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 62.0,
+        "decisions": [
+            {
+                "decision_type": "A",
+                "loop_track (i)": 2,
+                "num_beats (T_l)": 1.0
+            },
+            {
+                "decision_type": "A",
+                "loop_track (i)": 3,
+                "num_beats (T_l)": 1.0
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 63.0,
+        "decisions": [
+            {
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 64.0,
+        "decisions": [
+            {
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 65.0,
+        "decisions": [
+            {
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 66.0,
+        "decisions": [
+            {
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 67.0,
+        "decisions": [
+            {
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 68.0,
+        "decisions": [
+            {
+                "decision_type": "A",
+                "loop_track (i)": 0,
+                "num_beats (T_l)": 1.0
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 69.0,
+        "decisions": [
+            {
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 70.0,
+        "decisions": [
+            {
+                "decision_type": "A",
+                "loop_track (i)": 0,
+                "num_beats (T_l)": 1.0
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 71.0,
+        "decisions": [
+            {
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 72.0,
+        "decisions": [
+            {
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 73.0,
+        "decisions": [
+            {
+                "decision_type": "A",
+                "loop_track (i)": 0,
+                "num_beats (T_l)": 1.0
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 74.0,
+        "decisions": [
+            {
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 75.0,
+        "decisions": [
+            {
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 76.0,
+        "decisions": [
+            {
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 77.0,
+        "decisions": [
+            {
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 78.0,
+        "decisions": [
+            {
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 79.0,
+        "decisions": [
+            {
+                "decision_type": "A",
+                "loop_track (i)": 0,
+                "num_beats (T_l)": 1.0
+            },
+            {
+                "decision_type": "A",
+                "loop_track (i)": 2,
+                "num_beats (T_l)": 1.0
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 80.0,
+        "decisions": [
+            {
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 81.0,
+        "decisions": [
+            {
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 82.0,
+        "decisions": [
+            {
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 83.0,
+        "decisions": [
+            {
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 84.0,
+        "decisions": [
+            {
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 85.0,
+        "decisions": [
+            {
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 86.0,
+        "decisions": [
+            {
+                "decision_type": "A",
+                "loop_track (i)": 3,
+                "num_beats (T_l)": 1.0
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 87.0,
+        "decisions": [
+            {
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 88.0,
+        "decisions": [
+            {
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 89.0,
+        "decisions": [
+            {
+                "decision_type": "A",
+                "loop_track (i)": 2,
+                "num_beats (T_l)": 1.0
+            }
+        ]
+    },
+    {
+        "subdivision_index (m)": 90.0,
+        "decisions": [
+            {
+                "decision_type": "R",
+                "loop_track (i)": null,
+                "num_beats (T_l)": null
+            }
+        ]
+    }
+]

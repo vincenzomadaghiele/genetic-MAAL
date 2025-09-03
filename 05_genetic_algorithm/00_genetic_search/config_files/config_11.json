@@ -6,55 +6,45 @@
     "looping-rules": [
         [
             {
-                "rule-name": "Melodic trajectory - C",
+                "rule-name": "Harmonic movement - D",
                 "rule-type": "less",
-                "rule-threshold": 0.2
-            },
-            {
-                "rule-name": "Timbral similarity",
-                "rule-type": "less",
-                "rule-threshold": 0.5
-            }
-        ],
-        [
-            {
-                "rule-name": "Melodic trajectory - C",
-                "rule-type": "more",
-                "rule-threshold": 0.7000000000000001
-            },
-            {
-                "rule-name": "Timbral evolution - C",
-                "rule-type": "less",
-                "rule-threshold": 0.4
-            }
-        ],
-        [
-            {
-                "rule-name": "Rhythmic similarity",
-                "rule-type": "less",
-                "rule-threshold": 0.2
-            },
-            {
-                "rule-name": "Dynamic similarity",
-                "rule-type": "less",
-                "rule-threshold": 0.6000000000000001
+                "rule-threshold": 0.1
             }
         ],
         [
             {
                 "rule-name": "Dynamic changes - D",
                 "rule-type": "less",
-                "rule-threshold": 0.7000000000000001
+                "rule-threshold": 0.4
             },
             {
-                "rule-name": "Rhythmic similarity",
+                "rule-name": "Harmonic movement - D",
                 "rule-type": "less",
-                "rule-threshold": 0.1
+                "rule-threshold": 0.6000000000000001
             },
             {
                 "rule-name": "Melodic similarity",
                 "rule-type": "more",
-                "rule-threshold": 0.8
+                "rule-threshold": 0.5
+            }
+        ],
+        [
+            {
+                "rule-name": "Global spectral overlap",
+                "rule-type": "less",
+                "rule-threshold": 0.1
+            },
+            {
+                "rule-name": "Rhythmic similarity",
+                "rule-type": "less",
+                "rule-threshold": 0.9
+            }
+        ],
+        [
+            {
+                "rule-name": "Dynamic changes - C",
+                "rule-type": "less",
+                "rule-threshold": 0.30000000000000004
             }
         ]
     ],
